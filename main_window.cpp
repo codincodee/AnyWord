@@ -26,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
   font.setBold(true);
   font.setPointSize(20);
   ui->MeaningLabel->setFont(font);
+
+  ui->IKnowTheWordPushButton->setFocus();
 }
 
 MainWindow::~MainWindow()

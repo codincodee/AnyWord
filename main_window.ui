@@ -201,7 +201,7 @@
            <cursorShape>IBeamCursor</cursorShape>
           </property>
           <property name="focusPolicy">
-           <enum>Qt::ClickFocus</enum>
+           <enum>Qt::StrongFocus</enum>
           </property>
           <property name="frame">
            <bool>false</bool>
@@ -408,6 +408,10 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>IKnowTheWordPushButton</tabstop>
+  <tabstop>IDontKnowTheWordPushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

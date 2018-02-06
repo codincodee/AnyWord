@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
   font.setPointSize(10);
   ui->IDontKnowTheWordPushButton->setFont(font);
 
-  ui->MeaningLabel->setText("");
+  // ui->MeaningLabel->setText("");
   font = ui->MeaningLabel->font();
   font.setBold(true);
   font.setPointSize(20);

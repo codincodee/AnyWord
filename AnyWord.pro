@@ -32,3 +32,5 @@ HEADERS += \
 
 FORMS += \
         main_window.ui
+
+ICON = icon.ico

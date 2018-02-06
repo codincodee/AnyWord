@@ -28,6 +28,18 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->MeaningLabel->setFont(font);
 
   ui->IKnowTheWordPushButton->setFocus();
+
+  ui->ProgressBar->setStyleSheet(
+      "QProgressBar {"
+          "border: 0px solid grey;"
+          "border-radius: 0px;"
+          "text-align: center;"
+      "}"
+      "QProgressBar::chunk {"
+          "background-color: #05B8CC;"
+          "width: 1px;"
+      "}");
+  ui->ProgressBar->setValue(50);
 }
 
 MainWindow::~MainWindow()

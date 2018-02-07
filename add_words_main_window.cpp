@@ -7,6 +7,7 @@ AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
   this->setWindowModality(Qt::WindowModal);
+  ui->DeletePushButton->setVisible(true);
 }
 
 AddWordsMainWindow::~AddWordsMainWindow()

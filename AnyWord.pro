@@ -29,14 +29,14 @@ SOURCES += \
     add_words_main_window.cpp \
     factory.cpp \
     main_window_word_ui.cpp \
-    ui_base.cpp
+    main_window_meaning_ui.cpp
 
 HEADERS += \
         main_window.h \
     add_words_main_window.h \
     factory.h \
     main_window_word_ui.h \
-    ui_base.h
+    main_window_meaning_ui.h
 
 FORMS += \
         main_window.ui \

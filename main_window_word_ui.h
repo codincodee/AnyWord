@@ -2,9 +2,8 @@
 #define MAIN_WINDOW_WORD_UI_H
 
 #include <QLabel>
-#include "ui_base.h"
 
-class MainWindowWordUI : public UIBase
+class MainWindowWordUI
 {
 public:
   MainWindowWordUI();

@@ -18,7 +18,9 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
   void SetFactory(std::shared_ptr<Factory> factory);
+
   QLabel* WordLabel();
+  QLabel* MeaningLabel();
 private slots:
   void on_SettingsToolButton_clicked();
 

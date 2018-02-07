@@ -17,5 +17,6 @@ bool MainWindowWordUI::SetDefault() {
   font.setBold(true);
   font.setPointSize(30);
   qt_label_->setFont(font);
+  qt_label_->setText("Word");
   return true;
 }

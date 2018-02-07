@@ -19,12 +19,6 @@ MainWindow::MainWindow(QWidget *parent) :
   font.setPointSize(10);
   ui->IDontKnowTheWordPushButton->setFont(font);
 
-  // ui->MeaningLabel->setText("");
-  font = ui->MeaningLabel->font();
-  font.setBold(true);
-  font.setPointSize(20);
-  ui->MeaningLabel->setFont(font);
-
   ui->IKnowTheWordPushButton->setFocus();
 
   ui->ProgressBar->setStyleSheet(
@@ -57,6 +51,10 @@ void MainWindow::SetFactory(std::shared_ptr<Factory> factory) {
 
 QLabel* MainWindow::WordLabel() {
   return ui->WordLabel;
+}
+
+QLabel* MainWindow::MeaningLabel() {
+  return ui->MeaningLabel;
 }
 
 void MainWindow::on_SettingsToolButton_clicked()

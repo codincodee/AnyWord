@@ -39,12 +39,12 @@
          </spacer>
         </item>
         <item>
-         <widget class="QToolButton" name="toolButton">
+         <widget class="QToolButton" name="SettingsToolButton">
           <property name="focusPolicy">
            <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
-           <string>...</string>
+           <string>... </string>
           </property>
           <property name="arrowType">
            <enum>Qt::NoArrow</enum>

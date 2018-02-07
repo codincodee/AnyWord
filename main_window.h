@@ -15,6 +15,10 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
 
+private slots:
+  void on_SettingsToolButton_clicked();
+
+  void OnActionAddWordsTriggered(bool checked);
 private:
   Ui::MainWindow *ui;
 };

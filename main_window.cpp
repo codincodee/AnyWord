@@ -1,5 +1,6 @@
 #include "main_window.h"
 #include "ui_main_window.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -40,9 +41,22 @@ MainWindow::MainWindow(QWidget *parent) :
           "width: 1px;"
       "}");
   ui->ProgressBar->setValue(50);
+
+  QAction* action_add_words = new QAction("Add Words", this);
+  connect(action_add_words, &QAction::triggered, this, &MainWindow::OnActionAddWordsTriggered);
+  ui->SettingsToolButton->addAction(action_add_words);
 }
 
 MainWindow::~MainWindow()
 {
   delete ui;
+}
+
+void MainWindow::on_SettingsToolButton_clicked()
+{
+  ui->SettingsToolButton->showMenu();
+}
+
+void MainWindow::OnActionAddWordsTriggered(bool checked) {
+  qDebug() << __LINE__;
 }

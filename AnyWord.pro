@@ -25,12 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        main_window.cpp
+        main_window.cpp \
+    add_words_main_window.cpp
 
 HEADERS += \
-        main_window.h
+        main_window.h \
+    add_words_main_window.h
 
 FORMS += \
-        main_window.ui
+        main_window.ui \
+    add_words_main_window.ui
 
 ICON = icon.ico

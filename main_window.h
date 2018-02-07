@@ -2,6 +2,7 @@
 #define MAIN_WINDOW_H
 
 #include <QMainWindow>
+#include "add_words_main_window.h"
 
 namespace Ui {
   class MainWindow;
@@ -21,6 +22,7 @@ private slots:
   void OnActionAddWordsTriggered(bool checked);
 private:
   Ui::MainWindow *ui;
+  AddWordsMainWindow* add_words_main_window_;
 };
 
 #endif // MAIN_WINDOW_H

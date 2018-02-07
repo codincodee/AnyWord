@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
   QAction* action_add_words = new QAction("Add Words", this);
   connect(action_add_words, &QAction::triggered, this, &MainWindow::OnActionAddWordsTriggered);
   ui->SettingsToolButton->addAction(action_add_words);
+
+  add_words_main_window_ = nullptr;
 }
 
 MainWindow::~MainWindow()
@@ -59,4 +61,8 @@ void MainWindow::on_SettingsToolButton_clicked()
 
 void MainWindow::OnActionAddWordsTriggered(bool checked) {
   qDebug() << __LINE__;
+  if (!add_words_main_window_) {
+    add_words_main_window_ = new AddWordsMainWindow(this);
+  }
+  add_words_main_window_->show();
 }

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "add_words_main_window.h"
+#include <memory>
+#include "factory.h"
 
 namespace Ui {
   class MainWindow;
@@ -15,7 +17,8 @@ class MainWindow : public QMainWindow
 public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
-
+  void SetFactory(std::shared_ptr<Factory> factory);
+  QLabel* WordLabel();
 private slots:
   void on_SettingsToolButton_clicked();
 
@@ -23,6 +26,7 @@ private slots:
 private:
   Ui::MainWindow *ui;
   AddWordsMainWindow* add_words_main_window_;
+  std::shared_ptr<Factory> factory_;
 };
 
 #endif // MAIN_WINDOW_H

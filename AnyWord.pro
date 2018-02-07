@@ -26,11 +26,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         main_window.cpp \
-    add_words_main_window.cpp
+    add_words_main_window.cpp \
+    factory.cpp \
+    main_window_word_ui.cpp \
+    ui_base.cpp
 
 HEADERS += \
         main_window.h \
-    add_words_main_window.h
+    add_words_main_window.h \
+    factory.h \
+    main_window_word_ui.h \
+    ui_base.h
 
 FORMS += \
         main_window.ui \

@@ -7,11 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-  QFont font = ui->WordLabel->font();
-  font.setBold(true);
-  font.setPointSize(30);
-  ui->WordLabel->setFont(font);
 
+  QFont font;
   font = ui->IKnowTheWordPushButton->font();
   font.setBold(true);
   font.setPointSize(10);
@@ -54,13 +51,20 @@ MainWindow::~MainWindow()
   delete ui;
 }
 
+void MainWindow::SetFactory(std::shared_ptr<Factory> factory) {
+  factory_ = factory;
+}
+
+QLabel* MainWindow::WordLabel() {
+  return ui->WordLabel;
+}
+
 void MainWindow::on_SettingsToolButton_clicked()
 {
   ui->SettingsToolButton->showMenu();
 }
 
 void MainWindow::OnActionAddWordsTriggered(bool checked) {
-  qDebug() << __LINE__;
   if (!add_words_main_window_) {
     add_words_main_window_ = new AddWordsMainWindow(this);
   }

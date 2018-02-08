@@ -3,9 +3,12 @@
 
 #include <QMainWindow>
 #include <memory>
-#include "factory.h"
 #include <QProgressBar>
 #include <QToolButton>
+#include <QLabel>
+#include <QPushButton>
+
+class Factory;
 
 namespace Ui {
   class MainWindow;

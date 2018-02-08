@@ -3,9 +3,8 @@
 
 #include <memory>
 #include "main_window_ui_control.h"
+#include "main_window.h"
 #include "add_words_main_window.h"
-
-class MainWindow;
 
 class Factory
 {

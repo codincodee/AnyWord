@@ -1,5 +1,6 @@
 #include "add_words_main_window.h"
 #include "ui_add_words_main_window.h"
+#include "factory.h"
 
 AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
   QMainWindow(parent),

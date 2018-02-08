@@ -38,8 +38,7 @@ int MainWindowUIControl::SetDefaultUI() {
   font.setBold(true);
   font.setPointSize(30);
   qt_label_word_->setFont(font);
-  qt_label_word_->setText("X");
-  qt_label_word_->setVisible(false);
+  qt_label_word_->setText("Welcome");
 
   // Meaning Label
   if (!qt_label_meaning_) {

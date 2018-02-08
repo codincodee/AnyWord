@@ -1,6 +1,7 @@
 #include "main_window.h"
 #include "ui_main_window.h"
 #include <QDebug>
+#include "factory.h"
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),

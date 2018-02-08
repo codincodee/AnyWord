@@ -1,5 +1,4 @@
 #include "factory.h"
-#include "main_window.h"
 
 Factory::Factory()
 {

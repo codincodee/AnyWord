@@ -2,6 +2,9 @@
 #define ADD_WORDS_MAIN_WINDOW_H
 
 #include <QMainWindow>
+#include <memory>
+
+class Factory;
 
 namespace Ui {
   class AddWordsMainWindow;
@@ -17,6 +20,7 @@ public:
 
 private:
   Ui::AddWordsMainWindow *ui;
+  std::shared_ptr<Factory> factory_;
 };
 
 #endif // ADD_WORDS_MAIN_WINDOW_H

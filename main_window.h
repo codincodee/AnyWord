@@ -2,9 +2,10 @@
 #define MAIN_WINDOW_H
 
 #include <QMainWindow>
-#include "add_words_main_window.h"
 #include <memory>
 #include "factory.h"
+#include <QProgressBar>
+#include <QToolButton>
 
 namespace Ui {
   class MainWindow;
@@ -21,13 +22,16 @@ public:
 
   QLabel* WordLabel();
   QLabel* MeaningLabel();
+  QPushButton* IKnowPushButton();
+  QPushButton* IDontKnowPushButton();
+  QProgressBar* ProgressBar();
+  QToolButton* PlaybackPushButton();
 private slots:
   void on_SettingsToolButton_clicked();
 
   void OnActionAddWordsTriggered(bool checked);
 private:
   Ui::MainWindow *ui;
-  AddWordsMainWindow* add_words_main_window_;
   std::shared_ptr<Factory> factory_;
 };
 

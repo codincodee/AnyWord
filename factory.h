@@ -2,8 +2,8 @@
 #define FACTORY_H
 
 #include <memory>
-#include "main_window_word_ui.h"
-#include "main_window_meaning_ui.h"
+#include "main_window_ui_control.h"
+#include "add_words_main_window.h"
 
 class MainWindow;
 
@@ -13,10 +13,11 @@ public:
   Factory();
   void SetMainWindow(MainWindow* win);
   bool Init();
+  AddWordsMainWindow* GetAddWordsMainWindow();
 private:
-  MainWindow* qt_main_window_;
-  std::shared_ptr<MainWindowWordUI> main_window_word_ui_;
-  std::shared_ptr<MainWindowMeaningUI> main_window_meaning_ui_;
+  MainWindow* qt_main_window_ = nullptr;
+  std::shared_ptr<MainWindowUIControl> main_window_ui_control_;
+  AddWordsMainWindow* add_words_main_window_;
 };
 
 #endif // FACTORY_H

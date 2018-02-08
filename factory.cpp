@@ -15,12 +15,27 @@ bool Factory::Init() {
     return false;
   }
 
-  main_window_word_ui_.reset(new MainWindowWordUI);
-  main_window_word_ui_->SetQtLabel(qt_main_window_->WordLabel());
-  main_window_word_ui_->SetDefault();
+  // Main Window UI Control
+  main_window_ui_control_.reset(new MainWindowUIControl);
+  main_window_ui_control_->SetWordQtLabel(qt_main_window_->WordLabel());
+  main_window_ui_control_->SetMeaningQtLabel(qt_main_window_->MeaningLabel());
+  main_window_ui_control_->SetIKnowQtPushButton(
+      qt_main_window_->IKnowPushButton());
+  main_window_ui_control_->SetIDontKnowQtPushButton(
+      qt_main_window_->IDontKnowPushButton());
+  main_window_ui_control_->SetPlaybackQtToolButton(
+      qt_main_window_->PlaybackPushButton());
+  main_window_ui_control_->SetProgressQtProgressBar(
+      qt_main_window_->ProgressBar());
+  if (!main_window_ui_control_->SetDefaultUI()) {
+    return false;
+  }
 
-  main_window_meaning_ui_.reset(new MainWindowMeaningUI);
-  main_window_meaning_ui_->SetQtLabel(qt_main_window_->MeaningLabel());
-  main_window_meaning_ui_->SetDefault();
+  // Add Words Main Window
+  add_words_main_window_ = new AddWordsMainWindow(qt_main_window_);
   return true;
+}
+
+AddWordsMainWindow* Factory::GetAddWordsMainWindow() {
+  return add_words_main_window_;
 }

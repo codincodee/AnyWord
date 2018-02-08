@@ -24,22 +24,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        main_window.cpp \
+    main.cpp \
+    main_window.cpp \
     add_words_main_window.cpp \
     factory.cpp \
-    main_window_word_ui.cpp \
-    main_window_meaning_ui.cpp
+    main_window_ui_control.cpp
 
 HEADERS += \
-        main_window.h \
+    main_window.h \
     add_words_main_window.h \
     factory.h \
-    main_window_word_ui.h \
-    main_window_meaning_ui.h
+    main_window_ui_control.h
 
 FORMS += \
-        main_window.ui \
+    main_window.ui \
     add_words_main_window.ui
 
 RC_ICONS = icon.ico

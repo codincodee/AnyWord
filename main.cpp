@@ -2,6 +2,7 @@
 #include <QApplication>
 #include "factory.h"
 #include <memory>
+#include <QDebug>
 
 using namespace std;
 
@@ -12,7 +13,9 @@ int main(int argc, char *argv[])
 
   shared_ptr<Factory> factory(new Factory);
   factory->SetMainWindow(&win);
-  factory->Init();
+  if (!factory->Init()) {
+    qDebug() << "Factory initialization failed";
+  }
 
   win.SetFactory(factory);
   win.show();

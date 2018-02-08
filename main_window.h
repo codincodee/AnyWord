@@ -30,6 +30,9 @@ protected:
   QProgressBar* ProgressBar();
   QToolButton* PlaybackPushButton();
 
+signals:
+  void ShowAddWordsMainWindow();
+
 private slots:
   void on_SettingsToolButton_clicked();
 

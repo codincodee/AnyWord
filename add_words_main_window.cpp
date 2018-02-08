@@ -27,5 +27,6 @@ void AddWordsMainWindow::on_OkPushButton_clicked()
 ////  query.prepare("INSERT INTO people (name) VALUES (:name)");
 ////  query.bindValue(":name", "kevinz");
 ////  qDebug() << query.exec();
-
+  auto i = std::shared_ptr<int>(new int(2));
+  emit WriteDatabase(i);
 }

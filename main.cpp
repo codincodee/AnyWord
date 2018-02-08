@@ -9,12 +9,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
-//  MainWindow win;
-//  if (!win.Init()) {
-//    return -1;
-//  }
-//  win.show();
   Factory factory;
-
+  factory.Construct();
   return app.exec();
 }

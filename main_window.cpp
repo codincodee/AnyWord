@@ -38,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->SettingsToolButton->addAction(action_add_words);
 
   add_words_main_window_ = nullptr;
+
+  ui->PlaybackToolButton->setVisible(false);
 }
 
 MainWindow::~MainWindow()

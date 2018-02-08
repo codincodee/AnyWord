@@ -369,7 +369,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QToolButton" name="toolButton_3">
+         <widget class="QToolButton" name="PlaybackToolButton">
           <property name="focusPolicy">
            <enum>Qt::NoFocus</enum>
           </property>

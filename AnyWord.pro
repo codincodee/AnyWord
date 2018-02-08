@@ -42,4 +42,4 @@ FORMS += \
         main_window.ui \
     add_words_main_window.ui
 
-ICON = icon.ico
+RC_ICONS = icon.ico

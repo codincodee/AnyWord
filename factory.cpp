@@ -29,7 +29,7 @@ bool Factory::Construct() {
       add_words_main_window,
       SIGNAL(WriteDatabase(std::shared_ptr<int>)),
       database,
-      SLOT(OnWriteDataBase(std::shared_ptr<int>)));
+      SLOT(OnWriteDatabase(std::shared_ptr<int>)));
   return true;
 }
 

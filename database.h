@@ -10,7 +10,7 @@ class Database : public QObject
 public:
   Database();
 public slots:
-  void OnWriteDataBase(std::shared_ptr<int> db);
+  void OnWriteDatabase(std::shared_ptr<int> db);
 };
 
 #endif // DATABASE_H

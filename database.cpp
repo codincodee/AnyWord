@@ -6,6 +6,6 @@ Database::Database()
 
 }
 
-void Database::OnWriteDataBase(std::shared_ptr<int> db) {
+void Database::OnWriteDatabase(std::shared_ptr<int> db) {
   qDebug() << *db;
 }

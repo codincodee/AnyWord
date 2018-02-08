@@ -18,6 +18,9 @@ public:
   explicit AddWordsMainWindow(QWidget *parent = 0);
   ~AddWordsMainWindow();
 
+private slots:
+  void on_OkPushButton_clicked();
+
 private:
   Ui::AddWordsMainWindow *ui;
   std::shared_ptr<Factory> factory_;

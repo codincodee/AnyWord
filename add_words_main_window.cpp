@@ -1,6 +1,5 @@
 #include "add_words_main_window.h"
 #include "ui_add_words_main_window.h"
-#include "factory.h"
 
 AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -14,4 +13,9 @@ AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
 AddWordsMainWindow::~AddWordsMainWindow()
 {
   delete ui;
+}
+
+void AddWordsMainWindow::on_OkPushButton_clicked()
+{
+
 }

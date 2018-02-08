@@ -7,8 +7,7 @@
 #include <QToolButton>
 #include <QLabel>
 #include <QPushButton>
-
-class Factory;
+#include "add_words_main_window.h"
 
 namespace Ui {
   class MainWindow;
@@ -21,21 +20,23 @@ class MainWindow : public QMainWindow
 public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
-  void SetFactory(std::shared_ptr<Factory> factory);
+  bool Init();
 
+protected:
   QLabel* WordLabel();
   QLabel* MeaningLabel();
   QPushButton* IKnowPushButton();
   QPushButton* IDontKnowPushButton();
   QProgressBar* ProgressBar();
   QToolButton* PlaybackPushButton();
+
 private slots:
   void on_SettingsToolButton_clicked();
 
   void OnActionAddWordsTriggered(bool checked);
 private:
   Ui::MainWindow *ui;
-  std::shared_ptr<Factory> factory_;
+  AddWordsMainWindow* add_words_main_window_;
 };
 
 #endif // MAIN_WINDOW_H

@@ -29,17 +29,20 @@ SOURCES += \
     add_words_main_window.cpp \
     factory.cpp \
     database.cpp \
-    word_entry.cpp
+    word_entry.cpp \
+    select_book_main_window.cpp
 
 HEADERS += \
     main_window.h \
     add_words_main_window.h \
     factory.h \
     database.h \
-    word_entry.h
+    word_entry.h \
+    select_book_main_window.h
 
 FORMS += \
     main_window.ui \
-    add_words_main_window.ui
+    add_words_main_window.ui \
+    select_book_main_window.ui
 
 RC_ICONS = icon.ico

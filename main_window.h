@@ -32,11 +32,13 @@ protected:
 
 signals:
   void ShowAddWordsMainWindow();
+  void ShowSelectBookMainWindow();
 
 private slots:
   void on_SettingsToolButton_clicked();
 
   void OnActionAddWordsTriggered(bool checked);
+  void OnActionSelectBookTriggered(bool checked);
 private:
   Ui::MainWindow *ui;
   AddWordsMainWindow* add_words_main_window_;

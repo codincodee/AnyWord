@@ -2,6 +2,7 @@
 #include "main_window.h"
 #include "database.h"
 #include "add_words_main_window.h"
+#include "select_book_main_window.h"
 
 Factory::Factory()
 {
@@ -15,6 +16,9 @@ bool Factory::Construct() {
 
   auto add_words_main_window = new AddWordsMainWindow;
   recycle_widgets_.push_back(add_words_main_window);
+
+  auto select_book_main_window = new SelectBookMainWindow;
+  recycle_widgets_.push_back(select_book_main_window);
 
   auto database = new Database;
   recycle_objects_.push_back(database);
@@ -36,6 +40,12 @@ bool Factory::Construct() {
       SIGNAL(SearchDatabase(WordEntry&)),
       database,
       SLOT(OnSearchDatabase(WordEntry&)));
+
+  connect(
+      main_window,
+      SIGNAL(ShowSelectBookMainWindow()),
+      select_book_main_window,
+      SLOT(show()));
 
   return true;
 }

@@ -67,8 +67,20 @@ bool MainWindow::Init() {
   play_back_push_button->setVisible(false);
 
   QAction* action_add_words = new QAction("Add Words", this);
-  connect(action_add_words, &QAction::triggered, this, &MainWindow::OnActionAddWordsTriggered);
+  connect(
+      action_add_words,
+      &QAction::triggered,
+      this,
+      &MainWindow::OnActionAddWordsTriggered);
   ui->SettingsToolButton->addAction(action_add_words);
+
+  QAction* action_select_book = new QAction("Pick Book", this);
+  connect(
+      action_select_book,
+      &QAction::triggered,
+      this,
+      &MainWindow::OnActionSelectBookTriggered);
+  ui->SettingsToolButton->addAction(action_select_book);
   return true;
 }
 
@@ -103,4 +115,8 @@ void MainWindow::on_SettingsToolButton_clicked()
 
 void MainWindow::OnActionAddWordsTriggered(bool checked) {
   emit ShowAddWordsMainWindow();
+}
+
+void MainWindow::OnActionSelectBookTriggered(bool checked) {
+  emit ShowSelectBookMainWindow();
 }

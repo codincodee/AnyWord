@@ -30,6 +30,13 @@ bool Factory::Construct() {
       SIGNAL(WriteDatabase(std::shared_ptr<int>)),
       database,
       SLOT(OnWriteDatabase(std::shared_ptr<int>)));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(SearchDatabase(WordEntry&)),
+      database,
+      SLOT(OnSearchDatabase(WordEntry&)));
+
   return true;
 }
 

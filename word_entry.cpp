@@ -4,3 +4,7 @@ WordEntry::WordEntry()
 {
 
 }
+
+bool WordEntry::Empty() {
+  return word.isEmpty();
+}

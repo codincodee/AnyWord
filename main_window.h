@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include "add_words_main_window.h"
+#include "book_info.h"
 
 namespace Ui {
   class MainWindow;
@@ -39,6 +40,8 @@ private slots:
 
   void OnActionAddWordsTriggered(bool checked);
   void OnActionSelectBookTriggered(bool checked);
+
+  void OnBookSelectResult(const BookInfo& book);
 private:
   Ui::MainWindow *ui;
   AddWordsMainWindow* add_words_main_window_;

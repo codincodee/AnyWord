@@ -114,9 +114,15 @@ void MainWindow::on_SettingsToolButton_clicked()
 }
 
 void MainWindow::OnActionAddWordsTriggered(bool checked) {
+  Q_UNUSED(checked);
   emit ShowAddWordsMainWindow();
 }
 
 void MainWindow::OnActionSelectBookTriggered(bool checked) {
+  Q_UNUSED(checked);
   emit ShowSelectBookMainWindow();
+}
+
+void MainWindow::OnBookSelectResult(const BookInfo &book) {
+  ui->InformationLabel->setText(book.name);
 }

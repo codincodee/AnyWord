@@ -47,6 +47,11 @@ bool Factory::Construct() {
       select_book_main_window,
       SLOT(show()));
 
+  connect(
+      select_book_main_window,
+      SIGNAL(SelectResult(BookInfo)),
+      main_window,
+      SLOT(OnBookSelectResult(BookInfo)));
   return true;
 }
 

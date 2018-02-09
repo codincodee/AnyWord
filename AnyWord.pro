@@ -30,7 +30,8 @@ SOURCES += \
     factory.cpp \
     database.cpp \
     word_entry.cpp \
-    select_book_main_window.cpp
+    select_book_main_window.cpp \
+    book_info.cpp
 
 HEADERS += \
     main_window.h \
@@ -38,7 +39,8 @@ HEADERS += \
     factory.h \
     database.h \
     word_entry.h \
-    select_book_main_window.h
+    select_book_main_window.h \
+    book_info.h
 
 FORMS += \
     main_window.ui \

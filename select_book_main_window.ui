@@ -76,7 +76,23 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
-         <widget class="QComboBox" name="comboBox"/>
+         <widget class="QComboBox" name="BookComboBox">
+          <item>
+           <property name="text">
+            <string>adsfsaf</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>asdfasdfasdfa</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>asdfasdfasdfasdf</string>
+           </property>
+          </item>
+         </widget>
         </item>
         <item>
          <spacer name="horizontalSpacer_8">
@@ -95,7 +111,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="PickPushButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -308,7 +324,11 @@
          </spacer>
         </item>
         <item>
-         <widget class="QTextEdit" name="textEdit"/>
+         <widget class="QTextEdit" name="textEdit">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="horizontalSpacer_4">

@@ -28,13 +28,15 @@ SOURCES += \
     main_window.cpp \
     add_words_main_window.cpp \
     factory.cpp \
-    database.cpp
+    database.cpp \
+    word_entry.cpp
 
 HEADERS += \
     main_window.h \
     add_words_main_window.h \
     factory.h \
-    database.h
+    database.h \
+    word_entry.h
 
 FORMS += \
     main_window.ui \

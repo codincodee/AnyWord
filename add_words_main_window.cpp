@@ -1,8 +1,6 @@
 #include "add_words_main_window.h"
 #include "ui_add_words_main_window.h"
-#include <QSqlDatabase>
 #include <QDebug>
-#include <QSqlQuery>
 
 AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -10,7 +8,7 @@ AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
   this->setWindowModality(Qt::WindowModal);
-  ui->DeletePushButton->setVisible(true);
+  ui->DeletePushButton->setVisible(false);
 }
 
 AddWordsMainWindow::~AddWordsMainWindow()

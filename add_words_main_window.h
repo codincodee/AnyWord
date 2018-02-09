@@ -21,7 +21,7 @@ public:
 
 signals:
   void SearchDatabase(WordEntry& entry);
-  void WriteDatabase(std::shared_ptr<int>);
+  void WriteDatabase(const WordEntry& entry);
 
 protected:
   void DisableWidgets(std::vector<QWidget*>& widgets, const bool& disable);

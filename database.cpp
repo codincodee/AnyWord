@@ -7,8 +7,12 @@ Database::Database()
 
 }
 
-void Database::OnWriteDatabase(std::shared_ptr<int> db) {
-  *db = 10;
+bool Database::Init() {
+
+}
+
+void Database::OnWriteDatabase(const WordEntry& entry) {
+  qDebug() << "asdfsa";
 }
 
 void Database::OnSearchDatabase(WordEntry &entry) {

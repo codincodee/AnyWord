@@ -10,8 +10,9 @@ class Database : public QObject
   Q_OBJECT
 public:
   Database();
+  bool Init();
 public slots:
-  void OnWriteDatabase(std::shared_ptr<int> db);
+  void OnWriteDatabase(const WordEntry& entry);
   void OnSearchDatabase(WordEntry& entry);
 };
 

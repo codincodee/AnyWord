@@ -27,9 +27,9 @@ bool Factory::Construct() {
 
   connect(
       add_words_main_window,
-      SIGNAL(WriteDatabase(std::shared_ptr<int>)),
+      SIGNAL(WriteDatabase(const WordEntry&)),
       database,
-      SLOT(OnWriteDatabase(std::shared_ptr<int>)));
+      SLOT(OnWriteDatabase(const WordEntry&)));
 
   connect(
       add_words_main_window,

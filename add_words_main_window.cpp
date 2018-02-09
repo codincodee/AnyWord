@@ -15,12 +15,12 @@ AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
   all_widgets_.push_back(ui->WordLineEdit);
   all_widgets_.push_back(ui->MeaningLineEdit);
   all_widgets_.push_back(ui->RecordRadioButton);
-  all_widgets_.push_back(ui->LanguageComboBox);
   all_widgets_.push_back(ui->PlayToolButton);
   all_widgets_.push_back(ui->NotePlainTextEdit);
   all_widgets_.push_back(ui->DeletePushButton);
   all_widgets_.push_back(ui->ClearPushButton);
   all_widgets_.push_back(ui->OkPushButton);
+  all_widgets_.push_back(ui->SelectBookComboBox);
 }
 
 AddWordsMainWindow::~AddWordsMainWindow()

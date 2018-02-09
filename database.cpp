@@ -8,7 +8,7 @@ Database::Database()
 }
 
 bool Database::Init() {
-
+  return true;
 }
 
 void Database::OnWriteDatabase(const WordEntry& entry) {

@@ -21,6 +21,9 @@ bool Factory::Construct() {
   auto bookshelf = new Bookshelf;
   recycle_objects_.push_back(bookshelf);
 
+  select_book_main_window->RegisterBookListCallback(
+      bind(&Bookshelf::BookInfoList, bookshelf));
+
   connect(
       main_window,
       SIGNAL(ShowAddWordsMainWindow()),

@@ -21,6 +21,9 @@ public:
 signals:
   void SelectBook(const QString& book_name);
 
+protected:
+  void showEvent(QShowEvent *event);
+
 private slots:
   void on_PickPushButton_clicked();
 

@@ -20,6 +20,18 @@ void SelectBookMainWindow::RegisterBookListCallback(
   book_list_callback_ = func;
 }
 
+void SelectBookMainWindow::showEvent(QShowEvent *event) {
+  Q_UNUSED(event);
+  ui->BookComboBox->clear();
+  if (book_list_callback_) {
+    auto list = book_list_callback_();
+    for (auto book : list) {
+      ui->BookComboBox->addItem(book.name);
+    }
+  }
+  QMainWindow::showEvent(event);
+}
+
 void SelectBookMainWindow::on_PickPushButton_clicked()
 {
   emit SelectBook(ui->BookComboBox->currentText());

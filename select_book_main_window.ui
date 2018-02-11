@@ -324,7 +324,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QTextEdit" name="textEdit">
+         <widget class="QTextEdit" name="SummaryTextEdit">
           <property name="readOnly">
            <bool>true</bool>
           </property>

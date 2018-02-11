@@ -19,10 +19,12 @@ bool Factory::Construct() {
   auto select_book_main_window = new SelectBookMainWindow(main_window);
 
   auto bookshelf = new Bookshelf;
+  bookshelf->SetWidget(main_window);
   recycle_objects_.push_back(bookshelf);
 
   select_book_main_window->RegisterBookListCallback(
       bind(&Bookshelf::BookInfoList, bookshelf));
+  select_book_main_window->RegisterBookInfoCallback([bookshelf](const QString& book){return bookshelf->CurrentBook()->GetBookInfo();});
 
   connect(
       main_window,
@@ -41,7 +43,6 @@ bool Factory::Construct() {
       SIGNAL(SelectBook(const QString&)),
       bookshelf,
       SLOT(OnBookSelection(const QString&)));
-
   return true;
 }
 

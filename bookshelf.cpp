@@ -1,5 +1,7 @@
 #include "bookshelf.h"
 #include <QDebug>
+#include <QMessageBox>
+#include "ui_utils.h"
 
 using namespace std;
 
@@ -9,7 +11,17 @@ Bookshelf::Bookshelf()
 }
 
 void Bookshelf::OnBookSelection(const QString &book_name) {
-  current_book_ = book_name;
+  shared_ptr<Book> book(new Book);
+  if (!book->Load(book_name)) {
+    ShowWarning("No book found!");
+    return;
+  }
+  current_book_ = book;
+  emit CurrentBookChanged(book->GetBookInfo());
+}
+
+shared_ptr<Book> Bookshelf::CurrentBook() {
+  return current_book_;
 }
 
 vector<BookInfo> Bookshelf::BookInfoList() {

@@ -4,3 +4,7 @@ BookInfo::BookInfo()
 {
 
 }
+
+bool BookInfo::Emtpy() {
+  return name.isEmpty();
+}

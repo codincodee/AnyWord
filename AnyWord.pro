@@ -33,7 +33,9 @@ SOURCES += \
     select_book_main_window.cpp \
     book_info.cpp \
     bookshelf.cpp \
-    book.cpp
+    book.cpp \
+    ui_utils.cpp \
+    object_base.cpp
 
 HEADERS += \
     main_window.h \
@@ -44,7 +46,9 @@ HEADERS += \
     select_book_main_window.h \
     book_info.h \
     bookshelf.h \
-    book.h
+    book.h \
+    ui_utils.h \
+    object_base.h
 
 FORMS += \
     main_window.ui \

@@ -20,6 +20,11 @@ void SelectBookMainWindow::RegisterBookListCallback(
   book_list_callback_ = func;
 }
 
+void SelectBookMainWindow::RegisterBookInfoCallback(
+    std::function<BookInfo (const QString &)> func) {
+  book_info_callback_ = func;
+}
+
 void SelectBookMainWindow::showEvent(QShowEvent *event) {
   Q_UNUSED(event);
   ui->BookComboBox->clear();
@@ -35,4 +40,16 @@ void SelectBookMainWindow::showEvent(QShowEvent *event) {
 void SelectBookMainWindow::on_PickPushButton_clicked()
 {
   emit SelectBook(ui->BookComboBox->currentText());
+}
+
+void SelectBookMainWindow::on_BookComboBox_currentTextChanged(const QString &arg1)
+{
+  Q_UNUSED(arg1);
+  BookInfo book;
+  if (book_info_callback_) {
+    book = book_info_callback_(ui->BookComboBox->currentText());
+  }
+  if (!book.Emtpy()) {
+    ui->SummaryTextEdit->setText(book.summary);
+  }
 }

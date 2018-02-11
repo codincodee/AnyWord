@@ -7,6 +7,8 @@ struct BookInfo
 {
   BookInfo();
   QString name;
+  QString summary;
+  bool Emtpy();
 };
 
 #endif // BOOK_INFO_H

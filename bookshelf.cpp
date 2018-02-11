@@ -13,6 +13,7 @@ Bookshelf::Bookshelf()
 }
 
 bool Bookshelf::Init() {
+  bookshelf_path_ = ".";
   return true;
 }
 

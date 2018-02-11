@@ -20,6 +20,7 @@ bool Factory::Construct() {
 
   auto bookshelf = new Bookshelf;
   bookshelf->SetWidget(main_window);
+  bookshelf->Init();
   recycle_objects_.push_back(bookshelf);
 
   select_book_main_window->RegisterBookListCallback(

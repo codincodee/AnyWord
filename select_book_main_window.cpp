@@ -44,6 +44,7 @@ void SelectBookMainWindow::on_PickPushButton_clicked()
 
 void SelectBookMainWindow::on_BookComboBox_currentTextChanged(const QString &arg1)
 {
+  ui->SummaryTextEdit->clear();
   Q_UNUSED(arg1);
   BookInfo book;
   if (book_info_callback_) {

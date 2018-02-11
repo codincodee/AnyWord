@@ -24,7 +24,8 @@ bool Factory::Construct() {
 
   select_book_main_window->RegisterBookListCallback(
       bind(&Bookshelf::BookInfoList, bookshelf));
-  select_book_main_window->RegisterBookInfoCallback([bookshelf](const QString& book){return bookshelf->CurrentBook()->GetBookInfo();});
+  select_book_main_window->RegisterBookInfoCallback(
+      [bookshelf](const QString& book){return bookshelf->SearchBook(book);});
 
   connect(
       main_window,

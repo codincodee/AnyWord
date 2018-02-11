@@ -16,6 +16,7 @@ public:
   Bookshelf();
   std::vector<BookInfo> BookInfoList();
   std::shared_ptr<Book> CurrentBook();
+  BookInfo SearchBook(const QString& book);
 signals:
   void CurrentBookChanged(const BookInfo& book);
 public slots:

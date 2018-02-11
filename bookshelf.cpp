@@ -24,6 +24,13 @@ shared_ptr<Book> Bookshelf::CurrentBook() {
   return current_book_;
 }
 
+BookInfo Bookshelf::SearchBook(const QString &book) {
+  BookInfo info;
+  info.name = book;
+  info.summary = book;
+  return info;
+}
+
 vector<BookInfo> Bookshelf::BookInfoList() {
   vector<BookInfo> list;
   BookInfo book;

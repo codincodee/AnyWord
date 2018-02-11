@@ -6,6 +6,6 @@ Bookshelf::Bookshelf()
 
 }
 
-void Bookshelf::OnBookSelectResult(const BookInfo &book) {
-  qDebug() << "asdfsa";
+void Bookshelf::OnBookSelection(const QString &book_name) {
+  qDebug() << book_name;
 }

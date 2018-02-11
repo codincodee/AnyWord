@@ -225,7 +225,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Q</string>
+           <string>No book selected.</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>

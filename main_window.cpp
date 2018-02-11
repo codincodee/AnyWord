@@ -123,6 +123,6 @@ void MainWindow::OnActionSelectBookTriggered(bool checked) {
   emit ShowSelectBookMainWindow();
 }
 
-void MainWindow::OnBookSelectResult(const BookInfo &book) {
+void MainWindow::OnBookSelection(const BookInfo &book) {
   ui->InformationLabel->setText(book.name);
 }

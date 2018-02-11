@@ -11,7 +11,7 @@ public:
   Bookshelf();
 
 public slots:
-  void OnBookSelectResult(const BookInfo& book);
+  void OnBookSelection(const QString& book_name);
 };
 
 #endif // BOOKSHELF_H

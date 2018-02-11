@@ -41,7 +41,7 @@ private slots:
   void OnActionAddWordsTriggered(bool checked);
   void OnActionSelectBookTriggered(bool checked);
 
-  void OnBookSelectResult(const BookInfo& book);
+  void OnBookSelection(const BookInfo& book);
 private:
   Ui::MainWindow *ui;
   AddWordsMainWindow* add_words_main_window_;

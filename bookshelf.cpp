@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QMessageBox>
 #include "ui_utils.h"
+#include <QFile>
+#include <QDir>
 
 using namespace std;
 
@@ -10,9 +12,13 @@ Bookshelf::Bookshelf()
 
 }
 
+bool Bookshelf::Init() {
+  return true;
+}
+
 void Bookshelf::OnBookSelection(const QString &book_name) {
   shared_ptr<Book> book(new Book);
-  if (!book->Load(book_name)) {
+  if (!book->Load(BookPath(book_name))) {
     ShowWarning("No book found!");
     return;
   }
@@ -24,11 +30,12 @@ shared_ptr<Book> Bookshelf::CurrentBook() {
   return current_book_;
 }
 
-BookInfo Bookshelf::SearchBook(const QString &book) {
-  BookInfo info;
-  info.name = book;
-  info.summary = book;
-  return info;
+QString Bookshelf::BookPath(const QString &name) {
+  return bookshelf_path_ + "/" + name;
+}
+
+BookInfo Bookshelf::SearchBook(const QString &name) {
+  return Book::Check(BookPath(name));
 }
 
 vector<BookInfo> Bookshelf::BookInfoList() {

@@ -10,6 +10,7 @@ public:
   Book();
   bool Load(const QString& name);
   BookInfo GetBookInfo();
+  static BookInfo Check(const QString& name);
 };
 
 #endif // BOOK_H

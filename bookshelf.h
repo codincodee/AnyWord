@@ -14,9 +14,11 @@ class Bookshelf : public ObjectBase
   Q_OBJECT
 public:
   Bookshelf();
+  bool Init();
   std::vector<BookInfo> BookInfoList();
   std::shared_ptr<Book> CurrentBook();
   BookInfo SearchBook(const QString& book);
+  QString BookPath(const QString& name);
 signals:
   void CurrentBookChanged(const BookInfo& book);
 public slots:
@@ -24,6 +26,7 @@ public slots:
 private:
   QHash<QString, std::shared_ptr<Book>> books_;
   std::shared_ptr<Book> current_book_;
+  QString bookshelf_path_;
 };
 
 #endif // BOOKSHELF_H

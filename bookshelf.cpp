@@ -39,6 +39,10 @@ bool Bookshelf::CreateBook(const QString &name) {
   return Book::Create(BookPath(name));
 }
 
+bool Bookshelf::DeleteBook(const QString &name) {
+  return QDir(BookPath(name)).removeRecursively();
+}
+
 BookInfo Bookshelf::SearchBook(const QString &name) {
   return Book::Check(BookPath(name));
 }

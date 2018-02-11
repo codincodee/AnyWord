@@ -21,6 +21,8 @@ public:
       std::function<BookInfo(const QString& name)> func);
   void RegisterCreateBookCallback(
       std::function<bool(const QString& name)> func);
+  void RegisterDeleteBookCallback(
+      std::function<bool(const QString& name)> func);
 signals:
   void SelectBook(const QString& book_name);
 
@@ -34,13 +36,16 @@ private slots:
 
   void on_CreatePushButton_clicked();
 
+  void on_DeletePushButton_clicked();
+
 private:
-  void FreshBookList();
+  void RefreshBookList();
 
   Ui::SelectBookMainWindow *ui;
   std::function<std::vector<BookInfo>()> book_list_callback_;
   std::function<BookInfo(const QString& name)> book_info_callback_;
   std::function<bool(const QString& name)> create_book_callback_;
+  std::function<bool (const QString & name)> delete_book_callback_;
 };
 
 #endif // SELECT_BOOK_MAIN_WINDOW_H

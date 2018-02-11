@@ -20,6 +20,7 @@ public:
   BookInfo SearchBook(const QString& book);
   QString BookPath(const QString& name);
   bool CreateBook(const QString& name);
+  bool DeleteBook(const QString& name);
 signals:
   void CurrentBookChanged(const BookInfo& book);
 public slots:

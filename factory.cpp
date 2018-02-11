@@ -31,6 +31,8 @@ bool Factory::Construct() {
       [bookshelf](const QString& book){return bookshelf->SearchBook(book);});
   select_book_main_window->RegisterCreateBookCallback(
       bind(&Bookshelf::CreateBook, bookshelf, placeholders::_1));
+  select_book_main_window->RegisterDeleteBookCallback(
+      bind(&Bookshelf::DeleteBook, bookshelf, placeholders::_1));
 
   connect(
       main_window,

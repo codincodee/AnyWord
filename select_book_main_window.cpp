@@ -30,9 +30,15 @@ void SelectBookMainWindow::RegisterCreateBookCallback(
     std::function<bool (const QString &)> func) {
   create_book_callback_ = func;
 }
+
+void SelectBookMainWindow::RegisterDeleteBookCallback(
+    std::function<bool (const QString &)> func) {
+  delete_book_callback_ = func;
+}
+
 void SelectBookMainWindow::showEvent(QShowEvent *event) {
   Q_UNUSED(event);
-  FreshBookList();
+  RefreshBookList();
   QMainWindow::showEvent(event);
 }
 
@@ -77,19 +83,36 @@ void SelectBookMainWindow::on_CreatePushButton_clicked()
     } else {
       ui::info("Book created!", this);
       ui->CreateBookNameLineEdit->clear();
-      FreshBookList();
+      RefreshBookList();
     }
   } else {
     qDebug() << "Create Book callback not registered!";
   }
 }
 
-void SelectBookMainWindow::FreshBookList() {
+void SelectBookMainWindow::RefreshBookList() {
   ui->BookComboBox->clear();
   if (book_list_callback_) {
     auto list = book_list_callback_();
     for (auto book : list) {
       ui->BookComboBox->addItem(book.name);
     }
+  }
+}
+
+void SelectBookMainWindow::on_DeletePushButton_clicked()
+{
+  auto book_name = ui->BookComboBox->currentText();
+  if (book_name.isEmpty()) {
+    return;
+  }
+  if (delete_book_callback_) {
+    if (delete_book_callback_(book_name)) {
+      RefreshBookList();
+    } else {
+      ui::warn("Unable to delete the book!", this);
+    }
+  } else {
+    qDebug() << "Delete Book callback not registered!";
   }
 }

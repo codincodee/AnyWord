@@ -308,7 +308,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_8">
         <item>
-         <widget class="QLineEdit" name="lineEdit_2"/>
+         <widget class="QLineEdit" name="CreateBookNameLineEdit"/>
         </item>
         <item>
          <spacer name="horizontalSpacer_9">
@@ -327,7 +327,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="CreatePushButton">
           <property name="text">
            <string>Create</string>
           </property>

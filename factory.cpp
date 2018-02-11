@@ -5,6 +5,8 @@
 #include "select_book_main_window.h"
 #include "bookshelf.h"
 
+using namespace std;
+
 Factory::Factory()
 {
 }
@@ -27,6 +29,8 @@ bool Factory::Construct() {
       bind(&Bookshelf::BookInfoList, bookshelf));
   select_book_main_window->RegisterBookInfoCallback(
       [bookshelf](const QString& book){return bookshelf->SearchBook(book);});
+  select_book_main_window->RegisterCreateBookCallback(
+      bind(&Bookshelf::CreateBook, bookshelf, placeholders::_1));
 
   connect(
       main_window,

@@ -10,7 +10,7 @@ public:
   ObjectBase();
   virtual ~ObjectBase();
   void SetWidget(QWidget* widget);
-  void ShowWarning(const QString& message);
+  void warn(const QString& message);
 private:
   QWidget* widget_ = nullptr;
 };

@@ -1,5 +1,6 @@
 #include "object_base.h"
 #include <QMessageBox>
+#include "ui_utils.h"
 
 ObjectBase::ObjectBase()
 {
@@ -12,8 +13,6 @@ void ObjectBase::SetWidget(QWidget *widget) {
   widget_ = widget;
 }
 
-void ObjectBase::ShowWarning(const QString &message) {
-  if (widget_) {
-    QMessageBox::warning(widget_, "Warning", message);
-  }
+void ObjectBase::warn(const QString &message) {
+  ui::warn(message, widget_);
 }

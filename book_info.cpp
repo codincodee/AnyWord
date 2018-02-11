@@ -5,6 +5,6 @@ BookInfo::BookInfo()
 
 }
 
-bool BookInfo::Emtpy() {
+bool BookInfo::Empty() {
   return name.isEmpty();
 }

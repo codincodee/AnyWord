@@ -19,12 +19,12 @@ public:
   std::shared_ptr<Book> CurrentBook();
   BookInfo SearchBook(const QString& book);
   QString BookPath(const QString& name);
+  bool CreateBook(const QString& name);
 signals:
   void CurrentBookChanged(const BookInfo& book);
 public slots:
   void OnBookSelection(const QString& book_name);
 private:
-  QHash<QString, std::shared_ptr<Book>> books_;
   std::shared_ptr<Book> current_book_;
   QString bookshelf_path_;
 };

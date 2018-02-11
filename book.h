@@ -8,9 +8,10 @@ class Book
 {
 public:
   Book();
-  bool Load(const QString& name);
+  bool Load(const QString& path);
   BookInfo GetBookInfo();
-  static BookInfo Check(const QString& name);
+  static BookInfo Check(const QString& path);
+  static bool Create(const QString& path);
 };
 
 #endif // BOOK_H

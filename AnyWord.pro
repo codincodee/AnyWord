@@ -31,7 +31,8 @@ SOURCES += \
     database.cpp \
     word_entry.cpp \
     select_book_main_window.cpp \
-    book_info.cpp
+    book_info.cpp \
+    bookshelf.cpp
 
 HEADERS += \
     main_window.h \
@@ -40,7 +41,8 @@ HEADERS += \
     database.h \
     word_entry.h \
     select_book_main_window.h \
-    book_info.h
+    book_info.h \
+    bookshelf.h
 
 FORMS += \
     main_window.ui \

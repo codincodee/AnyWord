@@ -3,6 +3,7 @@
 #include "database.h"
 #include "add_words_main_window.h"
 #include "select_book_main_window.h"
+#include "bookshelf.h"
 
 Factory::Factory()
 {
@@ -14,14 +15,11 @@ bool Factory::Construct() {
   main_window->show();
   recycle_widgets_.push_back(main_window);
 
-  auto add_words_main_window = new AddWordsMainWindow;
-  recycle_widgets_.push_back(add_words_main_window);
+  auto add_words_main_window = new AddWordsMainWindow(main_window);
+  auto select_book_main_window = new SelectBookMainWindow(main_window);
 
-  auto select_book_main_window = new SelectBookMainWindow;
-  recycle_widgets_.push_back(select_book_main_window);
-
-  auto database = new Database;
-  recycle_objects_.push_back(database);
+  auto bookshelf = new Bookshelf;
+  recycle_objects_.push_back(bookshelf);
 
   connect(
       main_window,
@@ -30,22 +28,16 @@ bool Factory::Construct() {
       SLOT(show()));
 
   connect(
-      add_words_main_window,
-      SIGNAL(WriteDatabase(const WordEntry&)),
-      database,
-      SLOT(OnWriteDatabase(const WordEntry&)));
-
-  connect(
-      add_words_main_window,
-      SIGNAL(SearchDatabase(WordEntry&)),
-      database,
-      SLOT(OnSearchDatabase(WordEntry&)));
-
-  connect(
       main_window,
       SIGNAL(ShowSelectBookMainWindow()),
       select_book_main_window,
       SLOT(show()));
+
+  connect(
+      select_book_main_window,
+      SIGNAL(SelectResult(BookInfo)),
+      bookshelf,
+      SLOT(OnBookSelectResult(BookInfo)));
 
   connect(
       select_book_main_window,
@@ -58,5 +50,8 @@ bool Factory::Construct() {
 Factory::~Factory() {
   for (auto& obj : recycle_objects_) {
     delete obj;
+  }
+  for (auto& widget : recycle_widgets_) {
+    delete widget;
   }
 }

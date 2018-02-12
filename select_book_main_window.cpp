@@ -47,6 +47,7 @@ void SelectBookMainWindow::showEvent(QShowEvent *event) {
 
 void SelectBookMainWindow::on_PickPushButton_clicked()
 {
+  this->hide();
   emit SelectBook(ui->BookComboBox->currentText());
 }
 

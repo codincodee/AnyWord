@@ -2,6 +2,7 @@
 #include "ui_select_book_main_window.h"
 #include <QDebug>
 #include "ui_utils.h"
+#include <QMessageBox>
 
 SelectBookMainWindow::SelectBookMainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -106,6 +107,12 @@ void SelectBookMainWindow::on_DeletePushButton_clicked()
   if (book_name.isEmpty()) {
     return;
   }
+  if (QMessageBox::question(
+          this, "Confirm", "Are you sure to delete the book?",
+          QMessageBox::Yes, QMessageBox::Cancel) != QMessageBox::Yes) {
+    return;
+  }
+
   if (delete_book_callback_) {
     if (delete_book_callback_(book_name)) {
       RefreshBookList();

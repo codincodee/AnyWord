@@ -21,28 +21,43 @@ bool Database::NewDB(const QString& path) {
     return false;
   }
   QSqlQuery query;
+  query.prepare("CREATE TABLE info (id INTEGER UNIQUE PRIMARY KEY, language VARCHAR(50), version VARCHAR(10))");
+  if (!query.exec()) {
+    qDebug() << query.lastError();
+    return false;
+  }
+
+  query.prepare("INSERT INTO info (id, language, version) VALUES(1, 'English', 'v1.0.0')");
+  if (!query.exec()) {
+    qDebug() << query.lastError();
+    return false;
+  }
+
   query.prepare(
       "CREATE TABLE entry ("
       "word VARCHAR(50) UNIQUE PRIMARY KEY, meaning VARCHAR(100), note VARCHAR(100))");
   if (!query.exec()) {
     qDebug() << query.lastError();
-    db.close();
-  } else {
-    qDebug() << "Table created!";
+    return false;
   }
 
   query.prepare("INSERT INTO entry (word, meaning, note) VALUES('the word A', 'the meaning', 'the note')");
   if (!query.exec()) {
     qDebug() << query.lastError();
-  } else {
-    qDebug("Inserted");
   }
 
   query.prepare("INSERT INTO entry (word, meaning, note) VALUES('the word', 'the meaning', 'the note')");
   if (!query.exec()) {
     qDebug() << query.lastError();
+  }
+
+  query.prepare("SELECT language FROM info WHERE id = 1");
+  if (!query.exec()) {
+    qDebug() << query.lastError();
+    return false;
   } else {
-    qDebug("Inserted");
+    query.next();
+    qDebug() << query.value(0).toString();
   }
 
   query.prepare("SELECT COUNT(*) FROM entry");

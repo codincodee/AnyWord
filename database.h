@@ -11,9 +11,7 @@ class Database : public QObject
 public:
   Database();
   bool Init();
-public slots:
-  void OnWriteDatabase(const WordEntry& entry);
-  void OnSearchDatabase(WordEntry& entry);
+  static bool NewDB(const QString& path);
 };
 
 #endif // DATABASE_H

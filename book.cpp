@@ -2,6 +2,7 @@
 #include <QFile>
 #include <QDir>
 #include <QDebug>
+#include "database.h"
 
 Book::Book()
 {
@@ -46,5 +47,6 @@ bool Book::Create(const QString &path) {
   QTextStream ts(&file);
   ts << "lala" << endl;
   file.close();
+  qDebug() << Database::NewDB(path);
   return true;
 }

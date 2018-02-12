@@ -10,6 +10,8 @@ SelectBookMainWindow::SelectBookMainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
   this->setWindowModality(Qt::WindowModal);
+  auto all_supporting_languages = AllSupportingLanguagesString();
+  ui->LanguageComboBox->addItems(all_supporting_languages);
 }
 
 SelectBookMainWindow::~SelectBookMainWindow()
@@ -28,7 +30,7 @@ void SelectBookMainWindow::RegisterBookInfoCallback(
 }
 
 void SelectBookMainWindow::RegisterCreateBookCallback(
-    std::function<bool (const QString &)> func) {
+    std::function<bool (const BookInfo&)> func) {
   create_book_callback_ = func;
 }
 
@@ -67,6 +69,7 @@ void SelectBookMainWindow::on_CreatePushButton_clicked()
   if (book_name.isEmpty()) {
     return;
   }
+
   if (book_info_callback_) {
     auto book = book_info_callback_(book_name);
     if (!book.Empty()) {
@@ -78,8 +81,12 @@ void SelectBookMainWindow::on_CreatePushButton_clicked()
     return;
   }
 
+  BookInfo info;
+  info.name = book_name;
+  info.language = StringToSupportLanguage(ui->LanguageComboBox->currentText());
+
   if (create_book_callback_) {
-    if (!create_book_callback_(book_name)) {
+    if (!create_book_callback_(info)) {
       ui::warn("Unable to create a book!", this);
     } else {
       ui::info("Book created!", this);

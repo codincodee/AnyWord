@@ -11,7 +11,7 @@ public:
   bool Load(const QString& path);
   BookInfo GetBookInfo();
   static BookInfo Check(const QString& path);
-  static bool Create(const QString& path);
+  static bool Create(const QString& path, const BookInfo& info);
 };
 
 #endif // BOOK_H

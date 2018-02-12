@@ -7,3 +7,20 @@ QString SupportLanguageToString(const SupportLanguage& language) {
   default: return "Undefined";
   }
 }
+
+SupportLanguage StringToSupportLanguage(const QString& string) {
+  if (string == SupportLanguageToString(SupportLanguage::English)) {
+    return SupportLanguage::English;
+  } else if (string == SupportLanguageToString(SupportLanguage::Korean)) {
+    return SupportLanguage::Korean;
+  } else {
+    return SupportLanguage::Undefined;
+  }
+}
+
+QStringList AllSupportingLanguagesString() {
+  QStringList list;
+  list.push_back(SupportLanguageToString(SupportLanguage::English));
+  list.push_back(SupportLanguageToString(SupportLanguage::Korean));
+  return list;
+}

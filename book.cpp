@@ -36,7 +36,7 @@ BookInfo Book::Check(const QString& path) {
   return info;
 }
 
-bool Book::Create(const QString &path) {
+bool Book::Create(const QString& path, const BookInfo& info) {
   if (!QDir().mkpath(path)) {
     return false;
   }
@@ -47,6 +47,6 @@ bool Book::Create(const QString &path) {
   QTextStream ts(&file);
   ts << "lala" << endl;
   file.close();
-  qDebug() << Database::NewDB(path);
+  qDebug() << Database::NewDB(path, info);
   return true;
 }

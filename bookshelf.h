@@ -19,7 +19,7 @@ public:
   std::shared_ptr<Book> CurrentBook();
   BookInfo SearchBook(const QString& book);
   QString BookPath(const QString& name);
-  bool CreateBook(const QString& name);
+  bool CreateBook(const BookInfo& info);
   bool DeleteBook(const QString& name);
 signals:
   void CurrentBookChanged(const BookInfo& book);

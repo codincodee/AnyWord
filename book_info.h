@@ -2,6 +2,7 @@
 #define BOOK_INFO_H
 
 #include <QString>
+#include "support_language.h"
 
 struct BookInfo
 {
@@ -9,6 +10,7 @@ struct BookInfo
   QString name;
   QString summary;
   bool Empty();
+  SupportLanguage language;
 };
 
 #endif // BOOK_INFO_H

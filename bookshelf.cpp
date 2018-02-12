@@ -35,8 +35,8 @@ QString Bookshelf::BookPath(const QString &name) {
   return bookshelf_path_ + "/" + name;
 }
 
-bool Bookshelf::CreateBook(const QString &name) {
-  return Book::Create(BookPath(name));
+bool Bookshelf::CreateBook(const BookInfo& info) {
+  return Book::Create(BookPath(info.name), info);
 }
 
 bool Bookshelf::DeleteBook(const QString &name) {

@@ -360,7 +360,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBox"/>
+         <widget class="QComboBox" name="LanguageComboBox"/>
         </item>
         <item>
          <spacer name="horizontalSpacer_9">

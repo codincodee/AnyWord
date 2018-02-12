@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QMessageBox>
 
 Database::Database()
 {
@@ -14,7 +15,7 @@ bool Database::Init() {
   return true;
 }
 
-bool Database::NewDB(const QString& path) {
+bool Database::NewDB(const QString& path, const BookInfo& info) {
   QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
   db.setDatabaseName(path + "/book.db");
   if (!db.open()) {
@@ -27,7 +28,7 @@ bool Database::NewDB(const QString& path) {
     return false;
   }
 
-  query.prepare("INSERT INTO info (id, language, version) VALUES(1, 'English', 'v1.0.0')");
+  query.prepare("INSERT INTO info (id, language, version) VALUES(1, '" + SupportLanguageToString(info.language) + "', 'v1.0.0')");
   if (!query.exec()) {
     qDebug() << query.lastError();
     return false;
@@ -57,7 +58,8 @@ bool Database::NewDB(const QString& path) {
     return false;
   } else {
     query.next();
-    qDebug() << query.value(0).toString();
+    QWidget widget;
+    QMessageBox::information(&widget, "test", query.value(0).toString());
   }
 
   query.prepare("SELECT COUNT(*) FROM entry");

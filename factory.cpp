@@ -48,6 +48,12 @@ bool Factory::Construct() {
 
   connect(
       select_book_main_window,
+      SIGNAL(SelectBook(QString)),
+      main_window,
+      SLOT(OnBookSelection(QString)));
+
+  connect(
+      select_book_main_window,
       SIGNAL(SelectBook(const QString&)),
       bookshelf,
       SLOT(OnBookSelection(const QString&)));

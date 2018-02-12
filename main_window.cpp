@@ -123,6 +123,9 @@ void MainWindow::OnActionSelectBookTriggered(bool checked) {
   emit ShowSelectBookMainWindow();
 }
 
-void MainWindow::OnBookSelection(const BookInfo &book) {
-  ui->InformationLabel->setText(book.name);
+void MainWindow::OnBookSelection(const QString &book) {
+  auto text = ui->InformationLabel->text();
+  ui->InformationLabel->setText("Loading book, please wait ...");
+  qApp->processEvents();
+  ui->InformationLabel->setText(text);
 }

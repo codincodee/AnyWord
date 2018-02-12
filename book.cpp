@@ -25,28 +25,27 @@ BookInfo Book::Check(const QString& path) {
   if (!QDir(path).exists()) {
     return info;
   }
-  QFile file(path + "/manifest.txt");
-  if (!file.open(QIODevice::ReadOnly)) {
-    return info;
-  }
-  info.name = QDir(path).dirName();
-  auto raw = file.readAll();
-  info.summary = QString::fromLocal8Bit(raw.data(), raw.size());
-  file.close();
-  return info;
+//  QFile file(path + "/manifest.txt");
+//  if (!file.open(QIODevice::ReadOnly)) {
+//    return info;
+//  }
+//  info.name = QDir(path).dirName();
+//  auto raw = file.readAll();
+//  info.summary = QString::fromLocal8Bit(raw.data(), raw.size());
+//  file.close();
+  return Database::ReadBookInfoFromDB(path);
 }
 
 bool Book::Create(const QString& path, const BookInfo& info) {
   if (!QDir().mkpath(path)) {
     return false;
   }
-  QFile file(path + "/manifest.txt");
-  if (!file.open(QIODevice::WriteOnly)) {
-    return false;
-  }
-  QTextStream ts(&file);
-  ts << "lala" << endl;
-  file.close();
-  qDebug() << Database::NewDB(path, info);
-  return true;
+//  QFile file(path + "/manifest.txt");
+//  if (!file.open(QIODevice::WriteOnly)) {
+//    return false;
+//  }
+//  QTextStream ts(&file);
+//  ts << "lala" << endl;
+//  file.close();
+  return Database::NewDB(path, info);
 }

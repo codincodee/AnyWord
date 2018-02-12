@@ -12,7 +12,9 @@ class Database : public ObjectBase
 public:
   Database();
   bool Init();
+  static QString DBFileName();
   static bool NewDB(const QString& path, const BookInfo& info);
+  static BookInfo ReadBookInfoFromDB(const QString& path);
 };
 
 #endif // DATABASE_H

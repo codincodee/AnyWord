@@ -11,6 +11,7 @@ struct BookInfo
   QString summary;
   bool Empty();
   SupportLanguage language;
+  int word_num = 0;
 };
 
 #endif // BOOK_INFO_H

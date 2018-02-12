@@ -59,7 +59,7 @@ void SelectBookMainWindow::on_BookComboBox_currentTextChanged(const QString &arg
     book = book_info_callback_(ui->BookComboBox->currentText());
   }
   if (!book.Empty()) {
-    ui->SummaryTextEdit->setText(book.summary);
+    ui->SummaryTextEdit->setText("Language: " + SupportLanguageToString(book.language) + "\nTotal Words: " + QString::number(book.word_num));
   }
 }
 

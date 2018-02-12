@@ -57,17 +57,17 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
     return false;
   }
 
-  if (info.language == SupportLanguage::Korean) {
-    query.prepare("INSERT INTO entry (word, meaning, note) VALUES('the word A', 'the meaning', 'the note')");
-    if (!query.exec()) {
-      qDebug() << query.lastError();
-    }
-  }
+//  if (info.language == SupportLanguage::Korean) {
+//    query.prepare("INSERT INTO entry (word, meaning, note) VALUES('the word A', 'the meaning', 'the note')");
+//    if (!query.exec()) {
+//      qDebug() << query.lastError();
+//    }
+//  }
 
-  query.prepare("INSERT INTO entry (word, meaning, note) VALUES('the word', 'the meaning', 'the note')");
-  if (!query.exec()) {
-    qDebug() << query.lastError();
-  }
+//  query.prepare("INSERT INTO entry (word, meaning, note) VALUES('the word', 'the meaning', 'the note')");
+//  if (!query.exec()) {
+//    qDebug() << query.lastError();
+//  }
 
 //  query.prepare("SELECT language FROM info WHERE id = 1");
 //  if (!query.exec()) {

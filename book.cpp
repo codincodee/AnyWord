@@ -14,15 +14,13 @@ bool Book::Load(const QString &path) {
   qDebug() << (vocabulary_ != nullptr);
   if (vocabulary_) {
     vocabulary_->PrintAll();
+    information_ = Database::ReadBookInfoFromDB(path);
   }
   return vocabulary_ != nullptr;
 }
 
 BookInfo Book::GetBookInfo() {
-  BookInfo info;
-  info.name = "new Book";
-  info.summary = "What is this?";
-  return info;
+  return information_;
 }
 
 BookInfo Book::Check(const QString& path) {

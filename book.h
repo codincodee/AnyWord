@@ -16,6 +16,7 @@ public:
   static bool Create(const QString& path, const BookInfo& info);
 private:
   std::shared_ptr<Vocabulary> vocabulary_;
+  BookInfo information_;
 };
 
 #endif // BOOK_H

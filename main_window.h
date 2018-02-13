@@ -42,6 +42,7 @@ private slots:
   void OnActionSelectBookTriggered(bool checked);
 
   void OnBookSelection(const QString& book);
+  void OnCurrentBookChanged(const BookInfo& book);
 private:
   Ui::MainWindow *ui;
   AddWordsMainWindow* add_words_main_window_;

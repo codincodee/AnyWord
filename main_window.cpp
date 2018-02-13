@@ -129,3 +129,7 @@ void MainWindow::OnBookSelection(const QString &book) {
   qApp->processEvents();
   ui->InformationLabel->setText(text);
 }
+
+void MainWindow::OnCurrentBookChanged(const BookInfo &book) {
+  ui->InformationLabel->setText(book.name + " (" + SupportLanguageToString(book.language) + ")");
+}

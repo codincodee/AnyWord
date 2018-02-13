@@ -24,7 +24,7 @@ void Vocabulary::Clone(const Vocabulary &obj) {
 WordEntry Vocabulary::GetWord() {
   if (vocabulary_.size()) {
 //    qDebug() << qrand();
-    return *(vocabulary_.begin() + (qrand() % 10 > 5 ? 0 : 1));
+    // return *(vocabulary_.begin() + (qrand() % 10 > 5 ? 0 : 1));
   }
   return WordEntry();
 }

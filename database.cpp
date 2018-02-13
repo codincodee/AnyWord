@@ -55,11 +55,12 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
       "  word VARCHAR(100) UNIQUE PRIMARY KEY,"
       "  meaning VARCHAR(300),"
       "  note VARCHAR(1000),"
-      "  hit INTEGER DEFAULT(0),"
-      "  miss INTEGER DEFAULT(0),"
-      "  require_spelling INTEGER DEFAULT(0)"
+      "  hit INTEGER,"
+      "  miss INTEGER,"
+      "  require_spelling INTEGER"
       ")");
   if (!query.exec()) {
+    qDebug() << __LINE__;
     qDebug() << query.lastError();
     db.close();
     return false;
@@ -72,17 +73,37 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
         "  meaning,"
         "  note,"
         "  hit,"
-        "  miss"
+        "  miss,"
+        "  require_spelling"
         ")"
         "VALUES ("
-        "  'the word A', 'the meaning', 'the note', 2, 1)");
+        "  'the word A', 'the meaning', 'the note', 2, 1, 0)");
     if (!query.exec()) {
+      qDebug() << __LINE__;
       qDebug() << query.lastError();
     }
   }
 
-  query.prepare("INSERT INTO vocabulary (word, meaning, note, hit, miss) VALUES('the word', 'the meaning', 'the note', 0, 0)");
+  query.prepare(
+      "INSERT INTO vocabulary "
+      "("
+      "  word, "
+      "  meaning, "
+      "  note, "
+      "  hit, "
+      "  miss,"
+      "  require_spelling"
+      ") "
+      "VALUES ("
+      "  'the word', "
+      "  'the meaning', "
+      "  'the note', "
+      "  0, "
+      "  0,"
+      "  0"
+      ")");
   if (!query.exec()) {
+    qDebug() << __LINE__;
     qDebug() << query.lastError();
   }
 
@@ -195,4 +216,70 @@ shared_ptr<Vocabulary> Database::LoadVocabulary(const QString &path) {
   }
   db.close();
   return vocabulary;
+}
+
+bool Database::WriteEntry(const WordEntry &entry, const QString &path) {
+  auto path_to_file = path + "/" + DBFileName();
+  if (!QFile(path_to_file).exists()) {
+    return false;
+  }
+  QSqlDatabase db;
+  if (QSqlDatabase::contains()) {
+    db = QSqlDatabase::database(
+        QLatin1String(QSqlDatabase::defaultConnection), false);
+  } else {
+    db = QSqlDatabase::addDatabase("QSQLITE");
+  }
+  db.setDatabaseName(path_to_file);
+  if (!db.open()) {
+    return false;
+  }
+  QSqlQuery query;
+  query.prepare(
+      "SELECT COUNT(*) FROM vocabulary "
+      "WHERE word = '" + entry.word + "'");
+  if (!query.exec()) {
+    qDebug() << query.lastError();
+    db.close();
+    return false;
+  }
+  query.next();
+  if (query.value(0).toInt() > 0) {
+    query.prepare(
+        "DELETE FROM vocabulary "
+        "WHERE word = '" + entry.word + "'");
+    if (!query.exec()) {
+      qDebug() << __LINE__;
+      qDebug() << query.lastError();
+      db.close();
+      return false;
+    }
+  } // else {
+    query.prepare(
+        "INSERT INTO vocabulary ("
+        "  word,"
+        "  meaning,"
+        "  note,"
+        "  hit,"
+        "  miss,"
+        "  require_spelling"
+        ") "
+        "VALUES "
+        "("
+        "  '" + entry.word + "',"
+        "  '" + entry.meaning + "',"
+        "  '" + entry.note + "',"
+        "  " + QString::number(entry.hit) + ","
+        "  " + QString::number(entry.miss) + ","
+        "  " + QString::number((int)entry.require_spelling) +
+        ")");
+    if (!query.exec()) {
+      qDebug() << query.lastError();
+      db.close();
+      return false;
+    }
+  // }
+  qDebug() << "!!!!";
+  db.close();
+  return true;
 }

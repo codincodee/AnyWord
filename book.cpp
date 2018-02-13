@@ -15,6 +15,7 @@ void Book::Clone(const Book &obj) {
     vocabulary_->Clone(*obj.vocabulary_);
   }
   information_ = obj.information_;
+  path_ = obj.path_;
 }
 
 void Book::OnChange(std::shared_ptr<Book> new_book) {
@@ -22,16 +23,22 @@ void Book::OnChange(std::shared_ptr<Book> new_book) {
 }
 
 bool Book::Load(const QString &path) {
+  qDebug() << __LINE__;
   vocabulary_ = Database::LoadVocabulary(path);
   if (vocabulary_) {
     vocabulary_->PrintAll();
     information_ = Database::ReadBookInfoFromDB(path);
+    path_ = path;
   }
   return vocabulary_ != nullptr;
 }
 
 Vocabulary& Book::GetVocabulary() {
   return *vocabulary_;
+}
+
+bool Book::WriteEntry(const WordEntry &entry) {
+  return Database::WriteEntry(entry, path_);
 }
 
 BookInfo Book::GetBookInfo() {

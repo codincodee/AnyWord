@@ -43,6 +43,8 @@ bool Factory::Construct() {
   add_words_main_window->RegisterSearchBookCallback(
       [current_book](const WordEntry& entry){
         return current_book->GetVocabulary().Lookup(entry);});
+  add_words_main_window->RegisterWriteEntryCallback(
+      bind(&Book::WriteEntry, current_book, placeholders::_1));
 
   connect(
       bookshelf,

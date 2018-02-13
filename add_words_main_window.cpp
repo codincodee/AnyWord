@@ -33,6 +33,11 @@ void AddWordsMainWindow::RegisterSearchBookCallback(
   search_book_callback_ = func;
 }
 
+void AddWordsMainWindow::RegisterWriteEntryCallback(
+    std::function<bool (const WordEntry &)> func) {
+  write_entry_callback_ = func;
+}
+
 void AddWordsMainWindow::DisableWidgets(
     std::vector<QWidget *> &widgets, const bool& disable) {
   for (auto& widget : widgets) {
@@ -42,15 +47,23 @@ void AddWordsMainWindow::DisableWidgets(
 
 void AddWordsMainWindow::on_OkPushButton_clicked()
 {
-//  QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-//  db.setDatabaseName("vocabulary_test");
-//  qDebug() << db.open();
-////  QSqlQuery query("CREATE TABLE people (ids integer primary key, name, text)");
-////  query.prepare("INSERT INTO people (name) VALUES (:name)");
-////  query.bindValue(":name", "kevinz");
-////  qDebug() << query.exec();
+  if (ui->WordLineEdit->text().isEmpty()) {
+    return;
+  }
   WordEntry entry;
-  emit WriteDatabase(entry);
+  entry.word = ui->WordLineEdit->text();
+  WordEntry search_result;
+  if (search_book_callback_) {
+    search_result = search_book_callback_(entry);
+  }
+  entry.meaning = ui->MeaningLineEdit->text();
+  entry.note = ui->NotePlainTextEdit->toPlainText();
+  entry.hit = search_result.hit;
+  entry.miss = search_result.miss;
+  entry.require_spelling = ui->RequireSpellingCheckBox->isChecked();
+  if (write_entry_callback_) {
+    write_entry_callback_(entry);
+  }
 }
 
 void AddWordsMainWindow::on_WordLineEdit_editingFinished()
@@ -59,7 +72,6 @@ void AddWordsMainWindow::on_WordLineEdit_editingFinished()
   ui->WordLineEdit->setText(word.trimmed());
   ui->NotePlainTextEdit->clear();
   ui->MeaningLineEdit->clear();
-
   if (ui->WordLineEdit->text().isEmpty()) {
     return;
   }
@@ -81,4 +93,5 @@ void AddWordsMainWindow::on_WordLineEdit_editingFinished()
   ui->WordLineEdit->setText(search_result.word);
   ui->MeaningLineEdit->setText(search_result.meaning);
   ui->NotePlainTextEdit->setPlainText(search_result.note);
+  ui->RequireSpellingCheckBox->setChecked(search_result.require_spelling);
 }

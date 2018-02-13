@@ -17,6 +17,7 @@ public:
   static bool NewDB(const QString& path, const BookInfo& info);
   static BookInfo ReadBookInfoFromDB(const QString& path);
   static std::shared_ptr<Vocabulary> LoadVocabulary(const QString& path);
+  static bool WriteEntry(const WordEntry& entry, const QString& path);
 };
 
 #endif // DATABASE_H

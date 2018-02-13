@@ -21,6 +21,8 @@ public:
   ~AddWordsMainWindow();
   void RegisterSearchBookCallback(
       std::function<WordEntry(const WordEntry&)> func);
+  void RegisterWriteEntryCallback(
+      std::function<bool(const WordEntry&)> func);
 
 signals:
   void SearchBook(WordEntry& entry);
@@ -39,6 +41,7 @@ private:
   std::shared_ptr<Factory> factory_;
   std::vector<QWidget*> all_widgets_;
   std::function<WordEntry(const WordEntry&)> search_book_callback_;
+  std::function<bool(const WordEntry&)> write_entry_callback_;
 };
 
 #endif // ADD_WORDS_MAIN_WINDOW_H

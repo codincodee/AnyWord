@@ -24,12 +24,8 @@ void Bookshelf::OnBookSelection(const QString &book_name) {
     warn("No book found!");
     return;
   }
-  current_book_ = book;
+  emit ChangeBook(book);
   emit CurrentBookChanged(book->GetBookInfo());
-}
-
-shared_ptr<Book> Bookshelf::CurrentBook() {
-  return current_book_;
 }
 
 QString Bookshelf::BookPath(const QString &name) {

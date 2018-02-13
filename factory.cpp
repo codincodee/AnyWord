@@ -25,6 +25,15 @@ bool Factory::Construct() {
   bookshelf->Init();
   recycle_objects_.push_back(bookshelf);
 
+  auto current_book = new Book;
+  recycle_objects_.push_back(current_book);
+
+  connect(
+      bookshelf,
+      SIGNAL(ChangeBook(std::shared_ptr<Book>)),
+      current_book,
+      SLOT(OnChange(std::shared_ptr<Book>)));
+
   select_book_main_window->RegisterBookListCallback(
       bind(&Bookshelf::BookInfoList, bookshelf));
   select_book_main_window->RegisterBookInfoCallback(

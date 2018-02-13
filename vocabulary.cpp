@@ -15,3 +15,8 @@ void Vocabulary::PrintAll() {
     qDebug() << entry.word << entry.meaning << entry.note << entry.hit << entry.miss;
   }
 }
+
+
+void Vocabulary::Clone(const Vocabulary &obj) {
+  vocabulary_ = obj.vocabulary_;
+}

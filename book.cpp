@@ -9,6 +9,18 @@ Book::Book()
 
 }
 
+void Book::Clone(const Book &obj) {
+  if (obj.vocabulary_) {
+    vocabulary_.reset(new Vocabulary);
+    vocabulary_->Clone(*obj.vocabulary_);
+  }
+  information_ = obj.information_;
+}
+
+void Book::OnChange(std::shared_ptr<Book> new_book) {
+  this->Clone(*new_book);
+}
+
 bool Book::Load(const QString &path) {
   vocabulary_ = Database::LoadVocabulary(path);
   qDebug() << (vocabulary_ != nullptr);

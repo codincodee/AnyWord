@@ -5,15 +5,20 @@
 #include "book_info.h"
 #include "vocabulary.h"
 #include <memory>
+#include "object_base.h"
 
-class Book
+class Book : public ObjectBase
 {
+  Q_OBJECT
 public:
   Book();
-  bool Load(const QString& path);
   BookInfo GetBookInfo();
   static BookInfo Check(const QString& path);
   static bool Create(const QString& path, const BookInfo& info);
+  void Clone(const Book& obj);
+  bool Load(const QString &path);
+public slots:
+  void OnChange(std::shared_ptr<Book> new_book);
 private:
   std::shared_ptr<Vocabulary> vocabulary_;
   BookInfo information_;

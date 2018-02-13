@@ -12,6 +12,7 @@ struct WordEntry
   QString note;
   int hit;
   int miss;
+  bool require_spelling;
 
   bool Empty();
 };

@@ -52,7 +52,13 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
 
   query.prepare(
       "CREATE TABLE vocabulary ("
-      "word VARCHAR(100) UNIQUE PRIMARY KEY, meaning VARCHAR(300), note VARCHAR(1000), hit INTEGER, miss INTEGER)");
+      "  word VARCHAR(100) UNIQUE PRIMARY KEY,"
+      "  meaning VARCHAR(300),"
+      "  note VARCHAR(1000),"
+      "  hit INTEGER DEFAULT(0),"
+      "  miss INTEGER DEFAULT(0),"
+      "  require_spelling INTEGER DEFAULT(0)"
+      ")");
   if (!query.exec()) {
     qDebug() << query.lastError();
     db.close();
@@ -60,7 +66,16 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
   }
 
   if (info.language == SupportLanguage::Korean) {
-    query.prepare("INSERT INTO vocabulary (word, meaning, note, hit, miss) VALUES('the word A', 'the meaning', 'the note', 2, 1)");
+    query.prepare(
+        "INSERT INTO vocabulary ("
+        "  word,"
+        "  meaning,"
+        "  note,"
+        "  hit,"
+        "  miss"
+        ")"
+        "VALUES ("
+        "  'the word A', 'the meaning', 'the note', 2, 1)");
     if (!query.exec()) {
       qDebug() << query.lastError();
     }
@@ -153,7 +168,15 @@ shared_ptr<Vocabulary> Database::LoadVocabulary(const QString &path) {
   }
   shared_ptr<Vocabulary> vocabulary(new Vocabulary);
   QSqlQuery query;
-  query.prepare("SELECT word, meaning, note, hit, miss FROM vocabulary");
+  query.prepare(
+      "SELECT"
+      "  word,"
+      "  meaning,"
+      "  note,"
+      "  hit,"
+      "  miss,"
+      "  require_spelling "
+      "FROM vocabulary");
   if (query.exec()) {
     for (int row = 0; query.next(); ++row) {
       WordEntry entry;
@@ -162,6 +185,7 @@ shared_ptr<Vocabulary> Database::LoadVocabulary(const QString &path) {
       entry.note = query.value(2).toString();
       entry.hit = query.value(3).toInt();
       entry.miss = query.value(4).toInt();
+      entry.require_spelling = query.value(5).toInt();
       vocabulary->LoadWord(entry);
     }
   } else {

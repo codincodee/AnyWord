@@ -20,7 +20,6 @@ AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
   all_widgets_.push_back(ui->DeletePushButton);
   all_widgets_.push_back(ui->ClearPushButton);
   all_widgets_.push_back(ui->OkPushButton);
-  all_widgets_.push_back(ui->SelectBookComboBox);
 }
 
 AddWordsMainWindow::~AddWordsMainWindow()

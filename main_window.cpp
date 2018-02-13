@@ -31,6 +31,9 @@ bool MainWindow::Init() {
   font.setPointSize(20);
   meaning_label->setFont(font);
   meaning_label->setText("y");
+  QSizePolicy sp_retain = meaning_label->sizePolicy();
+  sp_retain.setRetainSizeWhenHidden(true);
+  meaning_label->setSizePolicy(sp_retain);
   meaning_label->setVisible(false);
 
   // "I know" Button
@@ -48,6 +51,12 @@ bool MainWindow::Init() {
   font.setPointSize(10);
   i_dont_know_push_button->setFont(font);
 
+  auto pass_push_button = ui->PassPushButton;
+  font = pass_push_button->font();
+  font.setBold(true);
+  font.setPointSize(10);
+  pass_push_button->setFont(font);
+
   // Progress
   auto progress_bar = ProgressBar();
   progress_bar->setStyleSheet(
@@ -64,7 +73,10 @@ bool MainWindow::Init() {
 
   // Playback
   auto play_back_push_button = PlaybackPushButton();
-  play_back_push_button->setVisible(false);
+  sp_retain = play_back_push_button->sizePolicy();
+  sp_retain.setRetainSizeWhenHidden(true);
+  play_back_push_button->setSizePolicy(sp_retain);
+  play_back_push_button->setVisible(true);
 
   QAction* action_add_words = new QAction("Add Words", this);
   connect(
@@ -136,11 +148,37 @@ void MainWindow::OnBookSelection(const QString &book) {
 
 void MainWindow::OnCurrentBookChanged(const BookInfo &book) {
   ui->InformationLabel->setText(book.name + " (" + SupportLanguageToString(book.language) + ")");
-  ChangeWordUI(get_word_callback_());
+  if (get_word_callback_) {
+    ChangeWordUI(get_word_callback_());
+  }
 }
 
 void MainWindow::ChangeWordUI(const WordEntry &word) {
   ui->WordLabel->setText(word.word);
   ui->MeaningLabel->setText(word.meaning);
   ui->NoteTextEdit->setText(word.note);
+}
+
+void MainWindow::on_IKnowTheWordPushButton_clicked()
+{
+  ui->MeaningLabel->setVisible(true);
+  ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: green}"));
+  ui->IKnowTheWordPushButton->setDisabled(true);
+  ui->IDontKnowTheWordPushButton->setDisabled(true);
+}
+
+void MainWindow::on_IDontKnowTheWordPushButton_clicked()
+{
+  ui->MeaningLabel->setVisible(true);
+  ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: red}"));
+  ui->IKnowTheWordPushButton->setDisabled(true);
+  ui->IDontKnowTheWordPushButton->setDisabled(true);
+}
+
+void MainWindow::on_PassPushButton_clicked()
+{
+  ChangeWordUI(get_word_callback_());
+  ui->MeaningLabel->setVisible(false);
+  ui->IKnowTheWordPushButton->setDisabled(false);
+  ui->IDontKnowTheWordPushButton->setDisabled(false);
 }

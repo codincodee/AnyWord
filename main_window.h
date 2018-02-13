@@ -44,6 +44,12 @@ private slots:
 
   void OnBookSelection(const QString& book);
   void OnCurrentBookChanged(const BookInfo& book);
+  void on_IKnowTheWordPushButton_clicked();
+
+  void on_IDontKnowTheWordPushButton_clicked();
+
+  void on_PassPushButton_clicked();
+
 private:
   void ChangeWordUI(const WordEntry& word);
   Ui::MainWindow *ui;

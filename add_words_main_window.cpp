@@ -20,11 +20,17 @@ AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
   all_widgets_.push_back(ui->DeletePushButton);
   all_widgets_.push_back(ui->ClearPushButton);
   all_widgets_.push_back(ui->OkPushButton);
+  all_widgets_.push_back(ui->RequireSpellingCheckBox);
 }
 
 AddWordsMainWindow::~AddWordsMainWindow()
 {
   delete ui;
+}
+
+void AddWordsMainWindow::RegisterSearchBookCallback(
+    std::function<WordEntry (const WordEntry &)> func) {
+  search_book_callback_ = func;
 }
 
 void AddWordsMainWindow::DisableWidgets(
@@ -49,6 +55,11 @@ void AddWordsMainWindow::on_OkPushButton_clicked()
 
 void AddWordsMainWindow::on_WordLineEdit_editingFinished()
 {
+  auto word = ui->WordLineEdit->text();
+  ui->WordLineEdit->setText(word.trimmed());
+  ui->NotePlainTextEdit->clear();
+  ui->MeaningLineEdit->clear();
+
   if (ui->WordLineEdit->text().isEmpty()) {
     return;
   }
@@ -57,14 +68,17 @@ void AddWordsMainWindow::on_WordLineEdit_editingFinished()
   qApp->processEvents();
   WordEntry entry;
   entry.word = ui->WordLineEdit->text();
-  emit SearchDatabase(entry);
+  WordEntry search_result;
+  if (search_book_callback_) {
+    search_result = search_book_callback_(entry);
+  }
   DisableWidgets(all_widgets_, false);
   ui->HintLabel->setText("Please continue.");
   qApp->processEvents();
-  if (entry.Empty()) {
+  if (search_result.Empty()) {
     return;
   }
-  ui->WordLineEdit->setText(entry.word);
-  ui->MeaningLineEdit->setText(entry.meaning);
-  ui->NotePlainTextEdit->setPlainText(entry.note);
+  ui->WordLineEdit->setText(search_result.word);
+  ui->MeaningLineEdit->setText(search_result.meaning);
+  ui->NotePlainTextEdit->setPlainText(search_result.note);
 }

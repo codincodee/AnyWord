@@ -163,9 +163,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox">
+         <widget class="QCheckBox" name="RequireSpellingCheckBox">
           <property name="text">
-           <string>Need Spelling</string>
+           <string>Require Spelling</string>
           </property>
          </widget>
         </item>

@@ -14,6 +14,7 @@ public:
   void PrintAll();
   void Clone(const Vocabulary& obj);
   WordEntry GetWord();
+  WordEntry Lookup(const WordEntry& entry);
 private:
   QHash<QString, WordEntry> vocabulary_;
 };

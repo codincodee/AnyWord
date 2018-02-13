@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <memory>
 #include "word_entry.h"
+#include <functional>
 
 class Factory;
 
@@ -18,9 +19,11 @@ class AddWordsMainWindow : public QMainWindow
 public:
   explicit AddWordsMainWindow(QWidget *parent = 0);
   ~AddWordsMainWindow();
+  void RegisterSearchBookCallback(
+      std::function<WordEntry(const WordEntry&)> func);
 
 signals:
-  void SearchDatabase(WordEntry& entry);
+  void SearchBook(WordEntry& entry);
   void WriteDatabase(const WordEntry& entry);
 
 protected:
@@ -35,6 +38,7 @@ private:
   Ui::AddWordsMainWindow *ui;
   std::shared_ptr<Factory> factory_;
   std::vector<QWidget*> all_widgets_;
+  std::function<WordEntry(const WordEntry&)> search_book_callback_;
 };
 
 #endif // ADD_WORDS_MAIN_WINDOW_H

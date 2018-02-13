@@ -40,6 +40,10 @@ bool Factory::Construct() {
   main_window->RegisterGetWordCallback(
       [current_book](){return current_book->GetVocabulary().GetWord();});
 
+  add_words_main_window->RegisterSearchBookCallback(
+      [current_book](const WordEntry& entry){
+        return current_book->GetVocabulary().Lookup(entry);});
+
   connect(
       bookshelf,
       SIGNAL(ChangeBook(std::shared_ptr<Book>)),

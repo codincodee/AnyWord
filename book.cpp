@@ -23,7 +23,6 @@ void Book::OnChange(std::shared_ptr<Book> new_book) {
 }
 
 bool Book::Load(const QString &path) {
-  qDebug() << __LINE__;
   vocabulary_ = Database::LoadVocabulary(path);
   if (vocabulary_) {
     vocabulary_->PrintAll();
@@ -38,6 +37,7 @@ Vocabulary& Book::GetVocabulary() {
 }
 
 bool Book::WriteEntry(const WordEntry &entry) {
+  vocabulary_->LoadWord(entry);
   return Database::WriteEntry(entry, path_);
 }
 

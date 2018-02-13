@@ -60,7 +60,6 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
       "  require_spelling INTEGER"
       ")");
   if (!query.exec()) {
-    qDebug() << __LINE__;
     qDebug() << query.lastError();
     db.close();
     return false;
@@ -79,7 +78,6 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
         "VALUES ("
         "  'the word A', 'the meaning', 'the note', 2, 1, 0)");
     if (!query.exec()) {
-      qDebug() << __LINE__;
       qDebug() << query.lastError();
     }
   }
@@ -103,7 +101,6 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
       "  0"
       ")");
   if (!query.exec()) {
-    qDebug() << __LINE__;
     qDebug() << query.lastError();
   }
 
@@ -249,37 +246,35 @@ bool Database::WriteEntry(const WordEntry &entry, const QString &path) {
         "DELETE FROM vocabulary "
         "WHERE word = '" + entry.word + "'");
     if (!query.exec()) {
-      qDebug() << __LINE__;
       qDebug() << query.lastError();
       db.close();
       return false;
     }
-  } // else {
-    query.prepare(
-        "INSERT INTO vocabulary ("
-        "  word,"
-        "  meaning,"
-        "  note,"
-        "  hit,"
-        "  miss,"
-        "  require_spelling"
-        ") "
-        "VALUES "
-        "("
-        "  '" + entry.word + "',"
-        "  '" + entry.meaning + "',"
-        "  '" + entry.note + "',"
-        "  " + QString::number(entry.hit) + ","
-        "  " + QString::number(entry.miss) + ","
-        "  " + QString::number((int)entry.require_spelling) +
-        ")");
-    if (!query.exec()) {
-      qDebug() << query.lastError();
-      db.close();
-      return false;
-    }
-  // }
-  qDebug() << "!!!!";
+  }
+  query.prepare(
+      "INSERT INTO vocabulary ("
+      "  word,"
+      "  meaning,"
+      "  note,"
+      "  hit,"
+      "  miss,"
+      "  require_spelling"
+      ") "
+      "VALUES "
+      "("
+      "  '" + entry.word + "',"
+      "  '" + entry.meaning + "',"
+      "  '" + entry.note + "',"
+      "  " + QString::number(entry.hit) + ","
+      "  " + QString::number(entry.miss) + ","
+      "  " + QString::number((int)entry.require_spelling) +
+      ")");
+  if (!query.exec()) {
+    qDebug() << query.lastError();
+    db.close();
+    return false;
+  }
+
   db.close();
   return true;
 }

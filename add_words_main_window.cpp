@@ -64,6 +64,11 @@ void AddWordsMainWindow::on_OkPushButton_clicked()
   if (write_entry_callback_) {
     write_entry_callback_(entry);
   }
+  ui->WordLineEdit->clear();
+  ui->MeaningLineEdit->clear();
+  ui->NotePlainTextEdit->clear();
+  ui->RequireSpellingCheckBox->setChecked(false);
+  ui->HintLabel->setText("Input successfully");
 }
 
 void AddWordsMainWindow::on_WordLineEdit_editingFinished()

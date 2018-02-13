@@ -28,12 +28,6 @@ bool Factory::Construct() {
   auto current_book = new Book;
   recycle_objects_.push_back(current_book);
 
-  connect(
-      bookshelf,
-      SIGNAL(ChangeBook(std::shared_ptr<Book>)),
-      current_book,
-      SLOT(OnChange(std::shared_ptr<Book>)));
-
   select_book_main_window->RegisterBookListCallback(
       bind(&Bookshelf::BookInfoList, bookshelf));
   select_book_main_window->RegisterBookInfoCallback(
@@ -42,6 +36,15 @@ bool Factory::Construct() {
       bind(&Bookshelf::CreateBook, bookshelf, placeholders::_1));
   select_book_main_window->RegisterDeleteBookCallback(
       bind(&Bookshelf::DeleteBook, bookshelf, placeholders::_1));
+
+  main_window->RegisterGetWordCallback(
+      [current_book](){return current_book->GetVocabulary().GetWord();});
+
+  connect(
+      bookshelf,
+      SIGNAL(ChangeBook(std::shared_ptr<Book>)),
+      current_book,
+      SLOT(OnChange(std::shared_ptr<Book>)));
 
   connect(
       main_window,

@@ -13,6 +13,7 @@ public:
   void LoadWord(const WordEntry& entry);
   void PrintAll();
   void Clone(const Vocabulary& obj);
+  WordEntry GetWord();
 private:
   QHash<QString, WordEntry> vocabulary_;
 };

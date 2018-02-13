@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include "add_words_main_window.h"
 #include "book_info.h"
+#include <functional>
 
 namespace Ui {
   class MainWindow;
@@ -22,7 +23,7 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
   bool Init();
-
+  void RegisterGetWordCallback(std::function<WordEntry()> func);
 protected:
   QLabel* WordLabel();
   QLabel* MeaningLabel();
@@ -44,8 +45,11 @@ private slots:
   void OnBookSelection(const QString& book);
   void OnCurrentBookChanged(const BookInfo& book);
 private:
+  void ChangeWordUI(const WordEntry& word);
   Ui::MainWindow *ui;
   AddWordsMainWindow* add_words_main_window_;
+
+  std::function<WordEntry()> get_word_callback_;
 };
 
 #endif // MAIN_WINDOW_H

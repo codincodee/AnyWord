@@ -17,6 +17,7 @@ public:
   static bool Create(const QString& path, const BookInfo& info);
   void Clone(const Book& obj);
   bool Load(const QString &path);
+  Vocabulary& GetVocabulary();
 public slots:
   void OnChange(std::shared_ptr<Book> new_book);
 private:

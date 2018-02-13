@@ -84,6 +84,10 @@ bool MainWindow::Init() {
   return true;
 }
 
+void MainWindow::RegisterGetWordCallback(std::function<WordEntry ()> func) {
+  get_word_callback_ = func;
+}
+
 QLabel* MainWindow::WordLabel() {
   return ui->WordLabel;
 }
@@ -132,4 +136,11 @@ void MainWindow::OnBookSelection(const QString &book) {
 
 void MainWindow::OnCurrentBookChanged(const BookInfo &book) {
   ui->InformationLabel->setText(book.name + " (" + SupportLanguageToString(book.language) + ")");
+  ChangeWordUI(get_word_callback_());
+}
+
+void MainWindow::ChangeWordUI(const WordEntry &word) {
+  ui->WordLabel->setText(word.word);
+  ui->MeaningLabel->setText(word.meaning);
+  ui->NoteTextEdit->setText(word.note);
 }

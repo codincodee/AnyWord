@@ -31,6 +31,10 @@ bool Book::Load(const QString &path) {
   return vocabulary_ != nullptr;
 }
 
+Vocabulary& Book::GetVocabulary() {
+  return *vocabulary_;
+}
+
 BookInfo Book::GetBookInfo() {
   return information_;
 }

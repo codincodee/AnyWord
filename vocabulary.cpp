@@ -20,3 +20,10 @@ void Vocabulary::PrintAll() {
 void Vocabulary::Clone(const Vocabulary &obj) {
   vocabulary_ = obj.vocabulary_;
 }
+
+WordEntry Vocabulary::GetWord() {
+  if (vocabulary_.size()) {
+    return *vocabulary_.begin();
+  }
+  return WordEntry();
+}

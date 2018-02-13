@@ -8,6 +8,8 @@
 #include <QFile>
 #include <QDir>
 
+using namespace std;
+
 Database::Database()
 {
 
@@ -34,14 +36,14 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
     return false;
   }
   QSqlQuery query;
-  query.prepare("CREATE TABLE info (id INTEGER UNIQUE PRIMARY KEY, language VARCHAR(50), version VARCHAR(10))");
+  query.prepare("CREATE TABLE manifest (id INTEGER UNIQUE PRIMARY KEY, language VARCHAR(50), version VARCHAR(10))");
   if (!query.exec()) {
     qDebug() << query.lastError();
     db.close();
     return false;
   }
 
-  query.prepare("INSERT INTO info (id, language, version) VALUES(1, '" + SupportLanguageToString(info.language) + "', 'v1.0.0')");
+  query.prepare("INSERT INTO manifest (id, language, version) VALUES(1, '" + SupportLanguageToString(info.language) + "', 'v1.0.0')");
   if (!query.exec()) {
     qDebug() << query.lastError();
     db.close();
@@ -49,25 +51,25 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
   }
 
   query.prepare(
-      "CREATE TABLE entry ("
-      "word VARCHAR(50) UNIQUE PRIMARY KEY, meaning VARCHAR(100), note VARCHAR(100))");
+      "CREATE TABLE vocabulary ("
+      "word VARCHAR(100) UNIQUE PRIMARY KEY, meaning VARCHAR(300), note VARCHAR(1000), hit INTEGER, miss INTEGER)");
   if (!query.exec()) {
     qDebug() << query.lastError();
     db.close();
     return false;
   }
 
-//  if (info.language == SupportLanguage::Korean) {
-//    query.prepare("INSERT INTO entry (word, meaning, note) VALUES('the word A', 'the meaning', 'the note')");
-//    if (!query.exec()) {
-//      qDebug() << query.lastError();
-//    }
-//  }
+  if (info.language == SupportLanguage::Korean) {
+    query.prepare("INSERT INTO vocabulary (word, meaning, note, hit, miss) VALUES('the word A', 'the meaning', 'the note', 2, 1)");
+    if (!query.exec()) {
+      qDebug() << query.lastError();
+    }
+  }
 
-//  query.prepare("INSERT INTO entry (word, meaning, note) VALUES('the word', 'the meaning', 'the note')");
-//  if (!query.exec()) {
-//    qDebug() << query.lastError();
-//  }
+  query.prepare("INSERT INTO vocabulary (word, meaning, note, hit, miss) VALUES('the word', 'the meaning', 'the note', 0, 0)");
+  if (!query.exec()) {
+    qDebug() << query.lastError();
+  }
 
 //  query.prepare("SELECT language FROM info WHERE id = 1");
 //  if (!query.exec()) {
@@ -110,7 +112,7 @@ BookInfo Database::ReadBookInfoFromDB(const QString &path) {
     return BookInfo();
   }
   QSqlQuery query;
-  query.prepare("SELECT language FROM info WHERE id = 1");
+  query.prepare("SELECT language FROM manifest WHERE id = 1");
   if (!query.exec()) {
     qDebug() << query.lastError();
     db.close();
@@ -120,7 +122,7 @@ BookInfo Database::ReadBookInfoFromDB(const QString &path) {
     info.language = StringToSupportLanguage(query.value(0).toString());
   }
 
-  query.prepare("SELECT COUNT(*) FROM entry");
+  query.prepare("SELECT COUNT(*) FROM vocabulary");
   if (!query.exec()) {
     qDebug() << query.lastError();
     db.close();
@@ -133,3 +135,40 @@ BookInfo Database::ReadBookInfoFromDB(const QString &path) {
   return info;
 }
 
+shared_ptr<Vocabulary> Database::LoadVocabulary(const QString &path) {
+  auto path_to_file = path + "/" + DBFileName();
+  if (!QFile(path_to_file).exists()) {
+    return shared_ptr<Vocabulary>();
+  }
+  QSqlDatabase db;
+  if (QSqlDatabase::contains()) {
+    db = QSqlDatabase::database(
+        QLatin1String(QSqlDatabase::defaultConnection), false);
+  } else {
+    db = QSqlDatabase::addDatabase("QSQLITE");
+  }
+  db.setDatabaseName(path_to_file);
+  if (!db.open()) {
+    return shared_ptr<Vocabulary>();
+  }
+  shared_ptr<Vocabulary> vocabulary(new Vocabulary);
+  QSqlQuery query;
+  query.prepare("SELECT word, meaning, note, hit, miss FROM vocabulary");
+  if (query.exec()) {
+    for (int row = 0; query.next(); ++row) {
+      WordEntry entry;
+      entry.word = query.value(0).toString();
+      entry.meaning = query.value(1).toString();
+      entry.note = query.value(2).toString();
+      entry.hit = query.value(3).toInt();
+      entry.miss = query.value(4).toInt();
+      vocabulary->LoadWord(entry);
+    }
+  } else {
+    qDebug() << query.lastError();
+    db.close();
+    return shared_ptr<Vocabulary>();
+  }
+  db.close();
+  return vocabulary;
+}

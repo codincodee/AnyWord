@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include "book_info.h"
+#include "vocabulary.h"
+#include <memory>
 
 class Book
 {
@@ -12,6 +14,8 @@ public:
   BookInfo GetBookInfo();
   static BookInfo Check(const QString& path);
   static bool Create(const QString& path, const BookInfo& info);
+private:
+  std::shared_ptr<Vocabulary> vocabulary_;
 };
 
 #endif // BOOK_H

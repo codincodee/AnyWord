@@ -7,10 +7,11 @@
 struct WordEntry
 {
   WordEntry();
-  BookInfo book;
   QString word;
   QString meaning;
   QString note;
+  int hit;
+  int miss;
 
   bool Empty();
 };

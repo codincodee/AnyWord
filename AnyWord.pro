@@ -36,7 +36,8 @@ SOURCES += \
     book.cpp \
     ui_utils.cpp \
     object_base.cpp \
-    support_language.cpp
+    support_language.cpp \
+    vocabulary.cpp
 
 HEADERS += \
     main_window.h \
@@ -50,7 +51,8 @@ HEADERS += \
     book.h \
     ui_utils.h \
     object_base.h \
-    support_language.h
+    support_language.h \
+    vocabulary.h
 
 FORMS += \
     main_window.ui \

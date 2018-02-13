@@ -5,6 +5,7 @@
 #include <memory>
 #include "word_entry.h"
 #include "object_base.h"
+#include "vocabulary.h"
 
 class Database : public ObjectBase
 {
@@ -15,6 +16,7 @@ public:
   static QString DBFileName();
   static bool NewDB(const QString& path, const BookInfo& info);
   static BookInfo ReadBookInfoFromDB(const QString& path);
+  static std::shared_ptr<Vocabulary> LoadVocabulary(const QString& path);
 };
 
 #endif // DATABASE_H

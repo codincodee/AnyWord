@@ -19,7 +19,6 @@ bool Bookshelf::Init() {
 }
 
 void Bookshelf::OnBookSelection(const QString &book_name) {
-  QThread::sleep(4);
   shared_ptr<Book> book(new Book);
   if (!book->Load(BookPath(book_name))) {
     warn("No book found!");

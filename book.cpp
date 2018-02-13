@@ -10,7 +10,12 @@ Book::Book()
 }
 
 bool Book::Load(const QString &path) {
-  return false;
+  vocabulary_ = Database::LoadVocabulary(path);
+  qDebug() << (vocabulary_ != nullptr);
+  if (vocabulary_) {
+    vocabulary_->PrintAll();
+  }
+  return vocabulary_ != nullptr;
 }
 
 BookInfo Book::GetBookInfo() {

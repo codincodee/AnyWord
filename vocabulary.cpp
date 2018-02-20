@@ -44,3 +44,16 @@ WordEntry Vocabulary::Lookup(const WordEntry &entry) {
     return *i;
   }
 }
+
+bool Vocabulary::OnMarkWord(const QString &word, const bool &know) {
+  auto i = vocabulary_.find(word);
+  if (i == vocabulary_.end()) {
+    return false;
+  }
+  if (know) {
+    ++i->hit;
+  } else {
+    ++i->miss;
+  }
+  return true;
+}

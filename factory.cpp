@@ -39,6 +39,9 @@ bool Factory::Construct() {
 
   main_window->RegisterGetWordCallback(
       [current_book](){return current_book->GetVocabulary().GetWord();});
+  main_window->RegisterMarkWordCallback(
+      [current_book](const QString& word, const bool& know){
+        return current_book->GetVocabulary().OnMarkWord(word, know);});
 
   add_words_main_window->RegisterSearchBookCallback(
       [current_book](const WordEntry& entry){

@@ -24,6 +24,8 @@ public:
   ~MainWindow();
   bool Init();
   void RegisterGetWordCallback(std::function<WordEntry()> func);
+  void RegisterMarkWordCallback(
+      std::function<bool(const QString& word, const bool& know)> func);
 protected:
   QLabel* WordLabel();
   QLabel* MeaningLabel();
@@ -35,6 +37,7 @@ protected:
 signals:
   void ShowAddWordsMainWindow();
   void ShowSelectBookMainWindow();
+  void MarkWord(const QString& word, const bool& know);
 
 private slots:
   void on_SettingsToolButton_clicked();
@@ -56,7 +59,9 @@ private:
   AddWordsMainWindow* add_words_main_window_;
 
   std::function<WordEntry()> get_word_callback_;
+  std::function<bool(const QString& word, const bool& know)> mark_word_callback_;
   WordEntry current_word_;
+  bool i_know_current_word_;
 };
 
 #endif // MAIN_WINDOW_H

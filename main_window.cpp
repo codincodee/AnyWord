@@ -100,6 +100,11 @@ void MainWindow::RegisterGetWordCallback(std::function<WordEntry ()> func) {
   get_word_callback_ = func;
 }
 
+void MainWindow::RegisterMarkWordCallback(
+    std::function<bool (const QString &, const bool &)> func) {
+  mark_word_callback_ = func;
+}
+
 QLabel* MainWindow::WordLabel() {
   return ui->WordLabel;
 }
@@ -150,6 +155,7 @@ void MainWindow::OnCurrentBookChanged(const BookInfo &book) {
   ui->InformationLabel->setText(book.name + " (" + SupportLanguageToString(book.language) + ")");
   if (get_word_callback_) {
     current_word_ = get_word_callback_();
+    i_know_current_word_ = false;
   }
   ChangeWordUI(current_word_);
 }
@@ -171,8 +177,10 @@ void MainWindow::on_IKnowTheWordPushButton_clicked()
   ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: green}"));
   ui->IKnowTheWordPushButton->setDisabled(true);
   // ui->IDontKnowTheWordPushButton->setDisabled(true);
-  ui->NoteTextEdit->setText(current_word_.note);
+  auto note = current_word_.note + "\nhit: " + QString::number(current_word_.hit) + "\nmiss: " + QString::number(current_word_.miss);
+  ui->NoteTextEdit->setText(note);
   ui->PassPushButton->setDisabled(false);
+  i_know_current_word_ = true;
 }
 
 void MainWindow::on_IDontKnowTheWordPushButton_clicked()
@@ -181,15 +189,21 @@ void MainWindow::on_IDontKnowTheWordPushButton_clicked()
   ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: red}"));
   ui->IKnowTheWordPushButton->setDisabled(true);
   ui->IDontKnowTheWordPushButton->setDisabled(true);
-  ui->NoteTextEdit->setText(current_word_.note);
+  auto note = current_word_.note + "\nhit: " + QString::number(current_word_.hit) + "\nmiss: " + QString::number(current_word_.miss);
+  ui->NoteTextEdit->setText(note);
   ui->PassPushButton->setDisabled(false);
+  i_know_current_word_ = false;
 }
 
 void MainWindow::on_PassPushButton_clicked()
 {
+  if (mark_word_callback_) {
+    mark_word_callback_(current_word_.word, i_know_current_word_);
+  }
   ui->NoteTextEdit->clear();
   if (get_word_callback_) {
     current_word_ = get_word_callback_();
+    i_know_current_word_ = false;
   }
   ChangeWordUI(current_word_);
   ui->MeaningLabel->setVisible(false);

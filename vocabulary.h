@@ -15,6 +15,8 @@ public:
   void Clone(const Vocabulary& obj);
   WordEntry GetWord();
   WordEntry Lookup(const WordEntry& entry);
+  bool OnMarkWord(const QString& word, const bool& know);
+
 private:
   QHash<QString, WordEntry> vocabulary_;
   int current_index_;

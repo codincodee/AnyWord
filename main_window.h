@@ -56,6 +56,7 @@ private:
   AddWordsMainWindow* add_words_main_window_;
 
   std::function<WordEntry()> get_word_callback_;
+  WordEntry current_word_;
 };
 
 #endif // MAIN_WINDOW_H

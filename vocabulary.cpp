@@ -3,7 +3,7 @@
 
 Vocabulary::Vocabulary()
 {
-
+  current_index_ = 0;
 }
 
 void Vocabulary::LoadWord(const WordEntry &entry) {
@@ -22,11 +22,18 @@ void Vocabulary::Clone(const Vocabulary &obj) {
 }
 
 WordEntry Vocabulary::GetWord() {
-  if (vocabulary_.size()) {
-//    qDebug() << qrand();
-    // return *(vocabulary_.begin() + (qrand() % 10 > 5 ? 0 : 1));
+  if (vocabulary_.size() <= 0) {
+    return WordEntry();
   }
-  return WordEntry();
+  WordEntry entry;
+  if (current_index_ < vocabulary_.size()) {
+    entry = *(vocabulary_.begin() + current_index_);
+  } else {
+    current_index_ = 0;
+    entry = *(vocabulary_.begin() + current_index_);
+  }
+  ++current_index_;
+  return entry;
 }
 
 WordEntry Vocabulary::Lookup(const WordEntry &entry) {

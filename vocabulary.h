@@ -17,6 +17,7 @@ public:
   WordEntry Lookup(const WordEntry& entry);
 private:
   QHash<QString, WordEntry> vocabulary_;
+  int current_index_;
 };
 
 #endif // VOCABULARY_H

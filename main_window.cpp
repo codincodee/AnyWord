@@ -149,14 +149,20 @@ void MainWindow::OnBookSelection(const QString &book) {
 void MainWindow::OnCurrentBookChanged(const BookInfo &book) {
   ui->InformationLabel->setText(book.name + " (" + SupportLanguageToString(book.language) + ")");
   if (get_word_callback_) {
-    ChangeWordUI(get_word_callback_());
+    current_word_ = get_word_callback_();
   }
+  ChangeWordUI(current_word_);
 }
 
 void MainWindow::ChangeWordUI(const WordEntry &word) {
   ui->WordLabel->setText(word.word);
   ui->MeaningLabel->setText(word.meaning);
-  ui->NoteTextEdit->setText(word.note);
+  // ui->NoteTextEdit->setText(word.note);
+  if (word.require_spelling) {
+    ui->SpellingLineEdit->setFocus();
+  } else {
+    ui->IKnowTheWordPushButton->setFocus();
+  }
 }
 
 void MainWindow::on_IKnowTheWordPushButton_clicked()
@@ -164,7 +170,9 @@ void MainWindow::on_IKnowTheWordPushButton_clicked()
   ui->MeaningLabel->setVisible(true);
   ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: green}"));
   ui->IKnowTheWordPushButton->setDisabled(true);
-  ui->IDontKnowTheWordPushButton->setDisabled(true);
+  // ui->IDontKnowTheWordPushButton->setDisabled(true);
+  ui->NoteTextEdit->setText(current_word_.note);
+  ui->PassPushButton->setDisabled(false);
 }
 
 void MainWindow::on_IDontKnowTheWordPushButton_clicked()
@@ -173,12 +181,19 @@ void MainWindow::on_IDontKnowTheWordPushButton_clicked()
   ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: red}"));
   ui->IKnowTheWordPushButton->setDisabled(true);
   ui->IDontKnowTheWordPushButton->setDisabled(true);
+  ui->NoteTextEdit->setText(current_word_.note);
+  ui->PassPushButton->setDisabled(false);
 }
 
 void MainWindow::on_PassPushButton_clicked()
 {
-  ChangeWordUI(get_word_callback_());
+  ui->NoteTextEdit->clear();
+  if (get_word_callback_) {
+    current_word_ = get_word_callback_();
+  }
+  ChangeWordUI(current_word_);
   ui->MeaningLabel->setVisible(false);
   ui->IKnowTheWordPushButton->setDisabled(false);
   ui->IDontKnowTheWordPushButton->setDisabled(false);
+  ui->PassPushButton->setDisabled(true);
 }

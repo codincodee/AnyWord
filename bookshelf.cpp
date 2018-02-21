@@ -5,7 +5,6 @@
 #include <QFile>
 #include <QDir>
 #include <QThread>
-
 using namespace std;
 
 Bookshelf::Bookshelf()
@@ -37,7 +36,7 @@ bool Bookshelf::CreateBook(const BookInfo& info) {
 }
 
 bool Bookshelf::DeleteBook(const QString &name) {
-  return QDir(BookPath(name)).removeRecursively();
+  return Book::Delete(BookPath(name));
 }
 
 BookInfo Bookshelf::SearchBook(const QString &name) {

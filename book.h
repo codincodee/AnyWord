@@ -19,6 +19,7 @@ public:
   bool Load(const QString &path);
   Vocabulary& GetVocabulary();
   bool WriteEntry(const WordEntry& entry);
+  static bool Delete(const QString& path);
 public slots:
   void OnChange(std::shared_ptr<Book> new_book);
 private:

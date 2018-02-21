@@ -74,3 +74,8 @@ bool Book::Create(const QString& path, const BookInfo& info) {
 //  file.close();
   return Database::NewDB(path, info);
 }
+
+bool Book::Delete(const QString &path) {
+  Database::CloseDB(path);
+  return QDir(path).removeRecursively();
+}

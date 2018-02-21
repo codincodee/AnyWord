@@ -45,15 +45,17 @@ WordEntry Vocabulary::Lookup(const WordEntry &entry) {
   }
 }
 
-bool Vocabulary::OnMarkWord(const QString &word, const bool &know) {
+bool Vocabulary::MarkWord(const QString &word, const bool &know) {
   auto i = vocabulary_.find(word);
   if (i == vocabulary_.end()) {
     return false;
   }
   if (know) {
     ++i->hit;
+    i->hit_ts = QDateTime::currentDateTime().toString();
   } else {
     ++i->miss;
+    i->miss_ts = QDateTime::currentDateTime().toString();
   }
   return true;
 }

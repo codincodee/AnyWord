@@ -3,7 +3,7 @@
 
 #include <QString>
 #include "book_info.h"
-#include <QTime>
+#include <QDateTime>
 
 struct WordEntry
 {

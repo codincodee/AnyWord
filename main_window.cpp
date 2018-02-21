@@ -177,7 +177,12 @@ void MainWindow::on_IKnowTheWordPushButton_clicked()
   ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: green}"));
   ui->IKnowTheWordPushButton->setDisabled(true);
   // ui->IDontKnowTheWordPushButton->setDisabled(true);
-  auto note = current_word_.note + "\nhit: " + QString::number(current_word_.hit) + "\nmiss: " + QString::number(current_word_.miss);
+  auto note =
+      current_word_.note +
+      "\nhit: " + QString::number(current_word_.hit) +
+      "\nhit_ts: " + current_word_.hit_ts +
+      "\nmiss: " + QString::number(current_word_.miss) +
+      "\nmiss_ts: " + current_word_.miss_ts;
   ui->NoteTextEdit->setText(note);
   ui->PassPushButton->setDisabled(false);
   i_know_current_word_ = true;
@@ -189,7 +194,12 @@ void MainWindow::on_IDontKnowTheWordPushButton_clicked()
   ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: red}"));
   ui->IKnowTheWordPushButton->setDisabled(true);
   ui->IDontKnowTheWordPushButton->setDisabled(true);
-  auto note = current_word_.note + "\nhit: " + QString::number(current_word_.hit) + "\nmiss: " + QString::number(current_word_.miss);
+  auto note =
+      current_word_.note +
+      "\nhit: " + QString::number(current_word_.hit) +
+      "\nhit_ts: " + current_word_.hit_ts +
+      "\nmiss: " + QString::number(current_word_.miss) +
+      "\nmiss_ts: " + current_word_.miss_ts;
   ui->NoteTextEdit->setText(note);
   ui->PassPushButton->setDisabled(false);
   i_know_current_word_ = false;

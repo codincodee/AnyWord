@@ -56,53 +56,42 @@ bool Database::NewDB(const QString& path, const BookInfo& info) {
       "  meaning VARCHAR(300),"
       "  note VARCHAR(1000),"
       "  hit INTEGER,"
+      "  hit_ts VARCHAR(30),"
       "  miss INTEGER,"
+      "  miss_ts VARCHAR(30),"
       "  require_spelling INTEGER"
       ")");
   if (!query.exec()) {
-    qDebug() << query.lastError();
+    qDebug() << __FILE__ << __LINE__ << query.lastError();
     db.close();
     return false;
   }
 
-  if (info.language == SupportLanguage::Korean) {
-    query.prepare(
-        "INSERT INTO vocabulary ("
-        "  word,"
-        "  meaning,"
-        "  note,"
-        "  hit,"
-        "  miss,"
-        "  require_spelling"
-        ")"
-        "VALUES ("
-        "  'the word A', 'the meaning', 'the note', 2, 1, 0)");
-    if (!query.exec()) {
-      qDebug() << query.lastError();
-    }
-  }
-
-  query.prepare(
-      "INSERT INTO vocabulary "
-      "("
-      "  word, "
-      "  meaning, "
-      "  note, "
-      "  hit, "
-      "  miss,"
-      "  require_spelling"
-      ") "
-      "VALUES ("
-      "  'the word', "
-      "  'the meaning', "
-      "  'the note', "
-      "  0, "
-      "  0,"
-      "  0"
-      ")");
-  if (!query.exec()) {
-    qDebug() << query.lastError();
-  }
+//  if (info.language == SupportLanguage::Korean) {
+//    query.prepare(
+//        "INSERT INTO vocabulary ("
+//        "  word,"
+//        "  meaning,"
+//        "  note,"
+//        "  hit,"
+//        "  hit_ts,"
+//        "  miss,"
+//        "  miss_ts,"
+//        "  require_spelling"
+//        ")"
+//        "VALUES ("
+//        "  'the word A',"
+//        "  'the meaning',"
+//        "  'the note',"
+//        "  2,"
+//        "  '',"
+//        "  1,"
+//        "  '',"
+//        "  0)");
+//    if (!query.exec()) {
+//      qDebug() << query.lastError();
+//    }
+//  }
 
 //  query.prepare("SELECT language FROM info WHERE id = 1");
 //  if (!query.exec()) {
@@ -192,18 +181,23 @@ shared_ptr<Vocabulary> Database::LoadVocabulary(const QString &path) {
       "  meaning,"
       "  note,"
       "  hit,"
+      "  hit_ts,"
       "  miss,"
+      "  miss_ts,"
       "  require_spelling "
       "FROM vocabulary");
   if (query.exec()) {
     for (int row = 0; query.next(); ++row) {
       WordEntry entry;
-      entry.word = query.value(0).toString();
-      entry.meaning = query.value(1).toString();
-      entry.note = query.value(2).toString();
-      entry.hit = query.value(3).toInt();
-      entry.miss = query.value(4).toInt();
-      entry.require_spelling = query.value(5).toInt();
+      int i = 0;
+      entry.word = query.value(i++).toString();
+      entry.meaning = query.value(i++).toString();
+      entry.note = query.value(i++).toString();
+      entry.hit = query.value(i++).toInt();
+      entry.hit_ts = query.value(i++).toString();
+      entry.miss = query.value(i++).toInt();
+      entry.miss_ts = query.value(i++).toString();
+      entry.require_spelling = query.value(i++).toInt();
       vocabulary->LoadWord(entry);
     }
   } else {
@@ -257,7 +251,9 @@ bool Database::WriteEntry(const WordEntry &entry, const QString &path) {
       "  meaning,"
       "  note,"
       "  hit,"
+      "  hit_ts,"
       "  miss,"
+      "  miss_ts,"
       "  require_spelling"
       ") "
       "VALUES "
@@ -266,7 +262,9 @@ bool Database::WriteEntry(const WordEntry &entry, const QString &path) {
       "  '" + entry.meaning + "',"
       "  '" + entry.note + "',"
       "  " + QString::number(entry.hit) + ","
+      "  '" + entry.hit_ts + "',"
       "  " + QString::number(entry.miss) + ","
+      "  '" + entry.miss_ts + "',"
       "  " + QString::number((int)entry.require_spelling) +
       ")");
   if (!query.exec()) {

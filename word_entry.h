@@ -3,6 +3,7 @@
 
 #include <QString>
 #include "book_info.h"
+#include <QTime>
 
 struct WordEntry
 {
@@ -11,7 +12,9 @@ struct WordEntry
   QString meaning;
   QString note;
   int hit;
+  QString hit_ts; // time stamp
   int miss;
+  QString miss_ts;
   bool require_spelling;
 
   bool Empty();

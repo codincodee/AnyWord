@@ -45,10 +45,10 @@ WordEntry Vocabulary::Lookup(const WordEntry &entry) {
   }
 }
 
-bool Vocabulary::MarkWord(const QString &word, const bool &know) {
+WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
   auto i = vocabulary_.find(word);
   if (i == vocabulary_.end()) {
-    return false;
+    return WordEntry();
   }
   if (know) {
     ++i->hit;
@@ -57,5 +57,5 @@ bool Vocabulary::MarkWord(const QString &word, const bool &know) {
     ++i->miss;
     i->miss_ts = QDateTime::currentDateTime().toString();
   }
-  return true;
+  return *i;
 }

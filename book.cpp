@@ -79,3 +79,11 @@ bool Book::Delete(const QString &path) {
   Database::CloseDB(path);
   return QDir(path).removeRecursively();
 }
+
+bool Book::MarkWord(const QString &word, const bool& know) {
+  auto entry = vocabulary_->MarkWord(word, know);
+  if (entry.Empty()) {
+    return false;
+  }
+  return Database::WriteEntry(entry, path_);
+}

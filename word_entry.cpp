@@ -1,13 +1,17 @@
 #include "word_entry.h"
 
 WordEntry::WordEntry()
-  : require_spelling(false),
-    hit(0),
-    miss(0)
 {
-
+  Clear();
 }
 
 bool WordEntry::Empty() {
   return word.isEmpty();
+}
+
+void WordEntry::Clear() {
+  word.clear();
+  require_spelling = false;
+  hit = 0;
+  miss = 0;
 }

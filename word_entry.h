@@ -18,6 +18,7 @@ struct WordEntry
   bool require_spelling;
 
   bool Empty();
+  void Clear();
 };
 
 #endif // WORD_ENTRY_H

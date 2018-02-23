@@ -1,6 +1,7 @@
 #include "main_window.h"
 #include "ui_main_window.h"
 #include <QDebug>
+#include "ui_utils.h"
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -30,11 +31,9 @@ bool MainWindow::Init() {
   font.setBold(true);
   font.setPointSize(20);
   meaning_label->setFont(font);
-  meaning_label->setText("y");
   QSizePolicy sp_retain = meaning_label->sizePolicy();
   sp_retain.setRetainSizeWhenHidden(true);
   meaning_label->setSizePolicy(sp_retain);
-  meaning_label->setVisible(false);
 
   // "I know" Button
   auto i_know_push_button = IKnowPushButton();
@@ -153,22 +152,52 @@ void MainWindow::OnBookSelection(const QString &book) {
 
 void MainWindow::OnCurrentBookChanged(const BookInfo &book) {
   ui->InformationLabel->setText(book.name + " (" + SupportLanguageToString(book.language) + ")");
-  if (get_word_callback_) {
-    current_word_ = get_word_callback_();
-    i_know_current_word_ = false;
-  }
-  ChangeWordUI(current_word_);
+//  if (get_word_callback_) {
+//    current_word_ = get_word_callback_();
+//    i_know_current_word_ = false;
+//  }
+  SetUIFocus(current_word_);
+  current_word_.Clear();
+  PassCurrentWord();
 }
 
-void MainWindow::ChangeWordUI(const WordEntry &word) {
-  ui->WordLabel->setText(word.word);
-  ui->MeaningLabel->setText(word.meaning);
-  // ui->NoteTextEdit->setText(word.note);
+void MainWindow::SetUIFocus(const WordEntry &word) {
   if (word.require_spelling) {
     ui->SpellingLineEdit->setFocus();
   } else {
     ui->IKnowTheWordPushButton->setFocus();
   }
+}
+
+void MainWindow::PassCurrentWord() {
+  if (mark_word_callback_ && !current_word_.Empty()) {
+    mark_word_callback_(current_word_.word, i_know_current_word_);
+  }
+  ui->WordLabel->clear();
+  ui->MeaningLabel->clear();
+  ui->NoteTextEdit->clear();
+  ui->IKnowTheWordPushButton->setDisabled(false);
+  ui->IDontKnowTheWordPushButton->setDisabled(false);
+  ui->PassPushButton->setDisabled(true);
+  if (get_word_callback_) {
+    current_word_ = get_word_callback_();
+    i_know_current_word_ = false;
+  }
+  if (current_word_.Empty()) {
+    ui::info("No word pending", this);
+  } else {
+    ui->WordLabel->setText(current_word_.word);
+    SetUIFocus(current_word_);
+  }
+}
+
+void MainWindow::DisplayWordMeaning(const WordEntry& word, const bool &know) {
+  if (know) {
+    ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: green}"));
+  } else {
+    ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: red}"));
+  }
+  ui->MeaningLabel->setText(word.meaning);
 }
 
 void MainWindow::DisplayWordNote(const WordEntry& word) {
@@ -183,38 +212,24 @@ void MainWindow::DisplayWordNote(const WordEntry& word) {
 
 void MainWindow::on_IKnowTheWordPushButton_clicked()
 {
-  ui->MeaningLabel->setVisible(true);
-  ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: green}"));
   ui->IKnowTheWordPushButton->setDisabled(true);
   ui->PassPushButton->setDisabled(false);
-  DisplayWordNote(current_word_);
   i_know_current_word_ = true;
+  DisplayWordMeaning(current_word_, i_know_current_word_);
+  DisplayWordNote(current_word_);
 }
 
 void MainWindow::on_IDontKnowTheWordPushButton_clicked()
 {
-  ui->MeaningLabel->setVisible(true);
-  ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: red}"));
   ui->IKnowTheWordPushButton->setDisabled(true);
   ui->IDontKnowTheWordPushButton->setDisabled(true);
-  DisplayWordNote(current_word_);
   ui->PassPushButton->setDisabled(false);
   i_know_current_word_ = false;
+  DisplayWordMeaning(current_word_, i_know_current_word_);
+  DisplayWordNote(current_word_);
 }
 
 void MainWindow::on_PassPushButton_clicked()
 {
-  if (mark_word_callback_) {
-    mark_word_callback_(current_word_.word, i_know_current_word_);
-  }
-  ui->NoteTextEdit->clear();
-  if (get_word_callback_) {
-    current_word_ = get_word_callback_();
-    i_know_current_word_ = false;
-  }
-  ChangeWordUI(current_word_);
-  ui->MeaningLabel->setVisible(false);
-  ui->IKnowTheWordPushButton->setDisabled(false);
-  ui->IDontKnowTheWordPushButton->setDisabled(false);
-  ui->PassPushButton->setDisabled(true);
+  PassCurrentWord();
 }

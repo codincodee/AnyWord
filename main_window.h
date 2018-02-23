@@ -54,7 +54,9 @@ private slots:
   void on_PassPushButton_clicked();
 
 private:
+  void DisplayWordNote(const WordEntry& word);
   void ChangeWordUI(const WordEntry& word);
+
   Ui::MainWindow *ui;
   AddWordsMainWindow* add_words_main_window_;
 

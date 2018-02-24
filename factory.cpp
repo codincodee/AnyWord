@@ -26,6 +26,7 @@ bool Factory::Construct() {
   recycle_objects_.push_back(bookshelf);
 
   auto current_book = new Book;
+  current_book->Init();
   recycle_objects_.push_back(current_book);
 
   select_book_main_window->RegisterBookListCallback(

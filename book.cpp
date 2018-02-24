@@ -9,6 +9,11 @@ Book::Book()
 
 }
 
+bool Book::Init() {
+  vocabulary_.reset(new Vocabulary);
+  return true;
+}
+
 void Book::Clone(const Book &obj) {
   if (obj.vocabulary_) {
     vocabulary_.reset(new Vocabulary);

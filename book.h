@@ -12,6 +12,7 @@ class Book : public ObjectBase
   Q_OBJECT
 public:
   Book();
+  bool Init();
   BookInfo GetBookInfo();
   static BookInfo Check(const QString& path);
   static bool Create(const QString& path, const BookInfo& info);

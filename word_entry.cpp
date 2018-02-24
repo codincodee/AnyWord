@@ -5,7 +5,7 @@ WordEntry::WordEntry()
   Clear();
 }
 
-bool WordEntry::Empty() {
+bool WordEntry::Empty() const {
   return word.isEmpty();
 }
 

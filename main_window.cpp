@@ -173,9 +173,6 @@ void MainWindow::PassCurrentWord() {
   if (mark_word_callback_ && !current_word_.Empty()) {
     mark_word_callback_(current_word_.word, i_know_current_word_);
   }
-  ui->WordLabel->clear();
-  ui->MeaningLabel->clear();
-  ui->NoteTextEdit->clear();
   ui->IKnowTheWordPushButton->setDisabled(false);
   ui->IDontKnowTheWordPushButton->setDisabled(false);
   ui->PassPushButton->setDisabled(true);
@@ -186,6 +183,9 @@ void MainWindow::PassCurrentWord() {
   if (current_word_.Empty()) {
     ui::info("No word pending", this);
   } else {
+    ui->WordLabel->clear();
+    ui->MeaningLabel->clear();
+    ui->NoteTextEdit->clear();
     ui->WordLabel->setText(current_word_.word);
     SetUIFocus(current_word_);
   }
@@ -201,6 +201,10 @@ void MainWindow::DisplayWordMeaning(const WordEntry& word, const bool &know) {
 }
 
 void MainWindow::DisplayWordNote(const WordEntry& word) {
+  if (word.Empty()) {
+    ui->NoteTextEdit->clear();
+    return;
+  }
   auto note =
       word.note +
       "\nhit: " + QString::number(word.hit) +

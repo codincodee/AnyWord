@@ -17,7 +17,7 @@ struct WordEntry
   QString miss_ts;
   bool require_spelling;
 
-  bool Empty();
+  bool Empty() const;
   void Clear();
 };
 

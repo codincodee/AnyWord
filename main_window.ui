@@ -68,7 +68,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QToolButton" name="toolButton_2">
+         <widget class="QToolButton" name="ModifyWordToolButton">
           <property name="focusPolicy">
            <enum>Qt::NoFocus</enum>
           </property>

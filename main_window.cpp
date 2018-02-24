@@ -92,6 +92,8 @@ bool MainWindow::Init() {
       this,
       &MainWindow::OnActionSelectBookTriggered);
   ui->SettingsToolButton->addAction(action_select_book);
+
+  ui->ModifyWordToolButton->setDisabled(true);
   return true;
 }
 

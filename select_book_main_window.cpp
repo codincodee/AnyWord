@@ -12,6 +12,10 @@ SelectBookMainWindow::SelectBookMainWindow(QWidget *parent) :
   this->setWindowModality(Qt::WindowModal);
   auto all_supporting_languages = AllSupportingLanguagesString();
   ui->LanguageComboBox->addItems(all_supporting_languages);
+
+  ui->AddBookPushButton->setDisabled(true);
+  ui->SelectBookLineEdit->setDisabled(true);
+  ui->SelectBookBrowsePushButton->setDisabled(true);
 }
 
 SelectBookMainWindow::~SelectBookMainWindow()

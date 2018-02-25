@@ -93,6 +93,14 @@ bool MainWindow::Init() {
       &MainWindow::OnActionSelectBookTriggered);
   ui->SettingsToolButton->addAction(action_select_book);
 
+  QAction* action_minimize_window = new QAction("Minimize", this);
+  connect(
+      action_minimize_window,
+      &QAction::triggered,
+      this,
+      &MainWindow::OnActionMinimizeWindowTriggered);
+  ui->SettingsToolButton->addAction(action_minimize_window);
+
   ui->ModifyWordToolButton->setDisabled(true);
   return true;
 }
@@ -143,6 +151,10 @@ void MainWindow::OnActionAddWordsTriggered(bool checked) {
 void MainWindow::OnActionSelectBookTriggered(bool checked) {
   Q_UNUSED(checked);
   emit ShowSelectBookMainWindow();
+}
+
+void MainWindow::OnActionMinimizeWindowTriggered(bool checked) {
+  qDebug() << "Minimizing";
 }
 
 void MainWindow::OnBookSelection(const QString &book) {

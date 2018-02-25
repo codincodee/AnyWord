@@ -44,6 +44,7 @@ private slots:
 
   void OnActionAddWordsTriggered(bool checked);
   void OnActionSelectBookTriggered(bool checked);
+  void OnActionMinimizeWindowTriggered(bool checked);
 
   void OnBookSelection(const QString& book);
   void OnCurrentBookChanged(const BookInfo& book);

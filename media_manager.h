@@ -17,6 +17,9 @@ public slots:
   void OnStartRecord();
   void OnStopRecord();
   void OnPlayRecord();
+  void OnPlayRecord(const QString& path);
+  void OnSaveRecord(const QString& path);
+  void OnClearRecord();
 private:
   QString TempAudioFilePath();
   std::unique_ptr<QAudioRecorder> q_audio_recorder_;

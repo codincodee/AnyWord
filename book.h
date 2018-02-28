@@ -22,6 +22,8 @@ public:
   bool WriteEntry(const WordEntry& entry);
   static bool Delete(const QString& path);
   bool MarkWord(const QString& word, const bool& know);
+signals:
+  void SaveRecord(const QString& path);
 public slots:
   void OnChange(std::shared_ptr<Book> new_book);
 private:

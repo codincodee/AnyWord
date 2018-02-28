@@ -30,6 +30,7 @@ signals:
   void StartRecord();
   void StopRecord();
   void PlayRecord();
+  void ClearRecord();
 
 protected:
   void DisableWidgets(std::vector<QWidget*>& widgets, const bool& disable);

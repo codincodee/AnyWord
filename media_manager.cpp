@@ -46,3 +46,25 @@ void MediaManager::OnPlayRecord() {
   q_sound_effect_->setSource(QUrl::fromLocalFile(file));
   q_sound_effect_->play();
 }
+
+void MediaManager::OnPlayRecord(const QString& path) {
+  if (q_sound_effect_->isPlaying()) {
+    q_sound_effect_->stop();
+  }
+  q_sound_effect_->setSource(QUrl::fromLocalFile(""));
+  q_sound_effect_->setSource(QUrl::fromLocalFile(path));
+  q_sound_effect_->play();
+}
+
+void MediaManager::OnClearRecord() {
+  if (q_sound_effect_->isPlaying()) {
+    q_sound_effect_->stop();
+  }
+  QFile(TempAudioFilePath()).remove();
+}
+
+void MediaManager::OnSaveRecord(const QString &path) {
+  auto real_path = path + ".wav";
+  QFile::copy(TempAudioFilePath(), real_path);
+  OnClearRecord();
+}

@@ -73,6 +73,7 @@ void AddWordsMainWindow::on_OkPushButton_clicked()
 
 void AddWordsMainWindow::on_WordLineEdit_editingFinished()
 {
+  emit ClearRecord();
   auto word = ui->WordLineEdit->text();
   ui->WordLineEdit->setText(word.trimmed());
   ui->NotePlainTextEdit->clear();

@@ -27,6 +27,9 @@ public:
 signals:
   void SearchBook(WordEntry& entry);
   void WriteDatabase(const WordEntry& entry);
+  void StartRecord();
+  void StopRecord();
+  void PlayRecord();
 
 protected:
   void DisableWidgets(std::vector<QWidget*>& widgets, const bool& disable);
@@ -35,6 +38,10 @@ private slots:
   void on_OkPushButton_clicked();
 
   void on_WordLineEdit_editingFinished();
+
+  void on_RecordRadioButton_clicked(bool checked);
+
+  void on_PlayToolButton_clicked();
 
 private:
   Ui::AddWordsMainWindow *ui;

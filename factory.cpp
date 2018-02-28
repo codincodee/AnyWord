@@ -4,6 +4,7 @@
 #include "add_words_main_window.h"
 #include "select_book_main_window.h"
 #include "bookshelf.h"
+#include "media_manager.h"
 
 using namespace std;
 
@@ -28,6 +29,10 @@ bool Factory::Construct() {
   auto current_book = new Book;
   current_book->Init();
   recycle_objects_.push_back(current_book);
+
+  auto media_manager = new MediaManager;
+  media_manager->Init();
+  recycle_objects_.push_back(media_manager);
 
   select_book_main_window->RegisterBookListCallback(
       bind(&Bookshelf::BookInfoList, bookshelf));
@@ -85,6 +90,24 @@ bool Factory::Construct() {
       SIGNAL(CurrentBookChanged(BookInfo)),
       main_window,
       SLOT(OnCurrentBookChanged(BookInfo)));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(StartRecord()),
+      media_manager,
+      SLOT(OnStartRecord()));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(StopRecord()),
+      media_manager,
+      SLOT(OnStopRecord()));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(PlayRecord()),
+      media_manager,
+      SLOT(OnPlayRecord()));
   return true;
 }
 

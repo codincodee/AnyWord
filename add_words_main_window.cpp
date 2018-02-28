@@ -100,3 +100,17 @@ void AddWordsMainWindow::on_WordLineEdit_editingFinished()
   ui->NotePlainTextEdit->setPlainText(search_result.note);
   ui->RequireSpellingCheckBox->setChecked(search_result.require_spelling);
 }
+
+void AddWordsMainWindow::on_RecordRadioButton_clicked(bool checked)
+{
+  if (checked) {
+    emit StartRecord();
+  } else {
+    emit StopRecord();
+  }
+}
+
+void AddWordsMainWindow::on_PlayToolButton_clicked()
+{
+  emit PlayRecord();
+}

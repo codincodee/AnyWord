@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -37,7 +37,8 @@ SOURCES += \
     ui_utils.cpp \
     object_base.cpp \
     support_language.cpp \
-    vocabulary.cpp
+    vocabulary.cpp \
+    media_manager.cpp
 
 HEADERS += \
     main_window.h \
@@ -52,7 +53,8 @@ HEADERS += \
     ui_utils.h \
     object_base.h \
     support_language.h \
-    vocabulary.h
+    vocabulary.h \
+    media_manager.h
 
 FORMS += \
     main_window.ui \

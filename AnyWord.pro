@@ -38,7 +38,8 @@ SOURCES += \
     object_base.cpp \
     support_language.cpp \
     vocabulary.cpp \
-    media_manager.cpp
+    media_manager.cpp \
+    minimized_main_window.cpp
 
 HEADERS += \
     main_window.h \
@@ -54,11 +55,13 @@ HEADERS += \
     object_base.h \
     support_language.h \
     vocabulary.h \
-    media_manager.h
+    media_manager.h \
+    minimized_main_window.h
 
 FORMS += \
     main_window.ui \
     add_words_main_window.ui \
-    select_book_main_window.ui
+    select_book_main_window.ui \
+    minimized_main_window.ui
 
 RC_ICONS = icon.ico

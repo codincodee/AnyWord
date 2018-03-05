@@ -5,6 +5,7 @@
 #include "select_book_main_window.h"
 #include "bookshelf.h"
 #include "media_manager.h"
+#include "minimized_main_window.h"
 
 using namespace std;
 
@@ -33,6 +34,15 @@ bool Factory::Construct() {
   auto media_manager = new MediaManager;
   media_manager->Init();
   recycle_objects_.push_back(media_manager);
+
+  auto minimized_main_window_ = new MinimizedMainWindow;
+  minimized_main_window_->show();
+
+  connect(
+      main_window,
+      SIGNAL(Destroyed()),
+      minimized_main_window_,
+      SLOT(close()));
 
   select_book_main_window->RegisterBookListCallback(
       bind(&Bookshelf::BookInfoList, bookshelf));

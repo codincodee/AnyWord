@@ -33,11 +33,13 @@ protected:
   QPushButton* IDontKnowPushButton();
   QProgressBar* ProgressBar();
   QToolButton* PlaybackPushButton();
+  void closeEvent(QCloseEvent* event);
 
 signals:
   void ShowAddWordsMainWindow();
   void ShowSelectBookMainWindow();
   void MarkWord(const QString& word, const bool& know);
+  bool Destroyed();
 
 private slots:
   void on_SettingsToolButton_clicked();

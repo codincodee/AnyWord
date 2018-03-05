@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
   delete ui;
+  emit Destroyed();
 }
 
 bool MainWindow::Init() {
@@ -132,6 +133,11 @@ QPushButton* MainWindow::IDontKnowPushButton() {
 
 QToolButton* MainWindow::PlaybackPushButton() {
   return ui->PlaybackToolButton;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+  emit Destroyed();
+  return QWidget::closeEvent(event);
 }
 
 QProgressBar* MainWindow::ProgressBar() {

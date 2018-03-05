@@ -51,6 +51,7 @@ bool MainWindow::Init() {
   font.setPointSize(10);
   i_dont_know_push_button->setFont(font);
 
+  // "Pass" Push Button
   auto pass_push_button = ui->PassPushButton;
   font = pass_push_button->font();
   font.setBold(true);
@@ -77,6 +78,8 @@ bool MainWindow::Init() {
   sp_retain.setRetainSizeWhenHidden(true);
   play_back_push_button->setSizePolicy(sp_retain);
   play_back_push_button->setVisible(true);
+
+  ui->SpellingLineEdit->setVisible(false);
 
   QAction* action_add_words = new QAction("Add Words", this);
   connect(
@@ -160,10 +163,12 @@ void MainWindow::OnActionSelectBookTriggered(bool checked) {
 }
 
 void MainWindow::OnActionMinimizeWindowTriggered(bool checked) {
+  Q_UNUSED(check);
   emit SwitchMiniWindowOnOff();
 }
 
 void MainWindow::OnBookSelection(const QString &book) {
+  Q_UNUSED(book);
   auto text = ui->InformationLabel->text();
   ui->InformationLabel->setText("Loading book, please wait ...");
   qApp->processEvents();
@@ -208,6 +213,7 @@ void MainWindow::PassCurrentWord() {
     ui->NoteTextEdit->clear();
     ui->WordLabel->setText(current_word_.word);
     SetUIFocus(current_word_);
+    // emit PlayRecord(current_word_.word);
     emit DisplayWordSignal(current_word_);
   }
 }

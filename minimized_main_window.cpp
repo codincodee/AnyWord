@@ -5,6 +5,7 @@
 #include <QRect>
 #include <QDebug>
 #include <QMouseEvent>
+#include <QShortcut>
 
 MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
   QWidget(parent),
@@ -20,6 +21,20 @@ MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
   widgets_.push_back(ui->CheckPushButton);
   widgets_.push_back(ui->CrossPushButton);
   widgets_.push_back(ui->PassPushButton);
+
+  QShortcut* shortcut;
+  shortcut = new QShortcut(QKeySequence("x"), this);
+  connect(
+      shortcut, SIGNAL(activated()), this, SLOT(on_CrossPushButton_clicked()));
+  shortcut = new QShortcut(QKeySequence("v"), this);
+  connect(
+      shortcut, SIGNAL(activated()), this, SLOT(on_CheckPushButton_clicked()));
+  shortcut = new QShortcut(QKeySequence("p"), this);
+  connect(
+      shortcut, SIGNAL(activated()), this, SLOT(on_PassPushButton_clicked()));
+  shortcut = new QShortcut(QKeySequence("q"), this);
+  connect(
+      shortcut, SIGNAL(activated()), this, SLOT(OnShowHideSwitch()));
 }
 
 MinimizedMainWindow::~MinimizedMainWindow()
@@ -46,9 +61,13 @@ void MinimizedMainWindow::OnDisplayWordMeaning(
   ui->MessageLabel->setText(word.word + ": " + word.meaning);
 }
 
+void MinimizedMainWindow::OnShowHideSwitch() {
+  SetAllWidgetsVisible(!ui->MessageLabel->isVisible());
+}
+
 void MinimizedMainWindow::mousePressEvent(QMouseEvent *event) {
   if (event->button() == Qt::RightButton) {
-    SetAllWidgetsVisible(!ui->MessageLabel->isVisible());
+    OnShowHideSwitch();
   }
   return QWidget::mousePressEvent(event);
 }

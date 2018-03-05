@@ -25,6 +25,7 @@ public slots:
   void OnSwitchWindow();
   void OnDisplayWord(const WordEntry& word);
   void OnDisplayWordMeaning(const WordEntry& word, const bool& know);
+  void OnShowHideSwitch();
 
 protected:
   void mousePressEvent(QMouseEvent *event);

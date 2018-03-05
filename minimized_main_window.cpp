@@ -35,10 +35,26 @@ void MinimizedMainWindow::mousePressEvent(QMouseEvent *event) {
   if (event->button() == Qt::RightButton) {
     SetAllWidgetsVisible(!ui->MessageLabel->isVisible());
   }
+  return QWidget::mousePressEvent(event);
 }
 
 void MinimizedMainWindow::SetAllWidgetsVisible(const bool &visible) {
   for (auto& widget : widgets_) {
     widget->setVisible(visible);
   }
+}
+
+void MinimizedMainWindow::on_PassPushButton_clicked()
+{
+  emit PassPushButtonClicked();
+}
+
+void MinimizedMainWindow::on_CheckPushButton_clicked()
+{
+  emit CheckPushButtonClicked();
+}
+
+void MinimizedMainWindow::on_CrossPushButton_clicked()
+{
+  emit CrossPushButtonClicked();
 }

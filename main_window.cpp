@@ -236,6 +236,9 @@ void MainWindow::DisplayWordNote(const WordEntry& word) {
 
 void MainWindow::on_IKnowTheWordPushButton_clicked()
 {
+  if (!ui->IKnowTheWordPushButton->isEnabled()) {
+    return;
+  }
   ui->IKnowTheWordPushButton->setDisabled(true);
   ui->PassPushButton->setDisabled(false);
   i_know_current_word_ = true;
@@ -245,6 +248,9 @@ void MainWindow::on_IKnowTheWordPushButton_clicked()
 
 void MainWindow::on_IDontKnowTheWordPushButton_clicked()
 {
+  if (!ui->IDontKnowTheWordPushButton->isEnabled()) {
+    return;
+  }
   ui->IKnowTheWordPushButton->setDisabled(true);
   ui->IDontKnowTheWordPushButton->setDisabled(true);
   ui->PassPushButton->setDisabled(false);
@@ -255,5 +261,8 @@ void MainWindow::on_IDontKnowTheWordPushButton_clicked()
 
 void MainWindow::on_PassPushButton_clicked()
 {
+  if (!ui->PassPushButton->isEnabled()) {
+    return;
+  }
   PassCurrentWord();
 }

@@ -15,11 +15,23 @@ public:
   explicit MinimizedMainWindow(QWidget *parent = 0);
   ~MinimizedMainWindow();
 
+signals:
+  void CheckPushButtonClicked();
+  void PassPushButtonClicked();
+  void CrossPushButtonClicked();
+
 public slots:
   void OnSwitchWindow();
 
 protected:
   void mousePressEvent(QMouseEvent *event);
+
+private slots:
+  void on_PassPushButton_clicked();
+
+  void on_CheckPushButton_clicked();
+
+  void on_CrossPushButton_clicked();
 
 private:
   void SetAllWidgetsVisible(const bool& visable);

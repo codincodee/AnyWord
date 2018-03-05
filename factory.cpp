@@ -131,6 +131,24 @@ bool Factory::Construct() {
       minimized_main_window_,
       SLOT(OnSwitchWindow()));
 
+  connect(
+      minimized_main_window_,
+      SIGNAL(CheckPushButtonClicked()),
+      main_window,
+      SLOT(on_IKnowTheWordPushButton_clicked()));
+
+  connect(
+      minimized_main_window_,
+      SIGNAL(CrossPushButtonClicked()),
+      main_window,
+      SLOT(on_IDontKnowTheWordPushButton_clicked()));
+
+  connect(
+      minimized_main_window_,
+      SIGNAL(PassPushButtonClicked()),
+      main_window,
+      SLOT(on_PassPushButton_clicked()));
+
   return true;
 }
 

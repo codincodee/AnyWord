@@ -41,6 +41,8 @@ signals:
   void MarkWord(const QString& word, const bool& know);
   bool Destroyed();
   void SwitchMiniWindowOnOff();
+  void DisplayWordMeaningSignal(const WordEntry &word, const bool &know);
+  void DisplayWordSignal(const WordEntry& word);
 
 private slots:
   void on_SettingsToolButton_clicked();

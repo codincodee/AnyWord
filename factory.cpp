@@ -149,6 +149,17 @@ bool Factory::Construct() {
       main_window,
       SLOT(on_PassPushButton_clicked()));
 
+  connect(
+      main_window,
+      SIGNAL(DisplayWordSignal(WordEntry)),
+      minimized_main_window_,
+      SLOT(OnDisplayWord(WordEntry)));
+
+  connect(
+      main_window,
+      SIGNAL(DisplayWordMeaningSignal(WordEntry,bool)),
+      minimized_main_window_,
+      SLOT(OnDisplayWordMeaning(WordEntry,bool)));
   return true;
 }
 

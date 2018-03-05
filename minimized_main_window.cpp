@@ -31,6 +31,21 @@ void MinimizedMainWindow::OnSwitchWindow() {
   this->setVisible(!this->isVisible());
 }
 
+void MinimizedMainWindow::OnDisplayWord(const WordEntry &word) {
+  ui->MessageLabel->setStyleSheet(QStringLiteral("QLabel{color: black}"));
+  ui->MessageLabel->setText(word.word);
+}
+
+void MinimizedMainWindow::OnDisplayWordMeaning(
+    const WordEntry &word, const bool &know) {
+  if (know) {
+    ui->MessageLabel->setStyleSheet(QStringLiteral("QLabel{color: green}"));
+  } else {
+    ui->MessageLabel->setStyleSheet(QStringLiteral("QLabel{color: red}"));
+  }
+  ui->MessageLabel->setText(word.word + ": " + word.meaning);
+}
+
 void MinimizedMainWindow::mousePressEvent(QMouseEvent *event) {
   if (event->button() == Qt::RightButton) {
     SetAllWidgetsVisible(!ui->MessageLabel->isVisible());

@@ -2,6 +2,7 @@
 #define MINIMIZED_MAIN_WINDOW_H
 
 #include <QWidget>
+#include "word_entry.h"
 
 namespace Ui {
   class MinimizedMainWindow;
@@ -22,6 +23,8 @@ signals:
 
 public slots:
   void OnSwitchWindow();
+  void OnDisplayWord(const WordEntry& word);
+  void OnDisplayWordMeaning(const WordEntry& word, const bool& know);
 
 protected:
   void mousePressEvent(QMouseEvent *event);

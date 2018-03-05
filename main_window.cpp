@@ -208,6 +208,7 @@ void MainWindow::PassCurrentWord() {
     ui->NoteTextEdit->clear();
     ui->WordLabel->setText(current_word_.word);
     SetUIFocus(current_word_);
+    emit DisplayWordSignal(current_word_);
   }
 }
 
@@ -218,6 +219,7 @@ void MainWindow::DisplayWordMeaning(const WordEntry& word, const bool &know) {
     ui->MeaningLabel->setStyleSheet(QStringLiteral("QLabel{color: red}"));
   }
   ui->MeaningLabel->setText(word.meaning);
+  emit DisplayWordMeaningSignal(word, know);
 }
 
 void MainWindow::DisplayWordNote(const WordEntry& word) {

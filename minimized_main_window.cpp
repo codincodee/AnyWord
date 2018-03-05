@@ -4,6 +4,7 @@
 #include <QDesktopWidget>
 #include <QRect>
 #include <QDebug>
+#include <QMouseEvent>
 
 MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
   QWidget(parent),
@@ -14,6 +15,11 @@ MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
   auto desktop = QApplication::desktop()->availableGeometry();
   auto window = this->rect();
   this->move(desktop.topLeft() - window.topLeft());
+
+  widgets_.push_back(ui->MessageLabel);
+  widgets_.push_back(ui->CheckPushButton);
+  widgets_.push_back(ui->CrossPushButton);
+  widgets_.push_back(ui->PassPushButton);
 }
 
 MinimizedMainWindow::~MinimizedMainWindow()
@@ -23,4 +29,16 @@ MinimizedMainWindow::~MinimizedMainWindow()
 
 void MinimizedMainWindow::OnSwitchWindow() {
   this->setVisible(!this->isVisible());
+}
+
+void MinimizedMainWindow::mousePressEvent(QMouseEvent *event) {
+  if (event->button() == Qt::RightButton) {
+    SetAllWidgetsVisible(!ui->MessageLabel->isVisible());
+  }
+}
+
+void MinimizedMainWindow::SetAllWidgetsVisible(const bool &visible) {
+  for (auto& widget : widgets_) {
+    widget->setVisible(visible);
+  }
 }

@@ -18,7 +18,13 @@ public:
 public slots:
   void OnSwitchWindow();
 
+protected:
+  void mousePressEvent(QMouseEvent *event);
+
 private:
+  void SetAllWidgetsVisible(const bool& visable);
+
+  std::vector<QWidget*> widgets_;
   Ui::MinimizedMainWindow *ui;
 };
 

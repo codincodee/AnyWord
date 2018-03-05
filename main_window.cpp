@@ -94,7 +94,7 @@ bool MainWindow::Init() {
       &MainWindow::OnActionSelectBookTriggered);
   ui->SettingsToolButton->addAction(action_select_book);
 
-  QAction* action_minimize_window = new QAction("Minimize", this);
+  QAction* action_minimize_window = new QAction("Mini Window", this);
   connect(
       action_minimize_window,
       &QAction::triggered,
@@ -160,7 +160,7 @@ void MainWindow::OnActionSelectBookTriggered(bool checked) {
 }
 
 void MainWindow::OnActionMinimizeWindowTriggered(bool checked) {
-  qDebug() << "Minimizing";
+  emit SwitchMiniWindowOnOff();
 }
 
 void MainWindow::OnBookSelection(const QString &book) {

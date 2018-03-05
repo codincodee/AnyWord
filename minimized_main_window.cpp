@@ -20,3 +20,7 @@ MinimizedMainWindow::~MinimizedMainWindow()
 {
   delete ui;
 }
+
+void MinimizedMainWindow::OnSwitchWindow() {
+  this->setVisible(!this->isVisible());
+}

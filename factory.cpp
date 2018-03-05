@@ -36,13 +36,7 @@ bool Factory::Construct() {
   recycle_objects_.push_back(media_manager);
 
   auto minimized_main_window_ = new MinimizedMainWindow;
-  minimized_main_window_->show();
-
-  connect(
-      main_window,
-      SIGNAL(Destroyed()),
-      minimized_main_window_,
-      SLOT(close()));
+  recycle_widgets_.push_back(minimized_main_window_);
 
   select_book_main_window->RegisterBookListCallback(
       bind(&Bookshelf::BookInfoList, bookshelf));
@@ -124,6 +118,19 @@ bool Factory::Construct() {
       SIGNAL(SaveRecord(QString)),
       media_manager,
       SLOT(OnSaveRecord(QString)));
+
+  connect(
+      main_window,
+      SIGNAL(Destroyed()),
+      minimized_main_window_,
+      SLOT(close()));
+
+  connect(
+      main_window,
+      SIGNAL(SwitchMiniWindowOnOff()),
+      minimized_main_window_,
+      SLOT(OnSwitchWindow()));
+
   return true;
 }
 

@@ -14,6 +14,10 @@ class MinimizedMainWindow : public QWidget
 public:
   explicit MinimizedMainWindow(QWidget *parent = 0);
   ~MinimizedMainWindow();
+
+public slots:
+  void OnSwitchWindow();
+
 private:
   Ui::MinimizedMainWindow *ui;
 };

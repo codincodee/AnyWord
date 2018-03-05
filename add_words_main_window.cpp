@@ -2,6 +2,7 @@
 #include "ui_add_words_main_window.h"
 #include <QDebug>
 #include <QThread>
+#include "ui_utils.h"
 
 AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -38,6 +39,11 @@ void AddWordsMainWindow::RegisterWriteEntryCallback(
   write_entry_callback_ = func;
 }
 
+void AddWordsMainWindow::RegisterRecordExistsCallback(
+    std::function<bool ()> func) {
+  record_exists_callback_ = func;
+}
+
 void AddWordsMainWindow::DisableWidgets(
     std::vector<QWidget *> &widgets, const bool& disable) {
   for (auto& widget : widgets) {
@@ -48,7 +54,16 @@ void AddWordsMainWindow::DisableWidgets(
 void AddWordsMainWindow::on_OkPushButton_clicked()
 {
   if (ui->WordLineEdit->text().isEmpty()) {
+    ui->HintLabel->setText("Please type in a word.");
     return;
+  }
+  if (record_exists_callback_) {
+    if (!record_exists_callback_()) {
+      ui->HintLabel->setText("Please record audio.");
+      return;
+    }
+  } else {
+    ui::warn("No record_exists_callback_", this);
   }
   WordEntry entry;
   entry.word = ui->WordLineEdit->text();
@@ -85,6 +100,7 @@ void AddWordsMainWindow::on_WordLineEdit_editingFinished()
   ui->HintLabel->setText("Searching vocabulary...");
   DisableWidgets(all_widgets_, true);
   qApp->processEvents();
+  emit LoadRecord(word);
   WordEntry entry;
   entry.word = ui->WordLineEdit->text();
   WordEntry search_result;

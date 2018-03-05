@@ -43,6 +43,14 @@ void Book::OnSaveRecord(const QString &word) {
   emit SaveRecord(path_ + "/" + word);
 }
 
+void Book::OnLoadRecord(const QString &word) {
+  if (path_.isEmpty()) {
+    warn("Book path is null, unable to load record!");
+    return;
+  }
+  emit LoadRecord(path_ + "/" + word);
+}
+
 bool Book::Load(const QString &path) {
   vocabulary_ = Database::LoadVocabulary(path);
   if (vocabulary_) {

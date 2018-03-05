@@ -13,6 +13,7 @@ class MediaManager : public QObject
 public:
   MediaManager();
   bool Init();
+  bool HasRecord();
 public slots:
   void OnStartRecord();
   void OnStopRecord();
@@ -20,6 +21,7 @@ public slots:
   void OnPlayRecord(const QString& path);
   void OnSaveRecord(const QString& path);
   void OnClearRecord();
+  void OnLoadRecord(const QString& path);
 
 private:
   inline static QString AudioFilePrefix() {

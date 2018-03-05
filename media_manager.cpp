@@ -17,6 +17,10 @@ bool MediaManager::Init() {
   return true;
 }
 
+bool MediaManager::HasRecord() {
+  return QFile(TempAudioFilePath()).exists();
+}
+
 void MediaManager::OnStartRecord() {
   auto devices = q_audio_recorder_->audioInputs();
   if (devices.isEmpty()) {
@@ -65,6 +69,14 @@ void MediaManager::OnClearRecord() {
     q_sound_effect_->stop();
   }
   QFile(TempAudioFilePath()).remove();
+}
+
+void MediaManager::OnLoadRecord(const QString &path) {
+  if (q_sound_effect_->isPlaying()) {
+    q_sound_effect_->stop();
+  }
+  auto real_path = path + AudioFilePrefix();
+  QFile::copy(real_path, TempAudioFilePath());
 }
 
 void MediaManager::OnSaveRecord(const QString &path) {

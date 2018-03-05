@@ -59,6 +59,9 @@ bool Factory::Construct() {
   add_words_main_window->RegisterWriteEntryCallback(
       bind(&Book::WriteEntry, current_book, placeholders::_1));
 
+  add_words_main_window->RegisterRecordExistsCallback(
+      bind(&MediaManager::HasRecord, media_manager));
+
   connect(
       bookshelf,
       SIGNAL(ChangeBook(std::shared_ptr<Book>)),
@@ -184,6 +187,24 @@ bool Factory::Construct() {
       SIGNAL(SaveRecord(QString)),
       media_manager,
       SLOT(OnSaveRecord(QString)));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(LoadRecord(QString)),
+      current_book,
+      SLOT(OnLoadRecord(QString)));
+
+  connect(
+      current_book,
+      SIGNAL(LoadRecord(QString)),
+      media_manager,
+      SLOT(OnLoadRecord(QString)));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(ClearRecord()),
+      media_manager,
+      SLOT(OnClearRecord()));
   return true;
 }
 

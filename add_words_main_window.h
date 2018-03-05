@@ -23,6 +23,8 @@ public:
       std::function<WordEntry(const WordEntry&)> func);
   void RegisterWriteEntryCallback(
       std::function<bool(const WordEntry&)> func);
+  void RegisterRecordExistsCallback(
+      std::function<bool()> func);
 
 signals:
   void SearchBook(WordEntry& entry);
@@ -32,6 +34,7 @@ signals:
   void PlayRecord();
   void ClearRecord();
   void SaveRecord(const QString& word);
+  void LoadRecord(const QString& word);
 
 protected:
   void DisableWidgets(std::vector<QWidget*>& widgets, const bool& disable);
@@ -51,6 +54,7 @@ private:
   std::vector<QWidget*> all_widgets_;
   std::function<WordEntry(const WordEntry&)> search_book_callback_;
   std::function<bool(const WordEntry&)> write_entry_callback_;
+  std::function<bool()> record_exists_callback_;
 };
 
 #endif // ADD_WORDS_MAIN_WINDOW_H

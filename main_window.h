@@ -43,6 +43,7 @@ signals:
   void SwitchMiniWindowOnOff();
   void DisplayWordMeaningSignal(const WordEntry &word, const bool &know);
   void DisplayWordSignal(const WordEntry& word);
+  void PlayRecord(const QString& word);
 
 private slots:
   void on_SettingsToolButton_clicked();
@@ -58,6 +59,8 @@ private slots:
   void on_IDontKnowTheWordPushButton_clicked();
 
   void on_PassPushButton_clicked();
+
+  void on_PlaybackToolButton_clicked();
 
 private:
   void DisplayWordMeaning(const WordEntry& word, const bool& know);

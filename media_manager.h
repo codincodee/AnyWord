@@ -20,7 +20,11 @@ public slots:
   void OnPlayRecord(const QString& path);
   void OnSaveRecord(const QString& path);
   void OnClearRecord();
+
 private:
+  inline static QString AudioFilePrefix() {
+    return ".wav";
+  }
   QString TempAudioFilePath();
   std::unique_ptr<QAudioRecorder> q_audio_recorder_;
   std::unique_ptr<QSoundEffect> q_sound_effect_;

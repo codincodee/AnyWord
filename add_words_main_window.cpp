@@ -64,6 +64,7 @@ void AddWordsMainWindow::on_OkPushButton_clicked()
   if (write_entry_callback_) {
     write_entry_callback_(entry);
   }
+  emit SaveRecord(entry.word);
   ui->WordLineEdit->clear();
   ui->MeaningLineEdit->clear();
   ui->NotePlainTextEdit->clear();

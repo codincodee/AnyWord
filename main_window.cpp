@@ -163,7 +163,7 @@ void MainWindow::OnActionSelectBookTriggered(bool checked) {
 }
 
 void MainWindow::OnActionMinimizeWindowTriggered(bool checked) {
-  Q_UNUSED(check);
+  Q_UNUSED(checked);
   emit SwitchMiniWindowOnOff();
 }
 
@@ -213,7 +213,7 @@ void MainWindow::PassCurrentWord() {
     ui->NoteTextEdit->clear();
     ui->WordLabel->setText(current_word_.word);
     SetUIFocus(current_word_);
-    // emit PlayRecord(current_word_.word);
+    emit PlayRecord(current_word_.word);
     emit DisplayWordSignal(current_word_);
   }
 }
@@ -273,4 +273,12 @@ void MainWindow::on_PassPushButton_clicked()
     return;
   }
   PassCurrentWord();
+}
+
+void MainWindow::on_PlaybackToolButton_clicked()
+{
+  if (current_word_.Empty()) {
+    return;
+  }
+  emit PlayRecord(current_word_.word);
 }

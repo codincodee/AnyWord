@@ -160,6 +160,30 @@ bool Factory::Construct() {
       SIGNAL(DisplayWordMeaningSignal(WordEntry,bool)),
       minimized_main_window_,
       SLOT(OnDisplayWordMeaning(WordEntry,bool)));
+
+  connect(
+      main_window,
+      SIGNAL(PlayRecord(QString)),
+      current_book,
+      SLOT(OnPlayRecord(QString)));
+
+  connect(
+      current_book,
+      SIGNAL(PlayRecord(QString)),
+      media_manager,
+      SLOT(OnPlayRecord(QString)));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(SaveRecord(QString)),
+      current_book,
+      SLOT(OnSaveRecord(QString)));
+
+  connect(
+      current_book,
+      SIGNAL(SaveRecord(QString)),
+      media_manager,
+      SLOT(OnSaveRecord(QString)));
   return true;
 }
 

@@ -27,6 +27,22 @@ void Book::OnChange(std::shared_ptr<Book> new_book) {
   this->Clone(*new_book);
 }
 
+void Book::OnPlayRecord(const QString &word) {
+  if (path_.isEmpty()) {
+    warn("Book path is null, unable to play record!");
+    return;
+  }
+  emit PlayRecord(path_ + "/" + word);
+}
+
+void Book::OnSaveRecord(const QString &word) {
+  if (path_.isEmpty()) {
+    warn("Book path is null, unable to save record!");
+    return;
+  }
+  emit SaveRecord(path_ + "/" + word);
+}
+
 bool Book::Load(const QString &path) {
   vocabulary_ = Database::LoadVocabulary(path);
   if (vocabulary_) {

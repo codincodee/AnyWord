@@ -22,10 +22,16 @@ public:
   bool WriteEntry(const WordEntry& entry);
   static bool Delete(const QString& path);
   bool MarkWord(const QString& word, const bool& know);
+
 signals:
   void SaveRecord(const QString& path);
+  void PlayRecord(const QString& path);
+
 public slots:
   void OnChange(std::shared_ptr<Book> new_book);
+  void OnPlayRecord(const QString& word);
+  void OnSaveRecord(const QString& word);
+
 private:
   std::shared_ptr<Vocabulary> vocabulary_;
   BookInfo information_;

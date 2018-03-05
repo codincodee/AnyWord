@@ -31,6 +31,7 @@ signals:
   void StopRecord();
   void PlayRecord();
   void ClearRecord();
+  void SaveRecord(const QString& word);
 
 protected:
   void DisableWidgets(std::vector<QWidget*>& widgets, const bool& disable);

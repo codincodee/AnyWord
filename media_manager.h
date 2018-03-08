@@ -24,7 +24,7 @@ public slots:
   void OnLoadRecord(const QString& path);
 
 private:
-  inline static QString AudioFilePrefix() {
+  inline static QString AudioFileSuffix() {
     return ".wav";
   }
   QString TempAudioFilePath();

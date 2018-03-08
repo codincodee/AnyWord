@@ -10,6 +10,10 @@ MediaManager::MediaManager()
 
 bool MediaManager::Init() {
   q_audio_recorder_.reset(new QAudioRecorder);
+  QAudioEncoderSettings settings;
+  settings.setCodec("audio/amr");
+  settings.setQuality(QMultimedia::HighQuality);
+  q_audio_recorder_->setAudioSettings(settings);
   q_audio_recorder_->setOutputLocation(
       QUrl::fromLocalFile(TempAudioFilePath()));
   temp_dir_.setAutoRemove(true);
@@ -35,7 +39,7 @@ void MediaManager::OnStopRecord() {
 }
 
 QString MediaManager::TempAudioFilePath() {
-  return temp_dir_.path() + "/temp_audio" + AudioFilePrefix();
+  return temp_dir_.path() + "/temp_audio" + AudioFileSuffix();
 }
 
 void MediaManager::OnPlayRecord() {
@@ -55,7 +59,7 @@ void MediaManager::OnPlayRecord(const QString& path) {
   if (q_sound_effect_->isPlaying()) {
     q_sound_effect_->stop();
   }
-  auto file = path + AudioFilePrefix();
+  auto file = path + AudioFileSuffix();
   if (!QFile(file).exists()) {
     return;
   }
@@ -75,12 +79,12 @@ void MediaManager::OnLoadRecord(const QString &path) {
   if (q_sound_effect_->isPlaying()) {
     q_sound_effect_->stop();
   }
-  auto real_path = path + AudioFilePrefix();
+  auto real_path = path + AudioFileSuffix();
   QFile::copy(real_path, TempAudioFilePath());
 }
 
 void MediaManager::OnSaveRecord(const QString &path) {
-  auto real_path = path + AudioFilePrefix();
+  auto real_path = path + AudioFileSuffix();
   QFile::copy(TempAudioFilePath(), real_path);
   OnClearRecord();
 }

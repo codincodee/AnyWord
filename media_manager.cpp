@@ -11,8 +11,12 @@ MediaManager::MediaManager()
 bool MediaManager::Init() {
   q_audio_recorder_.reset(new QAudioRecorder);
   QAudioEncoderSettings settings;
+
+  // TODO: On Windows, a suffix ".wav" is automatically
+  // added to the output audio file, which may cause compatibility issues.
   settings.setCodec("audio/amr");
   settings.setQuality(QMultimedia::HighQuality);
+
   q_audio_recorder_->setAudioSettings(settings);
   q_audio_recorder_->setOutputLocation(
       QUrl::fromLocalFile(TempAudioFilePath()));

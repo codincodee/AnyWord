@@ -116,11 +116,11 @@ bool Factory::Construct() {
       media_manager,
       SLOT(OnPlayRecord()));
 
-  connect(
-      current_book,
-      SIGNAL(SaveRecord(QString)),
-      media_manager,
-      SLOT(OnSaveRecord(QString)));
+//  connect(
+//      current_book,
+//      SIGNAL(SaveRecord(QString)),
+//      media_manager,
+//      SLOT(OnSaveRecord(QString)));
 
   connect(
       main_window,

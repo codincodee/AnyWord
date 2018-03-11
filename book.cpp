@@ -67,7 +67,7 @@ Vocabulary& Book::GetVocabulary() {
 
 bool Book::WriteEntry(const WordEntry &entry) {
   vocabulary_->LoadWord(entry);
-  emit SaveRecord(path_ + "/" + entry.word);
+  // emit SaveRecord(path_ + "/" + entry.word);
   return Database::WriteEntry(entry, path_);
 }
 

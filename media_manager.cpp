@@ -89,6 +89,9 @@ void MediaManager::OnLoadRecord(const QString &path) {
 
 void MediaManager::OnSaveRecord(const QString &path) {
   auto real_path = path + AudioFileSuffix();
-  QFile::copy(TempAudioFilePath(), real_path);
+  QFile(real_path).remove();
+  if (!QFile::copy(TempAudioFilePath(), real_path)) {
+    qDebug() << "Fail to copy audio record";
+  }
   OnClearRecord();
 }

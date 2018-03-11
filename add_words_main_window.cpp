@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QThread>
 #include "ui_utils.h"
+#include <QShortcut>
 
 AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -22,6 +23,23 @@ AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
   all_widgets_.push_back(ui->ClearPushButton);
   all_widgets_.push_back(ui->OkPushButton);
   all_widgets_.push_back(ui->RequireSpellingCheckBox);
+
+  QShortcut* shortcut;
+  shortcut = new QShortcut(QKeySequence("r"), this);
+  connect(
+      shortcut, SIGNAL(activated()), this, SLOT(OnRecordRadioButtonClicked()));
+  shortcut = new QShortcut(QKeySequence("p"), this);
+  connect(
+      shortcut, SIGNAL(activated()), this, SLOT(on_PlayToolButton_clicked()));
+  shortcut = new QShortcut(QKeySequence("Ctrl+s"), this);
+  connect(
+      shortcut, SIGNAL(activated()), this, SLOT(on_OkPushButton_clicked()));
+  shortcut = new QShortcut(QKeySequence("m"), this);
+  connect(
+      shortcut, SIGNAL(activated()), ui->MeaningLineEdit, SLOT(setFocus()));
+  shortcut = new QShortcut(QKeySequence("w"), this);
+  connect(
+      shortcut, SIGNAL(activated()), ui->WordLineEdit, SLOT(setFocus()));
 }
 
 AddWordsMainWindow::~AddWordsMainWindow()
@@ -85,6 +103,7 @@ void AddWordsMainWindow::on_OkPushButton_clicked()
   ui->NotePlainTextEdit->clear();
   ui->RequireSpellingCheckBox->setChecked(false);
   ui->HintLabel->setText("Input successfully!");
+  ui->WordLineEdit->setFocus();
 }
 
 void AddWordsMainWindow::on_WordLineEdit_editingFinished()
@@ -128,7 +147,17 @@ void AddWordsMainWindow::on_RecordRadioButton_clicked(bool checked)
   }
 }
 
+void AddWordsMainWindow::OnRecordRadioButtonClicked() {
+  on_RecordRadioButton_clicked(!ui->RecordRadioButton->isChecked());
+  ui->RecordRadioButton->setChecked(!ui->RecordRadioButton->isChecked());
+}
+
 void AddWordsMainWindow::on_PlayToolButton_clicked()
 {
   emit PlayRecord();
+}
+
+void AddWordsMainWindow::on_MeaningLineEdit_editingFinished()
+{
+  this->setFocus();
 }

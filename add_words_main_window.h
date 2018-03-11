@@ -48,6 +48,10 @@ private slots:
 
   void on_PlayToolButton_clicked();
 
+  void OnRecordRadioButtonClicked();
+
+  void on_MeaningLineEdit_editingFinished();
+
 private:
   Ui::AddWordsMainWindow *ui;
   std::shared_ptr<Factory> factory_;

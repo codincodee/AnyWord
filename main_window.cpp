@@ -288,6 +288,7 @@ void MainWindow::on_ModifyWordToolButton_clicked()
   if (ui->WordLabel->text().isEmpty()) {
     return;
   }
-  emit ModifyEntry(ui->WordLabel->text());
   emit ShowAddWordsMainWindow();
+  qApp->processEvents();
+  emit ModifyEntry(ui->WordLabel->text());
 }

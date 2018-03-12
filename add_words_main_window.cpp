@@ -180,5 +180,6 @@ void AddWordsMainWindow::on_DeletePushButton_clicked()
 
 void AddWordsMainWindow::OnLoadEntry(const QString &word) {
   ui->WordLineEdit->setText(word);
+  qApp->processEvents();
   on_WordLineEdit_editingFinished();
 }

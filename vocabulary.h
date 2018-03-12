@@ -5,6 +5,7 @@
 #include "word_entry.h"
 #include <QHash>
 #include <list>
+#include <set>
 
 class Vocabulary : public QObject
 {
@@ -19,11 +20,18 @@ public:
   WordEntry Lookup(const WordEntry& entry);
   WordEntry MarkWord(const QString& word, const bool& know);
   bool DeleteWord(const QString& word);
+  struct ChronoEntry {
+    ChronoEntry(WordEntry* entry);
+    WordEntry* entry = nullptr;
+  };
 private:
   void ClearStorage();
   QHash<QString, WordEntry*> vocabulary_;
   std::list<WordEntry*> entry_pool_;
+  std::multiset<ChronoEntry> chronology_;
   int current_index_;
 };
 
+bool operator <(
+    const Vocabulary::ChronoEntry& e1, const Vocabulary::ChronoEntry& e2);
 #endif // VOCABULARY_H

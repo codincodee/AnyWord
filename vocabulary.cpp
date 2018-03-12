@@ -1,5 +1,6 @@
 #include "vocabulary.h"
 #include <QDebug>
+#include <QDateTime>
 
 Vocabulary::Vocabulary()
 {
@@ -16,8 +17,10 @@ void Vocabulary::LoadWord(const WordEntry &entry) {
     auto entry_addr = new WordEntry(entry);
     entry_pool_.push_back(entry_addr);
     vocabulary_.insert(entry.word, entry_addr);
+    chronology_.insert(ChronoEntry(entry_addr));
   } else {
     *(*vo_i) = entry;
+    // TODO: Here is an ignored issue
   }
 }
 
@@ -38,7 +41,11 @@ void Vocabulary::Clone(const Vocabulary &obj) {
   }
   for (auto& entry_addr : entry_pool_) {
     vocabulary_.insert(entry_addr->word, entry_addr);
+    chronology_.insert(ChronoEntry(entry_addr));
   }
+//  for (auto& i : chronology_) {
+//    qDebug() << i.entry->word << i.entry->miss_ts;
+//  }
 }
 
 WordEntry Vocabulary::GetWord() {
@@ -97,4 +104,29 @@ void Vocabulary::ClearStorage() {
   }
   entry_pool_.clear();
   vocabulary_.clear();
+  chronology_.clear();
+}
+
+Vocabulary::ChronoEntry::ChronoEntry(WordEntry* en) : entry(en) {}
+
+bool operator<(
+    const Vocabulary::ChronoEntry& e1, const Vocabulary::ChronoEntry& e2) {
+  if (e1.entry == nullptr && e2.entry != nullptr) {
+    return false;
+  } else if (e1.entry != nullptr && e2.entry == nullptr) {
+    return true;
+  } else if (e1.entry == nullptr && e2.entry == nullptr) {
+    return false;
+  }
+
+  if (e1.entry->miss_ts.isEmpty() && !e2.entry->miss_ts.isEmpty()) {
+    return false;
+  } else if (!e1.entry->miss_ts.isEmpty() && e2.entry->miss_ts.isEmpty()) {
+    return true;
+  } else if (e1.entry->miss_ts.isEmpty() && e2.entry->miss_ts.isEmpty()) {
+    return false;
+  }
+  return
+      QDateTime::fromString(e1.entry->miss_ts) >
+      QDateTime::fromString(e2.entry->miss_ts);
 }

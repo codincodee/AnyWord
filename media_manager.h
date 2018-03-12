@@ -22,6 +22,7 @@ public slots:
   void OnSaveRecord(const QString& path);
   void OnClearRecord();
   void OnLoadRecord(const QString& path);
+  void OnDeleteRecord(const QString& path);
 
 private:
   inline static QString AudioFileSuffix() {

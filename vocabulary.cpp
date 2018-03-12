@@ -59,3 +59,8 @@ WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
   }
   return *i;
 }
+
+bool Vocabulary::DeleteWord(const QString &word) {
+  vocabulary_.remove(word);
+  return true;
+}

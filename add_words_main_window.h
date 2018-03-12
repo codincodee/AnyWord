@@ -28,11 +28,13 @@ public:
 
 signals:
   void SearchBook(WordEntry& entry);
-  void WriteDatabase(const WordEntry& entry);
+  // void WriteDatabase(const WordEntry& entry);
+  void DeleteEntry(const QString& word);
   void StartRecord();
   void StopRecord();
   void PlayRecord();
   void ClearRecord();
+  void DeleteRecord(const QString& word);
   void SaveRecord(const QString& word);
   void LoadRecord(const QString& word);
 
@@ -51,6 +53,8 @@ private slots:
   void OnRecordRadioButtonClicked();
 
   void on_MeaningLineEdit_editingFinished();
+
+  void on_DeletePushButton_clicked();
 
 private:
   Ui::AddWordsMainWindow *ui;

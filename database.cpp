@@ -243,3 +243,37 @@ bool Database::WriteEntry(const WordEntry &entry, const QString &path_to_dir) {
 
   return true;
 }
+
+bool Database::DeleteEntry(const QString &word, const QString &path_to_dir) {
+  auto path_to_file = path_to_dir + "/" + DBFileName();
+  if (!QFile(path_to_file).exists()) {
+    return false;
+  }
+  if (!KeepDBOpen(path_to_file, q_sql_database_)) {
+    return false;
+  }
+
+  QSqlQuery query;
+  QString cmd;
+
+  cmd =
+      "SELECT COUNT(*) FROM vocabulary "
+      "WHERE word = '" + word + "'";
+  query.prepare(cmd);
+  if (!query.exec()) {
+    qDebug() << cmd << query.lastError();
+    return false;
+  }
+  query.next();
+  if (query.value(0).toInt() > 0) {
+    cmd =
+        "DELETE FROM vocabulary "
+        "WHERE word = '" + word + "'";
+    query.prepare(cmd);
+    if (!query.exec()) {
+      qDebug() << cmd << query.lastError();
+      return false;
+    }
+  }
+  return true;
+}

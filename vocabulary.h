@@ -16,7 +16,7 @@ public:
   WordEntry GetWord();
   WordEntry Lookup(const WordEntry& entry);
   WordEntry MarkWord(const QString& word, const bool& know);
-
+  bool DeleteWord(const QString& word);
 private:
   QHash<QString, WordEntry> vocabulary_;
   int current_index_;

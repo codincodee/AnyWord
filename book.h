@@ -27,13 +27,16 @@ signals:
   void SaveRecord(const QString& path);
   void PlayRecord(const QString& path);
   void LoadRecord(const QString& path);
+  void DeleteRecord(const QString& path);
 
 public slots:
   void OnChange(std::shared_ptr<Book> new_book);
   void OnPlayRecord(const QString& word);
   void OnSaveRecord(const QString& word);
   void OnLoadRecord(const QString& word);
+  void OnDeleteRecord(const QString& word);
 
+  void OnDeleteEntry(const QString& word);
 private:
   std::shared_ptr<Vocabulary> vocabulary_;
   BookInfo information_;

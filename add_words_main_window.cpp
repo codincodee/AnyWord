@@ -11,7 +11,7 @@ AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
   this->setWindowModality(Qt::WindowModal);
-  ui->DeletePushButton->setVisible(false);
+  // ui->DeletePushButton->setVisible(false);
 
   // All Widgets
   all_widgets_.push_back(ui->WordLineEdit);
@@ -160,4 +160,20 @@ void AddWordsMainWindow::on_PlayToolButton_clicked()
 void AddWordsMainWindow::on_MeaningLineEdit_editingFinished()
 {
   this->setFocus();
+}
+
+void AddWordsMainWindow::on_DeletePushButton_clicked()
+{
+  auto word = ui->WordLineEdit->text();
+  if (word.isEmpty()) {
+    return;
+  }
+  emit ClearRecord();
+  emit DeleteRecord(word);
+  emit DeleteEntry(word);
+  ui->WordLineEdit->clear();
+  ui->MeaningLineEdit->clear();
+  ui->NotePlainTextEdit->clear();
+  ui->RequireSpellingCheckBox->setChecked(false);
+  ui->HintLabel->setText("Entry deleted!");
 }

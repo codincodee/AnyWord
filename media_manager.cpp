@@ -87,6 +87,14 @@ void MediaManager::OnLoadRecord(const QString &path) {
   QFile::copy(real_path, TempAudioFilePath());
 }
 
+void MediaManager::OnDeleteRecord(const QString &path) {
+  if (q_sound_effect_->isPlaying()) {
+    q_sound_effect_->stop();
+  }
+  auto real_path = path + AudioFileSuffix();
+  QFile(real_path).remove();
+}
+
 void MediaManager::OnSaveRecord(const QString &path) {
   auto real_path = path + AudioFileSuffix();
   QFile(real_path).remove();

@@ -205,6 +205,24 @@ bool Factory::Construct() {
       SIGNAL(ClearRecord()),
       media_manager,
       SLOT(OnClearRecord()));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(DeleteEntry(QString)),
+      current_book,
+      SLOT(OnDeleteEntry(QString)));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(DeleteRecord(QString)),
+      current_book,
+      SLOT(OnDeleteRecord(QString)));
+
+  connect(
+      current_book,
+      SIGNAL(DeleteRecord(QString)),
+      media_manager,
+      SLOT(OnDeleteRecord(QString)));
   return true;
 }
 

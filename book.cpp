@@ -51,6 +51,14 @@ void Book::OnLoadRecord(const QString &word) {
   emit LoadRecord(path_ + "/" + word);
 }
 
+void Book::OnDeleteRecord(const QString &word) {
+  if (path_.isEmpty()) {
+    warn("Book path is null, unable to delete record!");
+    return;
+  }
+  emit DeleteRecord(path_ + "/" + word);
+}
+
 bool Book::Load(const QString &path) {
   vocabulary_ = Database::LoadVocabulary(path);
   if (vocabulary_) {
@@ -69,6 +77,11 @@ bool Book::WriteEntry(const WordEntry &entry) {
   vocabulary_->LoadWord(entry);
   // emit SaveRecord(path_ + "/" + entry.word);
   return Database::WriteEntry(entry, path_);
+}
+
+void Book::OnDeleteEntry(const QString &word) {
+  vocabulary_->DeleteWord(word);
+  Database::DeleteEntry(word, path_);
 }
 
 BookInfo Book::GetBookInfo() {

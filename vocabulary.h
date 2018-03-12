@@ -4,6 +4,7 @@
 #include <QObject>
 #include "word_entry.h"
 #include <QHash>
+#include <list>
 
 class Vocabulary : public QObject
 {
@@ -18,7 +19,8 @@ public:
   WordEntry MarkWord(const QString& word, const bool& know);
   bool DeleteWord(const QString& word);
 private:
-  QHash<QString, WordEntry> vocabulary_;
+  QHash<QString, WordEntry*> vocabulary_;
+  std::list<WordEntry*> entry_pool_;
   int current_index_;
 };
 

@@ -223,6 +223,12 @@ bool Factory::Construct() {
       SIGNAL(DeleteRecord(QString)),
       media_manager,
       SLOT(OnDeleteRecord(QString)));
+
+  connect(
+      main_window,
+      SIGNAL(ModifyEntry(QString)),
+      add_words_main_window,
+      SLOT(OnLoadEntry(QString)));
   return true;
 }
 

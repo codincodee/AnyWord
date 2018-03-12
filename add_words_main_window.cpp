@@ -177,3 +177,8 @@ void AddWordsMainWindow::on_DeletePushButton_clicked()
   ui->RequireSpellingCheckBox->setChecked(false);
   ui->HintLabel->setText("Entry deleted!");
 }
+
+void AddWordsMainWindow::OnLoadEntry(const QString &word) {
+  ui->WordLineEdit->setText(word);
+  on_WordLineEdit_editingFinished();
+}

@@ -56,6 +56,7 @@ private slots:
 
   void on_DeletePushButton_clicked();
 
+  void OnLoadEntry(const QString& word);
 private:
   Ui::AddWordsMainWindow *ui;
   std::shared_ptr<Factory> factory_;

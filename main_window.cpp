@@ -105,7 +105,7 @@ bool MainWindow::Init() {
       &MainWindow::OnActionMinimizeWindowTriggered);
   ui->SettingsToolButton->addAction(action_minimize_window);
 
-  ui->ModifyWordToolButton->setDisabled(true);
+  // ui->ModifyWordToolButton->setDisabled(true);
   return true;
 }
 
@@ -281,4 +281,13 @@ void MainWindow::on_PlaybackToolButton_clicked()
     return;
   }
   emit PlayRecord(current_word_.word);
+}
+
+void MainWindow::on_ModifyWordToolButton_clicked()
+{
+  if (ui->WordLabel->text().isEmpty()) {
+    return;
+  }
+  emit ModifyEntry(ui->WordLabel->text());
+  emit ShowAddWordsMainWindow();
 }

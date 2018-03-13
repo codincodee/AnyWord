@@ -19,6 +19,7 @@ bool Vocabulary::PrepareWord(const WordEntry &entry) {
     chronology_.insert(ChronoEntry(entry_addr));
     return true;
   } else {
+    qDebug() << "Detected an existing word in the vocabulary.";
     return false;
   }
 }
@@ -73,14 +74,14 @@ WordEntry Vocabulary::GetWord() {
   return entry;
 }
 
-WordEntry Vocabulary::Lookup(const WordEntry &entry) {
-  auto vo_i = vocabulary_.find(entry.word);
-  if (vo_i == vocabulary_.end()) {
-    return WordEntry();
-  } else {
-    return *(*vo_i);
-  }
-}
+//WordEntry Vocabulary::Lookup(const WordEntry &entry) {
+//  auto vo_i = vocabulary_.find(entry.word);
+//  if (vo_i == vocabulary_.end()) {
+//    return WordEntry();
+//  } else {
+//    return *(*vo_i);
+//  }
+//}
 
 WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
   auto vo_i = vocabulary_.find(word);

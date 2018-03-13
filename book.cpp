@@ -144,3 +144,7 @@ bool Book::MarkWord(const QString &word, const bool& know) {
   }
   return Database::WriteEntry(entry, path_);
 }
+
+WordEntry Book::LookUp(const QString &word) {
+  return Database::LookUp(word, path_);
+}

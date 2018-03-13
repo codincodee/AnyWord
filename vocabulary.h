@@ -17,7 +17,7 @@ public:
   void PrintAll();
   void Clone(const Vocabulary& obj);
   WordEntry GetWord();
-  WordEntry Lookup(const WordEntry& entry);
+  // WordEntry Lookup(const WordEntry& entry);
   WordEntry MarkWord(const QString& word, const bool& know);
   // bool DeleteWord(const QString& word);
   struct ChronoEntry {

@@ -277,3 +277,49 @@ bool Database::DeleteEntry(const QString &word, const QString &path_to_dir) {
   }
   return true;
 }
+
+WordEntry Database::LookUp(const QString &word, const QString &path_to_dir) {
+  auto path_to_file = path_to_dir + "/" + DBFileName();
+  if (!QFile(path_to_file).exists()) {
+    return WordEntry();
+  }
+  if (!KeepDBOpen(path_to_file, q_sql_database_)) {
+    return WordEntry();
+  }
+
+  QSqlQuery query;
+  QString cmd;
+
+  cmd =
+      "SELECT"
+      "  word,"
+      "  meaning,"
+      "  note,"
+      "  hit,"
+      "  hit_ts,"
+      "  miss,"
+      "  miss_ts,"
+      "  require_spelling "
+      "FROM vocabulary "
+      "WHERE word = '" + word + "'";
+  query.prepare(cmd);
+  if (query.exec()) {
+    WordEntry entry;
+    for (int row = 0; query.next(); ++row) {
+      int i = 0;
+      entry.word = query.value(i++).toString();
+      entry.meaning = query.value(i++).toString();
+      entry.note = query.value(i++).toString();
+      entry.hit = query.value(i++).toInt();
+      entry.hit_ts = query.value(i++).toString();
+      entry.miss = query.value(i++).toInt();
+      entry.miss_ts = query.value(i++).toString();
+      entry.require_spelling = query.value(i++).toInt();
+    }
+    return entry;
+  } else {
+    qDebug() << cmd << query.lastError();
+    return WordEntry();
+  }
+  return WordEntry();
+}

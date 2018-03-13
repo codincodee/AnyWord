@@ -22,7 +22,7 @@ public:
   bool WriteEntry(const WordEntry& entry);
   static bool Delete(const QString& path);
   bool MarkWord(const QString& word, const bool& know);
-
+  WordEntry LookUp(const QString& word);
 signals:
   void SaveRecord(const QString& path);
   void PlayRecord(const QString& path);

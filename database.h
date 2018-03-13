@@ -20,6 +20,7 @@ public:
   static std::shared_ptr<Vocabulary> LoadVocabulary(const QString& path_to_dir);
   static bool WriteEntry(const WordEntry& entry, const QString& path_to_dir);
   static bool DeleteEntry(const QString& word, const QString& path_to_dir);
+  static WordEntry LookUp(const QString& word, const QString& path_to_dir);
   static void CloseDB(const QString& path);
 private:
   static bool KeepDBOpen(const QString& path_to_db, QSqlDatabase& db);

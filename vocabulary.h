@@ -4,7 +4,6 @@
 #include <QObject>
 #include "word_entry.h"
 #include <QHash>
-#include <list>
 #include <set>
 
 class Vocabulary : public QObject
@@ -27,7 +26,6 @@ public:
 private:
   void ClearStorage();
   QHash<QString, WordEntry*> vocabulary_;
-  std::list<WordEntry*> entry_pool_;
   std::multiset<ChronoEntry> chronology_;
   int current_index_;
 };

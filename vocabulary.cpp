@@ -15,7 +15,6 @@ void Vocabulary::LoadWord(const WordEntry &entry) {
   auto vo_i = vocabulary_.find(entry.word);
   if (vo_i == vocabulary_.end()) {
     auto entry_addr = new WordEntry(entry);
-    entry_pool_.push_back(entry_addr);
     vocabulary_.insert(entry.word, entry_addr);
     chronology_.insert(ChronoEntry(entry_addr));
   } else {
@@ -33,15 +32,16 @@ void Vocabulary::PrintAll() {
 
 void Vocabulary::Clone(const Vocabulary &obj) {
   ClearStorage();
-  for (auto& entry_addr : obj.entry_pool_) {
+  for (auto& entry_addr : obj.vocabulary_) {
+    if (!entry_addr) {
+      continue;
+    }
     if (entry_addr->Empty()) {
       continue;
     }
-    entry_pool_.push_back(new WordEntry(*entry_addr));
-  }
-  for (auto& entry_addr : entry_pool_) {
-    vocabulary_.insert(entry_addr->word, entry_addr);
-    chronology_.insert(ChronoEntry(entry_addr));
+    auto new_entry_addr = new WordEntry(*entry_addr);
+    vocabulary_.insert(new_entry_addr->word, new_entry_addr);
+    chronology_.insert(ChronoEntry(new_entry_addr));
   }
 //  for (auto& i : chronology_) {
 //    qDebug() << i.entry->word << i.entry->miss_ts;
@@ -98,11 +98,9 @@ bool Vocabulary::DeleteWord(const QString &word) {
 }
 
 void Vocabulary::ClearStorage() {
-  for (auto& entry_addr : entry_pool_) {
+  for (auto& entry_addr : vocabulary_) {
     delete entry_addr;
-    entry_addr = nullptr;
   }
-  entry_pool_.clear();
   vocabulary_.clear();
   chronology_.clear();
 }

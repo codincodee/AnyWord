@@ -37,6 +37,7 @@ signals:
   void DeleteRecord(const QString& word);
   void SaveRecord(const QString& word);
   void LoadRecord(const QString& word);
+  void CloseBook();
 
 protected:
   void DisableWidgets(std::vector<QWidget*>& widgets, const bool& disable);
@@ -57,6 +58,8 @@ private slots:
   void on_DeletePushButton_clicked();
 
   void OnLoadEntry(const QString& word);
+
+  void OnShow();
 private:
   Ui::AddWordsMainWindow *ui;
   std::shared_ptr<Factory> factory_;

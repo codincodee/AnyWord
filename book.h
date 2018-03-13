@@ -37,6 +37,8 @@ public slots:
   void OnDeleteRecord(const QString& word);
 
   void OnDeleteEntry(const QString& word);
+
+  void OnCloseSignal();
 private:
   std::shared_ptr<Vocabulary> vocabulary_;
   BookInfo information_;

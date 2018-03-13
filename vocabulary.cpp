@@ -11,17 +11,27 @@ Vocabulary::~Vocabulary() {
   ClearStorage();
 }
 
-void Vocabulary::LoadWord(const WordEntry &entry) {
+bool Vocabulary::PrepareWord(const WordEntry &entry) {
   auto vo_i = vocabulary_.find(entry.word);
   if (vo_i == vocabulary_.end()) {
     auto entry_addr = new WordEntry(entry);
     vocabulary_.insert(entry.word, entry_addr);
     chronology_.insert(ChronoEntry(entry_addr));
+    return true;
   } else {
-    *(*vo_i) = entry;
-    // TODO: Here is an ignored issue
+    return false;
   }
 }
+
+//bool Vocabulary::UpdateWordNonHistoryComponents(const WordEntry &entry) {
+//  auto vo_i = vocabulary_.find(entry.word);
+//  if (vo_i == vocabulary_.end()) {
+//    return false;
+//  } else {
+//    WordEntry::UpdateNonHistoryComponents(entry, *(*vo_i));
+//    return true;
+//  }
+//}
 
 void Vocabulary::PrintAll() {
 //  for (auto& entry : vocabulary_) {
@@ -87,15 +97,15 @@ WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
   return *(*vo_i);
 }
 
-bool Vocabulary::DeleteWord(const QString &word) {
-  auto vo_i = vocabulary_.find(word);
-  if (vo_i == vocabulary_.end()) {
-    return true;
-  }
-  (*vo_i)->Clear();
-  vocabulary_.remove(word);
-  return true;
-}
+//bool Vocabulary::DeleteWord(const QString &word) {
+//  auto vo_i = vocabulary_.find(word);
+//  if (vo_i == vocabulary_.end()) {
+//    return true;
+//  }
+//  (*vo_i)->Clear();
+//  // vocabulary_.remove(word);
+//  return true;
+//}
 
 void Vocabulary::ClearStorage() {
   for (auto& entry_addr : vocabulary_) {
@@ -103,6 +113,10 @@ void Vocabulary::ClearStorage() {
   }
   vocabulary_.clear();
   chronology_.clear();
+}
+
+void Vocabulary::Clear() {
+  ClearStorage();
 }
 
 Vocabulary::ChronoEntry::ChronoEntry(WordEntry* en) : entry(en) {}

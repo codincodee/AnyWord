@@ -15,3 +15,11 @@ void WordEntry::Clear() {
   hit = 0;
   miss = 0;
 }
+
+//void WordEntry::UpdateNonHistoryComponents(
+//    const WordEntry &from, WordEntry &to) {
+//  to.word = from.word;
+//  to.meaning = from.meaning;
+//  to.note = from.note;
+//  to.require_spelling = from.require_spelling;
+//}

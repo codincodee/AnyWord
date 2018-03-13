@@ -15,9 +15,7 @@ MainWindow::~MainWindow()
   emit Destroyed();
 }
 
-bool MainWindow::Init() {
-  ui->setupUi(this);
-
+void MainWindow::InitUI() {
   // Word Label
   auto word_label = WordLabel();
   QFont font = word_label->font();
@@ -80,6 +78,14 @@ bool MainWindow::Init() {
   play_back_push_button->setVisible(true);
 
   ui->SpellingLineEdit->setVisible(false);
+
+  ui->InformationLabel->clear();
+}
+
+bool MainWindow::Init() {
+  ui->setupUi(this);
+
+  InitUI();
 
   QAction* action_add_words = new QAction("Add Words", this);
   connect(
@@ -291,4 +297,10 @@ void MainWindow::on_ModifyWordToolButton_clicked()
   emit ShowAddWordsMainWindow();
   qApp->processEvents();
   emit ModifyEntry(ui->WordLabel->text());
+}
+
+void MainWindow::OnCloseBook() {
+  current_word_.Clear();
+  i_know_current_word_ = false;
+  InitUI();
 }

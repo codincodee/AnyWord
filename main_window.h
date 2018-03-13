@@ -65,7 +65,9 @@ private slots:
 
   void on_ModifyWordToolButton_clicked();
 
+  void OnCloseBook();
 private:
+  void InitUI();
   void DisplayWordMeaning(const WordEntry& word, const bool& know);
   void DisplayWordNote(const WordEntry& word);
   void SetUIFocus(const WordEntry& word);

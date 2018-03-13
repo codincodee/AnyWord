@@ -74,14 +74,28 @@ Vocabulary& Book::GetVocabulary() {
 }
 
 bool Book::WriteEntry(const WordEntry &entry) {
-  vocabulary_->LoadWord(entry);
+  // TODO: make sure that the book is closed
+  if (vocabulary_->WordNum()) {
+    qDebug() << "Close the book before writing an entry.";
+    return false;
+  }
+  // vocabulary_->UpdateWordNonHistoryComponents(entry);
   // emit SaveRecord(path_ + "/" + entry.word);
   return Database::WriteEntry(entry, path_);
 }
 
 void Book::OnDeleteEntry(const QString &word) {
-  vocabulary_->DeleteWord(word);
+  // vocabulary_->DeleteWord(word);
+  // TODO: make sure that the book is closed
+  if (vocabulary_->WordNum()) {
+    qDebug() << "Close the book before deleting an entry";
+    return;
+  }
   Database::DeleteEntry(word, path_);
+}
+
+void Book::OnCloseSignal() {
+  vocabulary_->Clear();
 }
 
 BookInfo Book::GetBookInfo() {

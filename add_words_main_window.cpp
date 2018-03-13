@@ -183,3 +183,8 @@ void AddWordsMainWindow::OnLoadEntry(const QString &word) {
   qApp->processEvents();
   on_WordLineEdit_editingFinished();
 }
+
+void AddWordsMainWindow::OnShow() {
+  emit CloseBook();
+  this->show();
+}

@@ -149,7 +149,7 @@ shared_ptr<Vocabulary> Database::LoadVocabulary(const QString &path_to_dir) {
       entry.miss = query.value(i++).toInt();
       entry.miss_ts = query.value(i++).toString();
       entry.require_spelling = query.value(i++).toInt();
-      vocabulary->LoadWord(entry);
+      vocabulary->PrepareWord(entry);
     }
   } else {
     qDebug() << cmd << query.lastError();

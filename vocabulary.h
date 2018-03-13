@@ -12,17 +12,22 @@ class Vocabulary : public QObject
 public:
   Vocabulary();
   ~Vocabulary();
-  void LoadWord(const WordEntry& entry);
+  bool PrepareWord(const WordEntry& entry);
+  // bool UpdateWordNonHistoryComponents(const WordEntry& entry);
   void PrintAll();
   void Clone(const Vocabulary& obj);
   WordEntry GetWord();
   WordEntry Lookup(const WordEntry& entry);
   WordEntry MarkWord(const QString& word, const bool& know);
-  bool DeleteWord(const QString& word);
+  // bool DeleteWord(const QString& word);
   struct ChronoEntry {
     ChronoEntry(WordEntry* entry);
     WordEntry* entry = nullptr;
   };
+  inline int WordNum() const {
+    return vocabulary_.size();
+  }
+  void Clear();
 private:
   void ClearStorage();
   QHash<QString, WordEntry*> vocabulary_;

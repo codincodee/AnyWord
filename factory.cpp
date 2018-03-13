@@ -72,7 +72,7 @@ bool Factory::Construct() {
       main_window,
       SIGNAL(ShowAddWordsMainWindow()),
       add_words_main_window,
-      SLOT(show()));
+      SLOT(OnShow()));
 
   connect(
       main_window,
@@ -229,6 +229,18 @@ bool Factory::Construct() {
       SIGNAL(ModifyEntry(QString)),
       add_words_main_window,
       SLOT(OnLoadEntry(QString)));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(CloseBook()),
+      main_window,
+      SLOT(OnCloseBook()));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(CloseBook()),
+      current_book,
+      SLOT(OnCloseSignal()));
   return true;
 }
 

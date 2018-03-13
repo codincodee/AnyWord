@@ -19,6 +19,7 @@ struct WordEntry
 
   bool Empty() const;
   void Clear();
+  // static void UpdateNonHistoryComponents(const WordEntry& from, WordEntry& to);
 };
 
 #endif // WORD_ENTRY_H

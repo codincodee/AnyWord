@@ -36,6 +36,7 @@ bool Factory::Construct() {
   recycle_objects_.push_back(media_manager);
 
   auto minimized_main_window_ = new MinimizedMainWindow;
+  minimized_main_window_->show();
   recycle_widgets_.push_back(minimized_main_window_);
 
   select_book_main_window->RegisterBookListCallback(
@@ -48,7 +49,7 @@ bool Factory::Construct() {
       bind(&Bookshelf::DeleteBook, bookshelf, placeholders::_1));
 
   main_window->RegisterGetWordCallback(
-      [current_book](){return current_book->GetVocabulary().GetWord();});
+      [current_book](){return current_book->GetVocabulary().OfferWord();});
   main_window->RegisterMarkWordCallback(
       [current_book](const QString& word, const bool& know){
         return current_book->MarkWord(word, know);});

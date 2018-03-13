@@ -16,7 +16,7 @@ public:
   // bool UpdateWordNonHistoryComponents(const WordEntry& entry);
   void PrintAll();
   void Clone(const Vocabulary& obj);
-  WordEntry GetWord();
+  WordEntry OfferWord();
   // WordEntry Lookup(const WordEntry& entry);
   WordEntry MarkWord(const QString& word, const bool& know);
   // bool DeleteWord(const QString& word);
@@ -29,9 +29,15 @@ public:
   }
   void Clear();
 private:
+  bool IfMastered(const WordEntry& entry);
+  bool IfWeakMastered(
+      const WordEntry& now,
+      const QString& prev_hit_ts, const QString& prev_miss_ts);
   void ClearStorage();
+  static void FixChronology(std::multiset<ChronoEntry>& chronology);
   QHash<QString, WordEntry*> vocabulary_;
   std::multiset<ChronoEntry> chronology_;
+  std::vector<WordEntry*> offer_list_;
   int current_index_;
 };
 

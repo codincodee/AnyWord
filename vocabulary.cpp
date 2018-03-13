@@ -1,6 +1,10 @@
 #include "vocabulary.h"
 #include <QDebug>
 #include <QDateTime>
+#include <random>
+
+std::random_device gRd;
+std::mt19937 gGen(gRd());
 
 Vocabulary::Vocabulary()
 {
@@ -12,6 +16,9 @@ Vocabulary::~Vocabulary() {
 }
 
 bool Vocabulary::PrepareWord(const WordEntry &entry) {
+  if (IfMastered(entry)) {
+    return true;
+  }
   auto vo_i = vocabulary_.find(entry.word);
   if (vo_i == vocabulary_.end()) {
     auto entry_addr = new WordEntry(entry);
@@ -54,24 +61,50 @@ void Vocabulary::Clone(const Vocabulary &obj) {
     vocabulary_.insert(new_entry_addr->word, new_entry_addr);
     chronology_.insert(ChronoEntry(new_entry_addr));
   }
-  for (auto& i : chronology_) {
-    qDebug() << i.entry->word << i.entry->hit_ts << i.entry->miss_ts;
-  }
+//  for (auto& i : chronology_) {
+//    qDebug() << i.entry->word << i.entry->hit_ts << i.entry->miss_ts;
+//  }
 }
 
-WordEntry Vocabulary::GetWord() {
-  if (vocabulary_.size() <= 0) {
+WordEntry Vocabulary::OfferWord() {
+//  if (vocabulary_.size() <= 0) {
+//    return WordEntry();
+//  }
+//  WordEntry entry;
+//  if (current_index_ < vocabulary_.size()) {
+//    entry = *(*(vocabulary_.begin() + current_index_));
+//  } else {
+//    current_index_ = 0;
+//    entry = *(*(vocabulary_.begin() + current_index_));
+//  }
+//  ++current_index_;
+
+  // No offer_list_
+  if (offer_list_.empty()) {
+    // Load offer_list_ until (1) offer_list_ > 30; (2) chronology_ used out
+    for (auto& chrono_entry : chronology_) {
+      if (!chrono_entry.entry) {
+        continue;
+      }
+      if (IfMastered(*chrono_entry.entry)) {
+        continue;
+      }
+      offer_list_.push_back(chrono_entry.entry);
+      if (offer_list_.size() >= 40) {
+        break;
+      }
+    }
+  }
+
+  if (offer_list_.empty()) {
     return WordEntry();
   }
-  WordEntry entry;
-  if (current_index_ < vocabulary_.size()) {
-    entry = *(*(vocabulary_.begin() + current_index_));
-  } else {
-    current_index_ = 0;
-    entry = *(*(vocabulary_.begin() + current_index_));
-  }
+
   ++current_index_;
-  return entry;
+  if (current_index_ >= offer_list_.size() || current_index_ < 0) {
+    current_index_ = 0;
+  }
+  return *offer_list_[current_index_];
 }
 
 //WordEntry Vocabulary::Lookup(const WordEntry &entry) {
@@ -88,13 +121,52 @@ WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
   if (vo_i == vocabulary_.end()) {
     return WordEntry();
   }
+  auto previous_hit_ts = (*vo_i)->hit_ts;
+  auto previous_miss_ts = (*vo_i)->miss_ts;
+
   if (know) {
     ++((*vo_i)->hit);
     (*vo_i)->hit_ts = QDateTime::currentDateTime().toString();
   } else {
     ++((*vo_i)->miss);
     (*vo_i)->miss_ts = QDateTime::currentDateTime().toString();
+    return *(*vo_i);
   }
+
+  auto entry = *(*vo_i);
+  if (IfWeakMastered(entry, previous_hit_ts, previous_miss_ts)) {
+    int erased_offer_index = -1;
+    for (int offer = 0; offer < offer_list_.size(); ++offer) {
+      if (offer_list_[offer]->word == entry.word) {
+        offer_list_.erase(offer_list_.begin() + offer);
+        erased_offer_index = offer;
+      }
+    }
+    FixChronology(chronology_);
+    for (auto chrono = chronology_.rbegin();
+         chrono !=chronology_.rend(); ++chrono) {
+      if (IfMastered(*chrono->entry)) {
+        continue;
+      }
+      bool existed = false;
+      for (auto& offer : offer_list_) {
+        if (offer->word == chrono->entry->word) {
+          existed = true;
+        }
+      }
+      if (existed) {
+        continue;
+      } else {
+        if (erased_offer_index < 0) {
+          qDebug() << __FILE__ << __LINE__;
+        }
+        offer_list_.insert(
+            offer_list_.begin() + erased_offer_index, chrono->entry);
+        break;
+      }
+    }
+  }
+
   return *(*vo_i);
 }
 
@@ -108,12 +180,68 @@ WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
 //  return true;
 //}
 
+bool Vocabulary::IfMastered(const WordEntry &entry) {
+  if (entry.hit < 20) {
+    return false;
+  }
+  if (entry.hit * 1.0f / entry.miss < 3.0f) {
+    return false;
+  }
+  auto hit_ts =
+      entry.hit_ts.isEmpty() ?
+          QDateTime::fromSecsSinceEpoch(0) :
+          QDateTime::fromString(entry.hit_ts);
+  auto miss_ts =
+      entry.miss_ts.isEmpty() ?
+          QDateTime::fromSecsSinceEpoch(0) :
+          QDateTime::fromString(entry.miss_ts);
+
+  if ((hit_ts.toSecsSinceEpoch() - miss_ts.toSecsSinceEpoch()) < 3600 * 2) {
+    return false;
+  }
+  return true;
+}
+
+bool Vocabulary::IfWeakMastered(
+    const WordEntry &entry,
+    const QString &prev_hit_ts, const QString &prev_miss_ts) {
+  auto now_hit =
+      entry.hit_ts.isEmpty() ?
+          QDateTime::fromSecsSinceEpoch(0) :
+          QDateTime::fromString(entry.hit_ts);
+  auto now_miss =
+      entry.miss_ts.isEmpty() ?
+          QDateTime::fromSecsSinceEpoch(0) :
+          QDateTime::fromString(entry.miss_ts);
+  auto prev_hit =
+      prev_hit_ts.isEmpty() ?
+          QDateTime::fromSecsSinceEpoch(0) :
+          QDateTime::fromString(prev_hit_ts);
+  auto prev_miss =
+      prev_miss_ts.isEmpty() ?
+          QDateTime::fromSecsSinceEpoch(0) :
+          QDateTime::fromString(prev_miss_ts);
+
+  if (now_hit < now_miss) {
+    return false;
+  }
+  if (prev_hit > prev_miss) {
+    if ((now_hit.toSecsSinceEpoch() - prev_hit.toSecsSinceEpoch()) < 60 * 30) {
+      if ((prev_hit.toSecsSinceEpoch() - prev_miss.toSecsSinceEpoch()) > 60 * 7) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 void Vocabulary::ClearStorage() {
   for (auto& entry_addr : vocabulary_) {
     delete entry_addr;
   }
   vocabulary_.clear();
   chronology_.clear();
+  offer_list_.clear();
 }
 
 void Vocabulary::Clear() {
@@ -163,4 +291,12 @@ bool operator<(
   }
 
   return stamp1 > stamp2;
+}
+
+void Vocabulary::FixChronology(std::multiset<ChronoEntry> &chronology) {
+  std::multiset<ChronoEntry> new_chronology;
+  for (auto& chrono : chronology) {
+    new_chronology.insert(chrono);
+  }
+  chronology = new_chronology;
 }

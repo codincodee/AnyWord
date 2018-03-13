@@ -54,9 +54,9 @@ void Vocabulary::Clone(const Vocabulary &obj) {
     vocabulary_.insert(new_entry_addr->word, new_entry_addr);
     chronology_.insert(ChronoEntry(new_entry_addr));
   }
-//  for (auto& i : chronology_) {
-//    qDebug() << i.entry->word << i.entry->miss_ts;
-//  }
+  for (auto& i : chronology_) {
+    qDebug() << i.entry->word << i.entry->hit_ts << i.entry->miss_ts;
+  }
 }
 
 WordEntry Vocabulary::GetWord() {
@@ -132,14 +132,35 @@ bool operator<(
     return false;
   }
 
-  if (e1.entry->miss_ts.isEmpty() && !e2.entry->miss_ts.isEmpty()) {
-    return false;
-  } else if (!e1.entry->miss_ts.isEmpty() && e2.entry->miss_ts.isEmpty()) {
-    return true;
-  } else if (e1.entry->miss_ts.isEmpty() && e2.entry->miss_ts.isEmpty()) {
+  if (e1.entry->hit_ts.isEmpty() && e1.entry->miss_ts.isEmpty()) {
     return false;
   }
-  return
-      QDateTime::fromString(e1.entry->miss_ts) >
-      QDateTime::fromString(e2.entry->miss_ts);
+  if (e2.entry->hit_ts.isEmpty() && e2.entry->miss_ts.isEmpty()) {
+    return true;
+  }
+
+  QDateTime stamp1, stamp2;
+  if (e1.entry->hit_ts.isEmpty()) {
+    stamp1 = QDateTime::fromString(e1.entry->miss_ts);
+  } else if (e1.entry->miss_ts.isEmpty()) {
+    stamp1 = QDateTime::fromString(e1.entry->hit_ts);
+  } else {
+    QDateTime hit, miss;
+    hit = QDateTime::fromString(e1.entry->hit_ts);
+    miss = QDateTime::fromString(e1.entry->miss_ts);
+    stamp1 = (hit > miss) ? hit : miss;
+  }
+
+  if (e2.entry->hit_ts.isEmpty()) {
+    stamp2 = QDateTime::fromString(e2.entry->miss_ts);
+  } else if (e2.entry->miss_ts.isEmpty()) {
+    stamp2 = QDateTime::fromString(e2.entry->hit_ts);
+  } else {
+    QDateTime hit, miss;
+    hit = QDateTime::fromString(e2.entry->hit_ts);
+    miss = QDateTime::fromString(e2.entry->miss_ts);
+    stamp2 = (hit > miss) ? hit : miss;
+  }
+
+  return stamp1 > stamp2;
 }

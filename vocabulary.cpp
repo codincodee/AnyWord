@@ -125,9 +125,11 @@ WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
   auto previous_miss_ts = (*vo_i)->miss_ts;
 
   if (know) {
+    (*vo_i)->miss = 0;
     ++((*vo_i)->hit);
     (*vo_i)->hit_ts = QDateTime::currentDateTime().toString();
   } else {
+    (*vo_i)->hit = 0;
     ++((*vo_i)->miss);
     (*vo_i)->miss_ts = QDateTime::currentDateTime().toString();
     return *(*vo_i);
@@ -181,24 +183,24 @@ WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
 //}
 
 bool Vocabulary::IfMastered(const WordEntry &entry) {
-  if (entry.hit < 15) {
+  if (entry.hit < 6) {
     return false;
   }
-  if (entry.hit * 1.0f / entry.miss < 1.5f) {
-    return false;
-  }
-  auto hit_ts =
-      entry.hit_ts.isEmpty() ?
-          QDateTime::fromSecsSinceEpoch(0) :
-          QDateTime::fromString(entry.hit_ts);
-  auto miss_ts =
-      entry.miss_ts.isEmpty() ?
-          QDateTime::fromSecsSinceEpoch(0) :
-          QDateTime::fromString(entry.miss_ts);
+//  if (entry.hit * 1.0f / entry.miss < 1.5f) {
+//    return false;
+//  }
+//  auto hit_ts =
+//      entry.hit_ts.isEmpty() ?
+//          QDateTime::fromSecsSinceEpoch(0) :
+//          QDateTime::fromString(entry.hit_ts);
+//  auto miss_ts =
+//      entry.miss_ts.isEmpty() ?
+//          QDateTime::fromSecsSinceEpoch(0) :
+//          QDateTime::fromString(entry.miss_ts);
 
-  if ((hit_ts.toSecsSinceEpoch() - miss_ts.toSecsSinceEpoch()) < 3600 * 2) {
-    return false;
-  }
+//  if ((hit_ts.toSecsSinceEpoch() - miss_ts.toSecsSinceEpoch()) < 3600 * 2) {
+//    return false;
+//  }
   return true;
 }
 
@@ -227,8 +229,12 @@ bool Vocabulary::IfWeakMastered(
   }
   if (prev_hit > prev_miss) {
     if ((now_hit.toSecsSinceEpoch() - prev_hit.toSecsSinceEpoch()) < 60 * 30) {
-      if ((prev_hit.toSecsSinceEpoch() - prev_miss.toSecsSinceEpoch()) > 60 * 7) {
+      if ((prev_hit.toSecsSinceEpoch() - prev_miss.toSecsSinceEpoch()) > 60 * 10) {
         return true;
+      } else {
+        if (entry.hit >= 3) {
+          return true;
+        }
       }
     }
   }

@@ -21,6 +21,7 @@ void Book::Clone(const Book &obj) {
   }
   information_ = obj.information_;
   path_ = obj.path_;
+  // qDebug() << Database::ClearHistory(path_);
 }
 
 void Book::OnChange(std::shared_ptr<Book> new_book) {

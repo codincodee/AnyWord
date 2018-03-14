@@ -113,6 +113,64 @@ BookInfo Database::ReadBookInfoFromDB(const QString &path_to_dir) {
   return info;
 }
 
+bool Database::ClearHistory(const QString &path_to_dir) {
+  auto path_to_file = path_to_dir + "/" + DBFileName();
+  if (!QFile(path_to_file).exists()) {
+    return false;
+  }
+  if (!KeepDBOpen(path_to_file, q_sql_database_)) {
+    return false;
+  }
+
+  QSqlQuery query;
+  QString cmd;
+
+  vector<WordEntry> all_entries;
+
+  cmd =
+      "SELECT"
+      "  word,"
+      "  meaning,"
+      "  note,"
+      "  hit,"
+      "  hit_ts,"
+      "  miss,"
+      "  miss_ts,"
+      "  require_spelling "
+      "FROM vocabulary";
+  query.prepare(cmd);
+  if (query.exec()) {
+    for (int row = 0; query.next(); ++row) {
+      WordEntry entry;
+      int i = 0;
+      entry.word = query.value(i++).toString();
+      entry.meaning = query.value(i++).toString();
+      entry.note = query.value(i++).toString();
+      entry.hit = query.value(i++).toInt();
+      entry.hit_ts = query.value(i++).toString();
+      entry.miss = query.value(i++).toInt();
+      entry.miss_ts = query.value(i++).toString();
+      entry.require_spelling = query.value(i++).toInt();
+      all_entries.push_back(entry);
+    }
+  } else {
+    qDebug() << cmd << query.lastError();
+    return false;
+  }
+
+  bool all_success = true;
+  for (auto& entry : all_entries) {
+    entry.hit = 0;
+    entry.miss = 0;
+    entry.hit_ts.clear();
+    entry.miss_ts.clear();
+    if (!WriteEntry(entry, path_to_dir)) {
+      all_success = false;
+    }
+  }
+  return all_success;
+}
+
 shared_ptr<Vocabulary> Database::LoadVocabulary(const QString &path_to_dir) {
   auto path_to_file = path_to_dir + "/" + DBFileName();
   if (!QFile(path_to_file).exists()) {

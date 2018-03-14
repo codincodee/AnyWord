@@ -181,10 +181,10 @@ WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
 //}
 
 bool Vocabulary::IfMastered(const WordEntry &entry) {
-  if (entry.hit < 20) {
+  if (entry.hit < 15) {
     return false;
   }
-  if (entry.hit * 1.0f / entry.miss < 3.0f) {
+  if (entry.hit * 1.0f / entry.miss < 1.5f) {
     return false;
   }
   auto hit_ts =

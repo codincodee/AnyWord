@@ -31,16 +31,6 @@ bool Vocabulary::PrepareWord(const WordEntry &entry) {
   }
 }
 
-//bool Vocabulary::UpdateWordNonHistoryComponents(const WordEntry &entry) {
-//  auto vo_i = vocabulary_.find(entry.word);
-//  if (vo_i == vocabulary_.end()) {
-//    return false;
-//  } else {
-//    WordEntry::UpdateNonHistoryComponents(entry, *(*vo_i));
-//    return true;
-//  }
-//}
-
 void Vocabulary::PrintAll() {
 //  for (auto& entry : vocabulary_) {
 //    qDebug() << entry.word << entry.meaning << entry.note << entry.hit << entry.miss;
@@ -67,18 +57,6 @@ void Vocabulary::Clone(const Vocabulary &obj) {
 }
 
 WordEntry Vocabulary::OfferWord() {
-//  if (vocabulary_.size() <= 0) {
-//    return WordEntry();
-//  }
-//  WordEntry entry;
-//  if (current_index_ < vocabulary_.size()) {
-//    entry = *(*(vocabulary_.begin() + current_index_));
-//  } else {
-//    current_index_ = 0;
-//    entry = *(*(vocabulary_.begin() + current_index_));
-//  }
-//  ++current_index_;
-
   // No offer_list_
   if (offer_list_.empty()) {
     // Load offer_list_ until (1) offer_list_ > 30; (2) chronology_ used out
@@ -106,15 +84,6 @@ WordEntry Vocabulary::OfferWord() {
   }
   return *offer_list_[current_index_];
 }
-
-//WordEntry Vocabulary::Lookup(const WordEntry &entry) {
-//  auto vo_i = vocabulary_.find(entry.word);
-//  if (vo_i == vocabulary_.end()) {
-//    return WordEntry();
-//  } else {
-//    return *(*vo_i);
-//  }
-//}
 
 WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
   auto vo_i = vocabulary_.find(word);
@@ -172,16 +141,6 @@ WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
   return *(*vo_i);
 }
 
-//bool Vocabulary::DeleteWord(const QString &word) {
-//  auto vo_i = vocabulary_.find(word);
-//  if (vo_i == vocabulary_.end()) {
-//    return true;
-//  }
-//  (*vo_i)->Clear();
-//  // vocabulary_.remove(word);
-//  return true;
-//}
-
 bool Vocabulary::IfMastered(const WordEntry &entry) {
   if (entry.hit >= 6) {
     return true;
@@ -205,21 +164,6 @@ bool Vocabulary::IfMastered(const WordEntry &entry) {
       return true;
     }
   }
-//  if (entry.hit * 1.0f / entry.miss < 1.5f) {
-//    return false;
-//  }
-//  auto hit_ts =
-//      entry.hit_ts.isEmpty() ?
-//          QDateTime::fromSecsSinceEpoch(0) :
-//          QDateTime::fromString(entry.hit_ts);
-//  auto miss_ts =
-//      entry.miss_ts.isEmpty() ?
-//          QDateTime::fromSecsSinceEpoch(0) :
-//          QDateTime::fromString(entry.miss_ts);
-
-//  if ((hit_ts.toSecsSinceEpoch() - miss_ts.toSecsSinceEpoch()) < 3600 * 2) {
-//    return false;
-//  }
   return false;
 }
 

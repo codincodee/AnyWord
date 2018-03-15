@@ -13,13 +13,10 @@ public:
   Vocabulary();
   ~Vocabulary();
   bool PrepareWord(const WordEntry& entry);
-  // bool UpdateWordNonHistoryComponents(const WordEntry& entry);
   void PrintAll();
   void Clone(const Vocabulary& obj);
   WordEntry OfferWord();
-  // WordEntry Lookup(const WordEntry& entry);
   WordEntry MarkWord(const QString& word, const bool& know);
-  // bool DeleteWord(const QString& word);
   struct ChronoEntry {
     ChronoEntry(WordEntry* entry);
     WordEntry* entry = nullptr;

@@ -152,6 +152,6 @@ WordEntry Book::LookUp(const QString &word) {
 
 bool Book::GetBookProgress(int &memorized, int &total) {
   total = information_.word_num;
-  memorized = vocabulary_->WordNum();
+  memorized = total - vocabulary_->WordNum();
   return true;
 }

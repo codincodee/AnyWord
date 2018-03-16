@@ -149,3 +149,9 @@ bool Book::MarkWord(const QString &word, const bool& know) {
 WordEntry Book::LookUp(const QString &word) {
   return Database::LookUp(word, path_);
 }
+
+bool Book::GetBookProgress(int &memorized, int &total) {
+  total = information_.word_num;
+  memorized = vocabulary_->WordNum();
+  return true;
+}

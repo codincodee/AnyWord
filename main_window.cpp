@@ -77,6 +77,10 @@ void MainWindow::InitUI() {
   play_back_push_button->setSizePolicy(sp_retain);
   play_back_push_button->setVisible(true);
 
+  // Information Label
+  ui->MemorizedWordNumLabel->clear();
+  ui->TotalWordNumLabel->clear();
+
   ui->SpellingLineEdit->setVisible(false);
 
   ui->InformationLabel->clear();
@@ -122,6 +126,11 @@ void MainWindow::RegisterGetWordCallback(std::function<WordEntry ()> func) {
 void MainWindow::RegisterMarkWordCallback(
     std::function<bool (const QString &, const bool &)> func) {
   mark_word_callback_ = func;
+}
+
+void MainWindow::RegisterBookProgressCallback(
+    std::function<bool (int &, int &)> func) {
+  book_progress_callback_ = func;
 }
 
 QLabel* MainWindow::WordLabel() {
@@ -187,6 +196,13 @@ void MainWindow::OnCurrentBookChanged(const BookInfo &book) {
 //    current_word_ = get_word_callback_();
 //    i_know_current_word_ = false;
 //  }
+  if (book_progress_callback_) {
+    int memorized, total;
+    book_progress_callback_(memorized, total);
+    ui->MemorizedWordNumLabel->setText(QString::number(memorized));
+    ui->TotalWordNumLabel->setText(QString::number(total));
+    ui->ProgressBar->setValue(memorized * 100.0 / total);
+  }
   SetUIFocus(current_word_);
   current_word_.Clear();
   PassCurrentWord();
@@ -294,13 +310,15 @@ void MainWindow::on_ModifyWordToolButton_clicked()
   if (ui->WordLabel->text().isEmpty()) {
     return;
   }
+  auto word = ui->WordLabel->text();
   emit ShowAddWordsMainWindow();
   qApp->processEvents();
-  emit ModifyEntry(ui->WordLabel->text());
+  emit ModifyEntry(word);
 }
 
 void MainWindow::OnCloseBook() {
   current_word_.Clear();
   i_know_current_word_ = false;
   InitUI();
+  emit DisplayWordSignal(WordEntry());
 }

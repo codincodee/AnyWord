@@ -26,6 +26,8 @@ public:
   void RegisterGetWordCallback(std::function<WordEntry()> func);
   void RegisterMarkWordCallback(
       std::function<bool(const QString& word, const bool& know)> func);
+  void RegisterBookProgressCallback(
+      std::function<bool(int& memorized, int& total)> func);
 protected:
   QLabel* WordLabel();
   QLabel* MeaningLabel();
@@ -78,6 +80,7 @@ private:
 
   std::function<WordEntry()> get_word_callback_;
   std::function<bool(const QString& word, const bool& know)> mark_word_callback_;
+  std::function<bool(int& memorized, int& total)> book_progress_callback_;
   WordEntry current_word_;
   bool i_know_current_word_;
 };

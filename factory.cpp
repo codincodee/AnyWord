@@ -53,6 +53,9 @@ bool Factory::Construct() {
   main_window->RegisterMarkWordCallback(
       [current_book](const QString& word, const bool& know){
         return current_book->MarkWord(word, know);});
+  main_window->RegisterBookProgressCallback(
+      bind(&Book::GetBookProgress, current_book,
+           placeholders::_1, placeholders::_2));
 
   add_words_main_window->RegisterSearchBookCallback(
       [current_book](const WordEntry& entry){
@@ -62,6 +65,8 @@ bool Factory::Construct() {
 
   add_words_main_window->RegisterRecordExistsCallback(
       bind(&MediaManager::HasRecord, media_manager));
+  add_words_main_window->RegisterBookInfoCallback(
+      bind(&Book::GetBookInfo, current_book));
 
   connect(
       bookshelf,
@@ -92,6 +97,12 @@ bool Factory::Construct() {
       SIGNAL(SelectBook(const QString&)),
       bookshelf,
       SLOT(OnBookSelection(const QString&)));
+
+  connect(
+      add_words_main_window,
+      SIGNAL(SelectBook(const QString&)),
+      bookshelf,
+      SLOT(OnBookSelection(QString)));
 
   connect(
       bookshelf,

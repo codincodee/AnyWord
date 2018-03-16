@@ -25,7 +25,8 @@ public:
       std::function<bool(const WordEntry&)> func);
   void RegisterRecordExistsCallback(
       std::function<bool()> func);
-
+  void RegisterBookInfoCallback(
+      std::function<BookInfo()> func);
 signals:
   void SearchBook(WordEntry& entry);
   // void WriteDatabase(const WordEntry& entry);
@@ -38,9 +39,11 @@ signals:
   void SaveRecord(const QString& word);
   void LoadRecord(const QString& word);
   void CloseBook();
+  void SelectBook(const QString& book);
 
 protected:
   void DisableWidgets(std::vector<QWidget*>& widgets, const bool& disable);
+  void hideEvent(QHideEvent *event);
 
 private slots:
   void on_OkPushButton_clicked();
@@ -66,6 +69,7 @@ private:
   std::vector<QWidget*> all_widgets_;
   std::function<WordEntry(const WordEntry&)> search_book_callback_;
   std::function<bool(const WordEntry&)> write_entry_callback_;
+  std::function<BookInfo ()> book_info_callback_;
   std::function<bool()> record_exists_callback_;
 };
 

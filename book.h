@@ -23,6 +23,7 @@ public:
   static bool Delete(const QString& path);
   bool MarkWord(const QString& word, const bool& know);
   WordEntry LookUp(const QString& word);
+  bool GetBookProgress(int& memorized, int& total);
 signals:
   void SaveRecord(const QString& path);
   void PlayRecord(const QString& path);

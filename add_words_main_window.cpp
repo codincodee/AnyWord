@@ -62,6 +62,11 @@ void AddWordsMainWindow::RegisterRecordExistsCallback(
   record_exists_callback_ = func;
 }
 
+void AddWordsMainWindow::RegisterBookInfoCallback(
+    std::function<BookInfo ()> func) {
+  book_info_callback_ = func;
+}
+
 void AddWordsMainWindow::DisableWidgets(
     std::vector<QWidget *> &widgets, const bool& disable) {
   for (auto& widget : widgets) {
@@ -186,5 +191,19 @@ void AddWordsMainWindow::OnLoadEntry(const QString &word) {
 
 void AddWordsMainWindow::OnShow() {
   emit CloseBook();
+  if (book_info_callback_) {
+    BookInfo info = book_info_callback_();
+    ui->BookNameLabel->setText(info.name);
+  }
   this->show();
+}
+
+void AddWordsMainWindow::hideEvent(QHideEvent *event) {
+  if (book_info_callback_) {
+    BookInfo info = book_info_callback_();
+    if (!info.Empty()) {
+      emit SelectBook(info.name);
+    }
+  }
+  return QMainWindow::hideEvent(event);
 }

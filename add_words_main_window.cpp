@@ -159,6 +159,7 @@ void AddWordsMainWindow::OnRecordRadioButtonClicked() {
 
 void AddWordsMainWindow::on_PlayToolButton_clicked()
 {
+  ui->RecordRadioButton->setChecked(false);
   emit PlayRecord();
 }
 

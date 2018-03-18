@@ -47,6 +47,7 @@ QString MediaManager::TempAudioFilePath() {
 }
 
 void MediaManager::OnPlayRecord() {
+  q_audio_recorder_->stop();
   if (q_sound_effect_->isPlaying()) {
     q_sound_effect_->stop();
   }

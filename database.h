@@ -13,7 +13,7 @@ class Database : public ObjectBase
   Q_OBJECT
 public:
   Database();
-  bool Init();
+  static bool Init();
   static QString DBFileName();
   static bool NewDB(const QString& path, const BookInfo& info);
   static BookInfo ReadBookInfoFromDB(const QString& path_to_dir);
@@ -25,7 +25,7 @@ public:
   static void CloseDB(const QString& path);
 private:
   static bool KeepDBOpen(const QString& path_to_db, QSqlDatabase& db);
-  static QSqlDatabase q_sql_database_;
+  static std::shared_ptr<QSqlDatabase> q_sql_database_;
 };
 
 #endif // DATABASE_H

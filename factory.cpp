@@ -14,6 +14,8 @@ Factory::Factory()
 }
 
 bool Factory::Construct() {
+  Database::Init();
+
   auto main_window = new MainWindow;
   main_window->Init();
   main_window->show();

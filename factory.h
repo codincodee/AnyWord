@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <QObject>
+#include "bookshelf.h"
 
 class Factory : public QObject
 {
@@ -11,6 +12,7 @@ public:
   bool Construct();
   ~Factory();
 private:
+  QString ini_file_path_ = "settings.ini";
   std::vector<QObject*> recycle_objects_;
   std::vector<QWidget*> recycle_widgets_;
 };

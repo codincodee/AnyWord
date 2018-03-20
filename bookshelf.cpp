@@ -5,11 +5,20 @@
 #include <QFile>
 #include <QDir>
 #include <QThread>
+#include <QSettings>
+
 using namespace std;
+
+const QString kLastOpenBookIniKey = "last_open_book";
 
 Bookshelf::Bookshelf()
 {
 
+}
+
+Bookshelf::~Bookshelf() {
+  QSettings settings(ini_file_path_, QSettings::IniFormat);
+  settings.setValue(kLastOpenBookIniKey, current_book_name_);
 }
 
 bool Bookshelf::Init() {
@@ -23,8 +32,20 @@ void Bookshelf::OnBookSelection(const QString &book_name) {
     warn("No book found!");
     return;
   }
+  current_book_name_ = book_name;
   emit ChangeBook(book);
   emit CurrentBookChanged(book->GetBookInfo());
+}
+
+
+bool Bookshelf::OpenBookFromHistory() {
+  QSettings settings(ini_file_path_, QSettings::IniFormat);
+  auto book = settings.value(kLastOpenBookIniKey).toString();
+  if (book.isEmpty()) {
+    return false;
+  }
+  OnBookSelection(book);
+  return true;
 }
 
 QString Bookshelf::BookPath(const QString &name) {

@@ -27,6 +27,7 @@ bool Factory::Construct() {
   auto bookshelf = new Bookshelf;
   bookshelf->SetWidget(main_window);
   bookshelf->Init();
+  bookshelf->SetIniFilePath(ini_file_path_);
   recycle_objects_.push_back(bookshelf);
 
   auto current_book = new Book;
@@ -255,6 +256,8 @@ bool Factory::Construct() {
       SIGNAL(CloseBook()),
       current_book,
       SLOT(OnCloseSignal()));
+
+  bookshelf->OpenBookFromHistory();
   return true;
 }
 

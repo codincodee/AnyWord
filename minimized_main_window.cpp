@@ -32,7 +32,7 @@ MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
   shortcut = new QShortcut(QKeySequence("p"), this);
   connect(
       shortcut, SIGNAL(activated()), this, SLOT(on_PassPushButton_clicked()));
-  shortcut = new QShortcut(QKeySequence("q"), this);
+  shortcut = new QShortcut(QKeySequence("z"), this);
   connect(
       shortcut, SIGNAL(activated()), this, SLOT(OnShowHideSwitch()));
 }

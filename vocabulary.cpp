@@ -3,9 +3,6 @@
 #include <QDateTime>
 #include <random>
 
-std::random_device gRd;
-std::mt19937 gGen(gRd());
-
 Vocabulary::Vocabulary()
 {
   current_index_ = 0;

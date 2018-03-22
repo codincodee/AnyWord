@@ -10,6 +10,12 @@
 
 using namespace std;
 
+#include <random>
+#include <QDateTime>
+random_device gRd;
+mt19937 gGen(gRd());
+uniform_int_distribution<> gDis(0, 60);
+
 shared_ptr<QSqlDatabase> Database::q_sql_database_ = shared_ptr<QSqlDatabase>();
 
 Database::Database()
@@ -163,7 +169,8 @@ bool Database::ClearHistory(const QString &path_to_dir) {
   for (auto& entry : all_entries) {
     entry.hit = 0;
     entry.miss = 0;
-    entry.hit_ts.clear();
+    // entry.hit_ts.clear();
+    entry.hit_ts = QDateTime::fromSecsSinceEpoch(gDis(gGen)).toString();
     entry.miss_ts.clear();
     if (!WriteEntry(entry, path_to_dir)) {
       all_success = false;

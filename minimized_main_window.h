@@ -29,6 +29,7 @@ public slots:
 
 protected:
   void mousePressEvent(QMouseEvent *event);
+  void mouseMoveEvent(QMouseEvent* event);
 
 private slots:
   void on_PassPushButton_clicked();

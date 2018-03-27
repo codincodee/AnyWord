@@ -281,7 +281,7 @@ void MainWindow::on_IDontKnowTheWordPushButton_clicked()
   if (!ui->IDontKnowTheWordPushButton->isEnabled()) {
     return;
   }
-  ui->IKnowTheWordPushButton->setDisabled(true);
+  // ui->IKnowTheWordPushButton->setDisabled(true);
   ui->IDontKnowTheWordPushButton->setDisabled(true);
   ui->PassPushButton->setDisabled(false);
   i_know_current_word_ = false;

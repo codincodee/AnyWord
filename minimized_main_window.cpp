@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QMouseEvent>
 #include <QShortcut>
+#include <QRect>
 
 MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
   QWidget(parent),
@@ -13,7 +14,7 @@ MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
   setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-  auto desktop = QApplication::desktop()->availableGeometry();
+  QRect desktop = QApplication::desktop()->availableGeometry();
   auto window = this->rect();
   this->move(desktop.topLeft() - window.topLeft());
 
@@ -70,6 +71,12 @@ void MinimizedMainWindow::mousePressEvent(QMouseEvent *event) {
     OnShowHideSwitch();
   }
   return QWidget::mousePressEvent(event);
+}
+
+void MinimizedMainWindow::mouseMoveEvent(QMouseEvent *event) {
+  if (event->buttons() & Qt::LeftButton) {
+    this->move(mapToParent(QCursor::pos() - this->pos()));
+  }
 }
 
 void MinimizedMainWindow::SetAllWidgetsVisible(const bool &visible) {

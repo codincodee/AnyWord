@@ -23,6 +23,10 @@ MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
   widgets_.push_back(ui->CrossPushButton);
   widgets_.push_back(ui->PassPushButton);
 
+  ui->CheckPushButton->setVisible(false);
+  ui->CrossPushButton->setVisible(false);
+  ui->PassPushButton->setVisible(false);
+
   QShortcut* shortcut;
   shortcut = new QShortcut(QKeySequence("x"), this);
   connect(

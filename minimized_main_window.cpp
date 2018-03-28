@@ -19,9 +19,9 @@ MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
   this->move(desktop.topLeft() - window.topLeft());
 
   widgets_.push_back(ui->MessageLabel);
-  widgets_.push_back(ui->CheckPushButton);
-  widgets_.push_back(ui->CrossPushButton);
-  widgets_.push_back(ui->PassPushButton);
+//  widgets_.push_back(ui->CheckPushButton);
+//  widgets_.push_back(ui->CrossPushButton);
+//  widgets_.push_back(ui->PassPushButton);
 
   ui->CheckPushButton->setVisible(false);
   ui->CrossPushButton->setVisible(false);

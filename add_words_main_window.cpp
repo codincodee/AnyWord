@@ -40,6 +40,9 @@ AddWordsMainWindow::AddWordsMainWindow(QWidget *parent) :
   shortcut = new QShortcut(QKeySequence("w"), this);
   connect(
       shortcut, SIGNAL(activated()), ui->WordLineEdit, SLOT(setFocus()));
+  shortcut = new QShortcut(QKeySequence("n"), this);
+  connect(
+      shortcut, SIGNAL(activated()), ui->NotePlainTextEdit, SLOT(setFocus()));
 }
 
 AddWordsMainWindow::~AddWordsMainWindow()

@@ -136,3 +136,11 @@ void SelectBookMainWindow::on_DeletePushButton_clicked()
     qDebug() << "Delete Book callback not registered!";
   }
 }
+
+void SelectBookMainWindow::on_EditBookPushButton_clicked()
+{
+  auto book_name = ui->BookComboBox->currentText();
+  if (!book_name.isEmpty()) {
+    emit EditBook(book_name);
+  }
+}

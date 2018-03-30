@@ -6,6 +6,7 @@
 #include "bookshelf.h"
 #include "media_manager.h"
 #include "minimized_main_window.h"
+#include "edit_book_window.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ bool Factory::Construct() {
 
   auto add_words_main_window = new AddWordsMainWindow(main_window);
   auto select_book_main_window = new SelectBookMainWindow(main_window);
+  auto edit_book_main_window = new EditBookWindow(select_book_main_window);
 
   auto bookshelf = new Bookshelf;
   bookshelf->SetWidget(main_window);
@@ -256,6 +258,12 @@ bool Factory::Construct() {
       SIGNAL(CloseBook()),
       current_book,
       SLOT(OnCloseSignal()));
+
+  connect(
+      select_book_main_window,
+      SIGNAL(EditBook(QString)),
+      edit_book_main_window,
+      SLOT(OnEditBook(QString)));
 
   bookshelf->OpenBookFromHistory();
   return true;

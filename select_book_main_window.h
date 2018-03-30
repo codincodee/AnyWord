@@ -25,6 +25,7 @@ public:
       std::function<bool(const QString& name)> func);
 signals:
   void SelectBook(const QString& book_name);
+  void EditBook(const QString& book_name);
 
 protected:
   void showEvent(QShowEvent *event);
@@ -37,6 +38,8 @@ private slots:
   void on_CreatePushButton_clicked();
 
   void on_DeletePushButton_clicked();
+
+  void on_EditBookPushButton_clicked();
 
 private:
   void RefreshBookList();

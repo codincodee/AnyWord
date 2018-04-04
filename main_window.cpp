@@ -269,7 +269,7 @@ void MainWindow::on_IKnowTheWordPushButton_clicked()
   if (!ui->IKnowTheWordPushButton->isEnabled()) {
     return;
   }
-  ui->IKnowTheWordPushButton->setDisabled(true);
+  // ui->IKnowTheWordPushButton->setDisabled(true);
   ui->PassPushButton->setDisabled(false);
   i_know_current_word_ = true;
   DisplayWordMeaning(current_word_, i_know_current_word_);
@@ -282,7 +282,7 @@ void MainWindow::on_IDontKnowTheWordPushButton_clicked()
     return;
   }
   // ui->IKnowTheWordPushButton->setDisabled(true);
-  ui->IDontKnowTheWordPushButton->setDisabled(true);
+  // ui->IDontKnowTheWordPushButton->setDisabled(true);
   ui->PassPushButton->setDisabled(false);
   i_know_current_word_ = false;
   DisplayWordMeaning(current_word_, i_know_current_word_);

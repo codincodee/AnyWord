@@ -261,7 +261,7 @@ bool Database::WriteEntry(const WordEntry &entry, const QString &path_to_dir) {
 
   cmd =
       "SELECT COUNT(*) FROM vocabulary "
-      "WHERE word = '" + entry.word + "'";
+      "WHERE word = \"" + entry.word + "\"";
   query.prepare(cmd);
   if (!query.exec()) {
     qDebug() << cmd << query.lastError();
@@ -271,7 +271,7 @@ bool Database::WriteEntry(const WordEntry &entry, const QString &path_to_dir) {
   if (query.value(0).toInt() > 0) {
     cmd =
         "DELETE FROM vocabulary "
-        "WHERE word = '" + entry.word + "'";
+        "WHERE word = \"" + entry.word + "\"";
     query.prepare(cmd);
     if (!query.exec()) {
       qDebug() << cmd << query.lastError();
@@ -292,9 +292,9 @@ bool Database::WriteEntry(const WordEntry &entry, const QString &path_to_dir) {
       ") "
       "VALUES "
       "("
-      "  '" + entry.word + "',"
-      "  '" + entry.meaning + "',"
-      "  '" + entry.note + "',"
+      "  \"" + entry.word + "\","
+      "  \"" + entry.meaning + "\","
+      "  \"" + entry.note + "\","
       "  " + QString::number(entry.hit) + ","
       "  '" + entry.hit_ts + "',"
       "  " + QString::number(entry.miss) + ","
@@ -324,7 +324,7 @@ bool Database::DeleteEntry(const QString &word, const QString &path_to_dir) {
 
   cmd =
       "SELECT COUNT(*) FROM vocabulary "
-      "WHERE word = '" + word + "'";
+      "WHERE word = \"" + word + "\"";
   query.prepare(cmd);
   if (!query.exec()) {
     qDebug() << cmd << query.lastError();
@@ -334,7 +334,7 @@ bool Database::DeleteEntry(const QString &word, const QString &path_to_dir) {
   if (query.value(0).toInt() > 0) {
     cmd =
         "DELETE FROM vocabulary "
-        "WHERE word = '" + word + "'";
+        "WHERE word = \"" + word + "\"";
     query.prepare(cmd);
     if (!query.exec()) {
       qDebug() << cmd << query.lastError();
@@ -367,7 +367,7 @@ WordEntry Database::LookUp(const QString &word, const QString &path_to_dir) {
       "  miss_ts,"
       "  require_spelling "
       "FROM vocabulary "
-      "WHERE word = '" + word + "'";
+      "WHERE word = \"" + word + "\"";
   query.prepare(cmd);
   if (query.exec()) {
     WordEntry entry;

@@ -82,7 +82,11 @@ bool Book::WriteEntry(const WordEntry &entry) {
   }
   // vocabulary_->UpdateWordNonHistoryComponents(entry);
   // emit SaveRecord(path_ + "/" + entry.word);
-  return Database::WriteEntry(entry, path_);
+  bool success = Database::WriteEntry(entry, path_);
+  if (!success) {
+    warn("Fail to write an entry");
+  }
+  return success;
 }
 
 void Book::OnDeleteEntry(const QString &word) {
@@ -128,7 +132,11 @@ bool Book::MarkWord(const QString &word, const bool& know) {
   if (entry.Empty()) {
     return false;
   }
-  return Database::WriteEntry(entry, path_);
+  bool success = Database::WriteEntry(entry, path_);
+  if (!success) {
+    warn("Unable to write an entry");
+  }
+  return success;
 }
 
 WordEntry Book::LookUp(const QString &word) {

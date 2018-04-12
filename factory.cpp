@@ -33,6 +33,7 @@ bool Factory::Construct() {
   recycle_objects_.push_back(bookshelf);
 
   auto current_book = new Book;
+  current_book->SetWidget(main_window);
   current_book->Init();
   recycle_objects_.push_back(current_book);
 

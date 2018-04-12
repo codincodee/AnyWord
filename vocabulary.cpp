@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include <random>
+#include <QFile>
 
 Vocabulary::Vocabulary()
 {
@@ -51,6 +52,14 @@ void Vocabulary::Clone(const Vocabulary &obj) {
 //  for (auto& i : chronology_) {
 //    qDebug() << i.entry->word << i.entry->hit_ts << i.entry->miss_ts;
 //  }
+//  QFile file("vocabulary.txt");
+//  qDebug() << file.open(QIODevice::ReadWrite);
+//  QTextStream stream(&file);
+//  stream.setCodec("UTF-8");
+//  for (auto& i : chronology_) {
+//    stream << i.entry->word << " " << i.entry->hit << " " << i.entry->hit_ts << " " << i.entry->miss << " " << i.entry->miss_ts << "\n";
+//  }
+//  file.close();
 }
 
 WordEntry Vocabulary::OfferWord() {

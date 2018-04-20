@@ -25,6 +25,8 @@ public:
   static void CloseDB(const QString& path);
 private:
   static bool KeepDBOpen(const QString& path_to_db, QSqlDatabase& db);
+  static bool FilterString(QString& str);
+  static bool FilterEntry(WordEntry& entry);
   static std::shared_ptr<QSqlDatabase> q_sql_database_;
 };
 

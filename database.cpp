@@ -240,6 +240,24 @@ bool Database::KeepDBOpen(const QString& path_to_db, QSqlDatabase& db) {
   return true;
 }
 
+bool Database::FilterString(QString &str) {
+  bool result = false;
+  for (auto& c : str) {
+    if (c == '\"') {
+      c = '\'';
+      result = true;
+    }
+  }
+  return result;
+}
+
+bool Database::FilterEntry(WordEntry &entry) {
+  return
+      FilterString(entry.word) ||
+      FilterString(entry.meaning) ||
+      FilterString(entry.note);
+}
+
 void Database::CloseDB(const QString &path) {
   auto path_to_db = path + "/" + DBFileName();
   if (q_sql_database_->databaseName() == path_to_db) {
@@ -279,6 +297,8 @@ bool Database::WriteEntry(const WordEntry &entry, const QString &path_to_dir) {
     }
   }
 
+  auto entry_to_write = entry;
+  FilterEntry(entry_to_write);
   cmd =
       "INSERT INTO vocabulary ("
       "  word,"
@@ -292,14 +312,14 @@ bool Database::WriteEntry(const WordEntry &entry, const QString &path_to_dir) {
       ") "
       "VALUES "
       "("
-      "  \"" + entry.word + "\","
-      "  \"" + entry.meaning + "\","
-      "  \"" + entry.note + "\","
-      "  " + QString::number(entry.hit) + ","
-      "  '" + entry.hit_ts + "',"
-      "  " + QString::number(entry.miss) + ","
-      "  '" + entry.miss_ts + "',"
-      "  " + QString::number((int)entry.require_spelling) +
+      "  \"" + entry_to_write.word + "\","
+      "  \"" + entry_to_write.meaning + "\","
+      "  \"" + entry_to_write.note + "\","
+      "  " + QString::number(entry_to_write.hit) + ","
+      "  '" + entry_to_write.hit_ts + "',"
+      "  " + QString::number(entry_to_write.miss) + ","
+      "  '" + entry_to_write.miss_ts + "',"
+      "  " + QString::number((int)entry_to_write.require_spelling) +
       ")";
   query.prepare(cmd);
   if (!query.exec()) {
@@ -389,3 +409,4 @@ WordEntry Database::LookUp(const QString &word, const QString &path_to_dir) {
   }
   return WordEntry();
 }
+

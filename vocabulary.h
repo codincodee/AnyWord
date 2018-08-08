@@ -26,8 +26,8 @@ public:
   }
   void Clear();
 private:
-  bool IfMastered(const WordEntry& entry);
-  bool IfWeakMastered(
+  static bool IfMastered(const WordEntry& entry);
+  static bool IfWeakMastered(
       const WordEntry& now,
       const QString& prev_hit_ts, const QString& prev_miss_ts);
   void ClearStorage();

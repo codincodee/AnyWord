@@ -176,6 +176,9 @@ bool Vocabulary::IfMastered(const WordEntry &entry) {
 bool Vocabulary::IfWeakMastered(
     const WordEntry &entry,
     const QString &prev_hit_ts, const QString &prev_miss_ts) {
+  if (IfMastered(entry)) {
+    return true;
+  }
   auto now_hit =
       entry.hit_ts.isEmpty() ?
           QDateTime::fromSecsSinceEpoch(0) :

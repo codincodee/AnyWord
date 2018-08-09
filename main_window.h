@@ -68,6 +68,8 @@ private slots:
   void on_ModifyWordToolButton_clicked();
 
   void OnCloseBook();
+
+  void OnIDontKnowThePreviousWord();
 private:
   void InitUI();
   void DisplayWordMeaning(const WordEntry& word, const bool& know);
@@ -82,6 +84,7 @@ private:
   std::function<bool(const QString& word, const bool& know)> mark_word_callback_;
   std::function<bool(int& memorized, int& total)> book_progress_callback_;
   WordEntry current_word_;
+  WordEntry previous_word_;
   bool i_know_current_word_;
 };
 

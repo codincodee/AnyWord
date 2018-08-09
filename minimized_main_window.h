@@ -20,12 +20,14 @@ signals:
   void CheckPushButtonClicked();
   void PassPushButtonClicked();
   void CrossPushButtonClicked();
+  void IDontKnowPreviousWord();
 
 public slots:
   void OnSwitchWindow();
   void OnDisplayWord(const WordEntry& word);
   void OnDisplayWordMeaning(const WordEntry& word, const bool& know);
   void OnShowHideSwitch();
+  void OnIDontKnowPreviousWord();
 
 protected:
   void mousePressEvent(QMouseEvent *event);

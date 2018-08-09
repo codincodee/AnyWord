@@ -46,6 +46,9 @@ MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
   shortcut = new QShortcut(QKeySequence("z"), this);
   connect(
       shortcut, SIGNAL(activated()), this, SLOT(OnShowHideSwitch()));
+  shortcut = new QShortcut(QKeySequence("f"), this);
+  connect(
+      shortcut, SIGNAL(activated()), this, SLOT(OnIDontKnowPreviousWord()));
 }
 
 MinimizedMainWindow::~MinimizedMainWindow()
@@ -74,6 +77,10 @@ void MinimizedMainWindow::OnDisplayWordMeaning(
 
 void MinimizedMainWindow::OnShowHideSwitch() {
   SetAllWidgetsVisible(!ui->MessageLabel->isVisible());
+}
+
+void MinimizedMainWindow::OnIDontKnowPreviousWord() {
+  emit IDontKnowPreviousWord();
 }
 
 void MinimizedMainWindow::mousePressEvent(QMouseEvent *event) {

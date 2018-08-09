@@ -205,6 +205,7 @@ void MainWindow::OnCurrentBookChanged(const BookInfo &book) {
   }
   SetUIFocus(current_word_);
   current_word_.Clear();
+  previous_word_.Clear();
   PassCurrentWord();
 }
 
@@ -216,9 +217,20 @@ void MainWindow::SetUIFocus(const WordEntry &word) {
   }
 }
 
+void MainWindow::OnIDontKnowThePreviousWord() {
+  if (previous_word_.Empty()) {
+    return;
+  }
+  if (!mark_word_callback_) {
+    return;
+  }
+  mark_word_callback_(previous_word_.word, false);
+}
+
 void MainWindow::PassCurrentWord() {
   if (mark_word_callback_ && !current_word_.Empty()) {
     mark_word_callback_(current_word_.word, i_know_current_word_);
+    previous_word_ = current_word_;
   }
   ui->IKnowTheWordPushButton->setDisabled(false);
   ui->IDontKnowTheWordPushButton->setDisabled(false);
@@ -318,6 +330,7 @@ void MainWindow::on_ModifyWordToolButton_clicked()
 
 void MainWindow::OnCloseBook() {
   current_word_.Clear();
+  previous_word_.Clear();
   i_know_current_word_ = false;
   InitUI();
   emit DisplayWordSignal(WordEntry());

@@ -266,6 +266,12 @@ bool Factory::Construct() {
       edit_book_main_window,
       SLOT(OnEditBook(QString)));
 
+  connect(
+      minimized_main_window_,
+      SIGNAL(IDontKnowPreviousWord()),
+      main_window,
+      SLOT(OnIDontKnowThePreviousWord()));
+
   bookshelf->OpenBookFromHistory();
   return true;
 }

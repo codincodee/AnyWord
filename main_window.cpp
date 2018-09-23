@@ -128,6 +128,11 @@ void MainWindow::RegisterMarkWordCallback(
   mark_word_callback_ = func;
 }
 
+void MainWindow::RegisterResetWordCallback(
+    std::function<bool (const QString &)> func) {
+  reset_word_callback_ = func;
+}
+
 void MainWindow::RegisterBookProgressCallback(
     std::function<bool (int &, int &)> func) {
   book_progress_callback_ = func;
@@ -221,10 +226,11 @@ void MainWindow::OnIDontKnowThePreviousWord() {
   if (previous_word_.Empty()) {
     return;
   }
-  if (!mark_word_callback_) {
+  if (!reset_word_callback_) {
     return;
   }
-  mark_word_callback_(previous_word_.word, false);
+  reset_word_callback_(previous_word_.word);
+  emit WordReset(previous_word_);
 }
 
 void MainWindow::PassCurrentWord() {

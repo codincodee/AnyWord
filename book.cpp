@@ -127,8 +127,17 @@ bool Book::Delete(const QString &path) {
   return QDir(path).removeRecursively();
 }
 
-bool Book::MarkWord(const QString &word, const bool& know) {
-  auto entry = vocabulary_->MarkWord(word, know);
+bool Book::MarkWord(const QString &word, const bool &know) {
+  return MarkWord(
+      word, know ? MarkWordOperation::i_know : MarkWordOperation::i_dont_know);
+}
+
+bool Book::ResetWord(const QString &word) {
+  return MarkWord(word, MarkWordOperation::reset);
+}
+
+bool Book::MarkWord(const QString &word, const MarkWordOperation& operation) {
+  auto entry = vocabulary_->MarkWord(word, operation);
   if (entry.Empty()) {
     return false;
   }

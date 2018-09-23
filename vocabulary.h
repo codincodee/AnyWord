@@ -6,6 +6,10 @@
 #include <QHash>
 #include <set>
 
+enum class MarkWordOperation {
+  i_know, i_dont_know, reset
+};
+
 class Vocabulary : public QObject
 {
   Q_OBJECT
@@ -17,6 +21,7 @@ public:
   void Clone(const Vocabulary& obj);
   WordEntry OfferWord();
   WordEntry MarkWord(const QString& word, const bool& know);
+  WordEntry MarkWord(const QString &word, const MarkWordOperation &operation);
   struct ChronoEntry {
     ChronoEntry(WordEntry* entry);
     WordEntry* entry = nullptr;

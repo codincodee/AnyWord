@@ -22,6 +22,8 @@ public:
   bool WriteEntry(const WordEntry& entry);
   static bool Delete(const QString& path);
   bool MarkWord(const QString& word, const bool& know);
+  bool MarkWord(const QString& word, const MarkWordOperation& operation);
+  bool ResetWord(const QString& word);
   WordEntry LookUp(const QString& word);
   bool GetBookProgress(int& memorized, int& total);
 signals:

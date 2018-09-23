@@ -28,6 +28,7 @@ public slots:
   void OnDisplayWordMeaning(const WordEntry& word, const bool& know);
   void OnShowHideSwitch();
   void OnIDontKnowPreviousWord();
+  void OnWordResetCallback(const WordEntry& entry);
 
 protected:
   void mousePressEvent(QMouseEvent *event);

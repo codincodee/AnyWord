@@ -92,10 +92,24 @@ WordEntry Vocabulary::OfferWord() {
 }
 
 WordEntry Vocabulary::MarkWord(const QString &word, const bool &know) {
+  return MarkWord(
+      word, know ? MarkWordOperation::i_know : MarkWordOperation::i_dont_know);
+}
+
+WordEntry Vocabulary::MarkWord(
+    const QString &word, const MarkWordOperation& operation) {
   auto vo_i = vocabulary_.find(word);
   if (vo_i == vocabulary_.end()) {
     return WordEntry();
   }
+  if (operation == MarkWordOperation::reset) {
+    (*vo_i)->miss = 0;
+    (*vo_i)->hit = 0;
+    (*vo_i)->hit_ts = QDateTime::fromSecsSinceEpoch(0).toString();
+    (*vo_i)->miss_ts.clear();
+    return *(*vo_i);
+  }
+  bool know = (operation == MarkWordOperation::i_know) ? true : false;
   auto previous_hit_ts = (*vo_i)->hit_ts;
   auto previous_miss_ts = (*vo_i)->miss_ts;
 

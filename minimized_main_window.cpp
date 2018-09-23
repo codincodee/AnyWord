@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include <QShortcut>
 #include <QRect>
+#include <QThread>
 
 MinimizedMainWindow::MinimizedMainWindow(QWidget *parent) :
   QWidget(parent),
@@ -81,6 +82,17 @@ void MinimizedMainWindow::OnShowHideSwitch() {
 
 void MinimizedMainWindow::OnIDontKnowPreviousWord() {
   emit IDontKnowPreviousWord();
+}
+
+void MinimizedMainWindow::OnWordResetCallback(const WordEntry &entry) {
+  auto origin_text = ui->MessageLabel->text();
+  auto origin_style = ui->MessageLabel->styleSheet();
+  ui->MessageLabel->setStyleSheet(QStringLiteral("QLabel{color: red}"));
+  ui->MessageLabel->setText("Reseting " + entry.word);
+  qApp->processEvents();
+  QThread::sleep(1);
+  ui->MessageLabel->setText(origin_text);
+  ui->MessageLabel->setStyleSheet(origin_style);
 }
 
 void MinimizedMainWindow::mousePressEvent(QMouseEvent *event) {

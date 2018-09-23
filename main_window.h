@@ -26,6 +26,8 @@ public:
   void RegisterGetWordCallback(std::function<WordEntry()> func);
   void RegisterMarkWordCallback(
       std::function<bool(const QString& word, const bool& know)> func);
+  void RegisterResetWordCallback(
+      std::function<bool(const QString& word)> func);
   void RegisterBookProgressCallback(
       std::function<bool(int& memorized, int& total)> func);
 protected:
@@ -47,6 +49,7 @@ signals:
   void DisplayWordSignal(const WordEntry& word);
   void PlayRecord(const QString& word);
   void ModifyEntry(const QString& word);
+  void WordReset(const WordEntry& word);
 
 private slots:
   void on_SettingsToolButton_clicked();
@@ -82,6 +85,7 @@ private:
 
   std::function<WordEntry()> get_word_callback_;
   std::function<bool(const QString& word, const bool& know)> mark_word_callback_;
+  std::function<bool(const QString& word)> reset_word_callback_;
   std::function<bool(int& memorized, int& total)> book_progress_callback_;
   WordEntry current_word_;
   WordEntry previous_word_;

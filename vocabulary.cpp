@@ -240,6 +240,26 @@ void Vocabulary::Clear() {
   ClearStorage();
 }
 
+std::vector<std::shared_ptr<Vocabulary>> Vocabulary::GenerateVolumes() {
+  std::vector<std::shared_ptr<Vocabulary>> volumes;
+  std::shared_ptr<Vocabulary> voc(new Vocabulary);
+  int cnt = 0;
+  for (auto& word : vocabulary_) {
+    ++cnt;
+    voc->vocabulary_[word->word] = new WordEntry(*word);
+    if (cnt >= kVolumeSize) {
+      volumes.push_back(voc);
+      voc.reset(new Vocabulary);
+      cnt = 0;
+      continue;
+    }
+  }
+  if (cnt != 0) {
+    volumes.push_back(voc);
+  }
+  return volumes;
+}
+
 Vocabulary::ChronoEntry::ChronoEntry(WordEntry* en) : entry(en) {}
 
 bool operator<(

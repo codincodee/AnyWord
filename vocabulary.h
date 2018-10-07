@@ -5,6 +5,7 @@
 #include "word_entry.h"
 #include <QHash>
 #include <set>
+#include <memory>
 
 enum class MarkWordOperation {
   i_know, i_dont_know, reset
@@ -30,7 +31,9 @@ public:
     return vocabulary_.size();
   }
   void Clear();
+  std::vector<std::shared_ptr<Vocabulary>> GenerateVolumes();
 private:
+  friend class Book;
   static bool IfMastered(const WordEntry& entry);
   static bool IfWeakMastered(
       const WordEntry& now,
@@ -41,6 +44,7 @@ private:
   std::multiset<ChronoEntry> chronology_;
   std::vector<WordEntry*> offer_list_;
   int current_index_;
+  const int kVolumeSize = 2000;
 };
 
 bool operator <(

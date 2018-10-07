@@ -43,9 +43,12 @@ public slots:
 
   void OnCloseSignal();
 private:
+  QString LoadVolume(const QString& path);
+  bool BuildVolume(const QString& book_path, const QString& volumes_path);
   std::shared_ptr<Vocabulary> vocabulary_;
   BookInfo information_;
   QString path_;
+  const QString kVolumeFolderName;
 };
 
 #endif // BOOK_H

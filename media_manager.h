@@ -14,6 +14,9 @@ public:
   MediaManager();
   bool Init();
   bool HasRecord();
+  inline static QString AudioFileSuffix() {
+    return ".wav";
+  }
 public slots:
   void OnStartRecord();
   void OnStopRecord();
@@ -25,9 +28,6 @@ public slots:
   void OnDeleteRecord(const QString& path);
 
 private:
-  inline static QString AudioFileSuffix() {
-    return ".wav";
-  }
   QString TempAudioFilePath();
   std::unique_ptr<QAudioRecorder> q_audio_recorder_;
   std::unique_ptr<QSoundEffect> q_sound_effect_;
